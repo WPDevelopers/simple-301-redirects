@@ -34,6 +34,8 @@ if (!class_exists("Simple301redirects")) {
 
 	class Simple301Redirects {
 
+	protected $dropdown_data = array();
+
 		function initialize_admin() {
 			$this->maybe_upgrade_db(); // upgrade the storage format if needed
 
@@ -111,7 +113,12 @@ if (!class_exists("Simple301redirects")) {
 						<tr>
 							<td style="width:35%;"><input type="text" name="301_redirects[request]" value="" style="width:99%;" /></td>
 							<td style="width:2%;">&raquo;</td>
-							<td><input type="text" name="301_redirects[destination]" value="" style="width:99%;" /></td>
+							<td>
+								<input type="text" name="301_redirects[destination]" value="" style="width:45%;" />
+								<select class="s301r_set_redirect" style="width: 45%">
+									<?php echo $this->dropdown_inner_html(); ?>
+								</select>
+							</td>
 							<td style="width:4%;">&nbsp;</td>
 						</tr>
 					</tbody>
@@ -181,12 +188,18 @@ if (!class_exists("Simple301redirects")) {
 				foreach ($redirects as $index => $redirect) {
 					$counter++;
 					$row_class = ($counter % 2 === 0) ? 'row_static' : 'row_static alternate';
+					$destination = empty($redirect['destination']) ? '' : $redirect['destination'];
 					$output .= '
 
 					<tr id="s301r_row_'.$index.'" class="'.$row_class.'">
 						<td class="s301r_request">'.$redirect['request'].'</td>
 						<td>&raquo;</td>
-						<td class="s301r_destination"><input name="301_redirects[update_destintation]['.$index.']" value="'.$redirect['destination'].'" style="width:80%" /></td>
+						<td class="s301r_destination">
+							<input name="301_redirects[update_destintation]['.$index.']" value="'.$destination.'" style="width:45%" />
+							<select class="s301r_set_redirect" data-index="'.$index.'" style="width:45%" />
+								'.$this->dropdown_inner_html($destination).'
+							</select>
+						</td>
 						<td class="s301r-delete"><input type="checkbox" name="301_redirects[delete][]" value="'.$index.'"></td>
 					</tr>
 
@@ -194,6 +207,48 @@ if (!class_exists("Simple301redirects")) {
 				}
 			} // end if
 			return $output;
+		}
+
+		/**
+		* dropdown_inner_html
+		* returns a list of HTML <options> corresponding to posts, containing a redirect URL as value and a title as the menu text
+		* All public pages, posts, and queryable custom post types are included.
+		* @param string $current - the redirect URL for the current entry - so that default selected value can be set
+		* @return string/html - string containing all <option> tags, but NOT outer <select> tag
+		*/
+		protected function dropdown_inner_html($current = false) {
+			//get a list of all posts from DB. Do this only once and store it in $this->dropdown_data
+			if ( empty($this->dropdown_data) ) {
+				//get it from the database
+				$data = array();
+				//create an array of all custom post types plus post and page
+				$post_types = get_post_types( array(
+					'_builtin' => false,
+					'public' => true
+				));
+				$post_types = array_merge($post_types, array('post', 'page'));
+				$all_posts = new WP_Query( array(
+					'post_type' => $post_types,
+					'posts_per_page' => -1
+				));
+				foreach ( $all_posts->posts as $post ) {
+					$id = $post->ID;
+					$data[get_permalink($id)] = $post->post_title;
+				}
+			} else {
+				$data = $this->dropdown_data;
+			}
+
+			//
+			$html = '<option value="">Choose ...</option>';
+			foreach ($data as $destination => $title) {
+				$html .= sprintf('<option value="%s" %s>%s</option>',
+					$destination,
+					($current === $destination) ? 'selected' : '',
+					$title
+				);
+			}
+			return $html;
 		}
 
 		/**

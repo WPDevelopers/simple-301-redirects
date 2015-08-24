@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	// turn delete column into edit/delete actions
 	$('.s301r-delete-head').addClass('s301r-actions-head').removeClass('s301r-delete-head').text('Actions');
 	$('.s301r-delete').html('<!--<a href="#" class="s301r-edit-link">Edit</a>&nbsp;--><a href="#" class="s301r-delete-link">Delete</a>');
-	
+
 	// ajax delete
 	$('.s301r-delete-link').click(function(){
 		var confirm_delete = confirm('Are you sure you want to delete this redirect?');
@@ -30,6 +30,12 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 
+	$('.s301r_set_redirect').change(function(e) {
+		var redirect = $(this).val(),
+			textboxName = (typeof $(this).data('index') === 'number') ? '301_redirects[update_destintation]['+$(this).data('index')+']' : '301_redirects[destination]';
+		$('input[name="'+textboxName+'"]').val(redirect);
+	});
+
 	// edit link
 	$('.s301r-edit-link').click(function(){
 		// swap text for inputs
@@ -50,4 +56,3 @@ jQuery(document).ready(function($) {
 		return false;
 	});
 });
-
