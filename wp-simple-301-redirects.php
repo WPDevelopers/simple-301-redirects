@@ -185,7 +185,7 @@ if (!class_exists("Simple301redirects")) {
 					<tr id="s301r_row_'.$index.'" class="'.$row_class.'">
 						<td class="s301r_request">'.$redirect['request'].'</td>
 						<td>&raquo;</td>
-						<td class="s301r_destination">'.$redirect['destination'].'</td>
+						<td class="s301r_destination"><input name="301_redirects[update_destintation]['.$index.']" value="'.$redirect['destination'].'" style="width:80%" /></td>
 						<td class="s301r-delete"><input type="checkbox" name="301_redirects[delete][]" value="'.$index.'"></td>
 					</tr>
 
@@ -210,8 +210,7 @@ if (!class_exists("Simple301redirects")) {
 			$redirects = get_option( 's301r_redirects' );
 			if ($redirects == '') { $redirects = array(); }
 
-			//insert sitemap data
-			if ( ($_FILES['sitemap']) ) {
+			if ( $_FILES['sitemap']['size'] ) {
 				$urls = $this->process_sitemap($_FILES['sitemap']);
 				foreach ($urls as $url) {
 					$redirects[] = $this->create_redirect($url, '');
@@ -219,6 +218,12 @@ if (!class_exists("Simple301redirects")) {
 			}
 
 			$data = $_POST['301_redirects'];
+
+			if ( isset($data['update_destintation']) ) {
+				foreach ( $data['update_destintation'] as $index => $destination ) {
+					$redirects[$index]['destination'] = trim($destination);
+				}
+			}
 
 			// delete checked redirect
 			if (isset($data['delete']) && is_array($data['delete'])) {
