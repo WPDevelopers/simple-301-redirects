@@ -76,13 +76,13 @@ if (!class_exists("Simple301redirects")) {
 		?>
 		<div class="wrap simple_301_redirects">
 
-		<?php
-			if (isset($_POST['301_redirects'])) {
-				echo '<div id="message" class="updated"><p>Settings saved</p></div>';
-			}
-		?>
+		<h2>Simple 301 Redirects</h2>
 
-			<h2>Simple 301 Redirects</h2>
+			<?php
+				if (isset($_POST['301_redirects'])) {
+					echo '<div id="message" class="updated"><p>Settings saved</p></div>';
+				}
+			?>
 
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_s-xclick">
@@ -132,6 +132,7 @@ if (!class_exists("Simple301redirects")) {
 
 			</form>
 
+			<hr />
 			<div class="documentation">
 				<h2>Documentation</h2>
 				<h3>Basic Redirects</h3>
