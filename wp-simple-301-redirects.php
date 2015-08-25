@@ -34,7 +34,9 @@ if (!class_exists("Simple301redirects")) {
 
 	class Simple301Redirects {
 
-	protected $dropdown_data = array();
+		protected $dropdown_data = array();
+
+		protected $messages = array();
 
 		function initialize_admin() {
 			$this->maybe_upgrade_db(); // upgrade the storage format if needed
@@ -44,7 +46,14 @@ if (!class_exists("Simple301redirects")) {
 			add_action('admin_enqueue_scripts', array($this,'write_scripts'));
 
 			// if submitted, process the data
-			if (isset($_POST['301_redirects'])) { $this->save_redirects(); }
+			if ( isset($_POST['_s301r_nonce_save']) ) {
+				$this->save_redirects();
+			}
+
+			//if a sitemap was submitted, do that instead
+			else if ( isset($_POST['_s301r_nonce_upload']) ) {
+				$this->process_sitemap();
+			}
 		}
 
 		function write_scripts() {
@@ -96,9 +105,9 @@ if (!class_exists("Simple301redirects")) {
 				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 			</form>
 
-			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options" enctype="multipart/form-data">
+			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options">
 
-				<?php wp_nonce_field( 'save_redirects', '_s301r_nonce' ); ?>
+				<?php wp_nonce_field( 'save_redirects', '_s301r_nonce_save' ); ?>
 
 				<table class="widefat">
 					<thead>
@@ -128,15 +137,19 @@ if (!class_exists("Simple301redirects")) {
 				$settings = get_option( 's301r_settings' );
 				$wildcard_checked = ($settings['wildcard'] === 'true') ? ' checked="checked"' : ''; ?>
 				<p><input type="checkbox" name="301_redirects[wildcard]" id="wps301-wildcard"<?php echo $wildcard_checked; ?> /><label for="wps301-wildcard"> Use Wildcards?</label></p>
-
 				<p class="submit"><input type="submit" name="submit_s301r" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
 
-				<hr />
+			</form>
+
+			<hr />
+
+			<form method="post" id="simple_301_redirects_upload_form" action="options-general.php?page=301options" enctype="multipart/form-data">
+
+				<?php wp_nonce_field('upload_redirects', '_s301r_nonce_upload'); ?>
 
 				<p><label for="sitemap"><strong>Input from Sitemap</strong></label></p>
 				<p><input type="file" id="sitemap" name="sitemap" /></p>
 				<p class="submit"><input type="submit" name="submit_s301r" class="button-primary" value="<?php _e('Upload') ?>" /></p>
-
 			</form>
 
 			<hr />
@@ -260,19 +273,13 @@ if (!class_exists("Simple301redirects")) {
 		 */
 		function save_redirects() {
 			if ( !current_user_can('manage_options') )  { wp_die( 'You do not have sufficient permissions to access this page.' ); }
-			check_admin_referer( 'save_redirects', '_s301r_nonce' );
+			check_admin_referer( 'save_redirects', '_s301r_nonce_save' );
 
 			// get existing redirects
 			$redirects = get_option( 's301r_redirects' );
 			if ($redirects == '') { $redirects = array(); }
 
-			if ( $_FILES['sitemap']['size'] ) {
-				$urls = $this->process_sitemap($_FILES['sitemap']);
-				foreach ($urls as $url) {
-					$redirects[] = $this->create_redirect($url, '');
-				}
-			}
-
+			//new data
 			$data = $_POST['301_redirects'];
 
 			if ( isset($data['update_destintation']) ) {
@@ -313,7 +320,16 @@ if (!class_exists("Simple301redirects")) {
 		* @param filename
 		* @return array redirect list
 		*/
-		private function process_sitemap($file) {
+		protected function process_sitemap() {
+			if ( !current_user_can('manage_options') )  { wp_die( 'You do not have sufficient permissions to access this page.' ); }
+			check_admin_referer( 'upload_redirects', '_s301r_nonce_upload' );
+
+			$file = $_FILES['sitemap'];
+
+			if ( !$file['size'] ) {
+				//create flash for no file uploaded
+			}
+
 			if ( $file['type'] !== 'text/xml') {
 				//create flash for wrong file type		//!!TO DO!!!!!
 				return;
@@ -324,14 +340,23 @@ if (!class_exists("Simple301redirects")) {
 				//create flash for no XML parser installed or not valid XML
 				return;
 			}
-			$urls = array();
-			foreach ($xml->url as $url) {
-				if ( !empty($url) ) $urls[] = (string) $url->loc;
+
+			// get existing redirects
+			$redirects = get_option( 's301r_redirects' );
+			if ($redirects == '') { $redirects = array(); }
+
+			foreach ($xml->url as $url_obj) {
+				$url_str = empty($url_obj->loc) ? '' : (string) $url_obj->loc;
+				if ( $url_str !== '' ) {
+					$redirect = $this->create_redirect($url_str, '');
+					$redirects[] = $redirect;
+				}
 			}
-			return $urls;
+
+			update_option('s301r_redirects', $redirects);
 		}
 
-		private function create_redirect($request, $destination) {
+		protected function create_redirect($request, $destination) {
 			return array(
 				'request' => trim($request),
 				'destination' => trim($destination)
