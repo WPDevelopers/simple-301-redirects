@@ -293,7 +293,7 @@ if (!class_exists("Simple301redirects")) {
 
 			// save new redirect
 			if ( trim( $data['request'] ) != '' ) {
-				$redirects[] = $this->create_redirect($data['request'], $data['destination']);
+				array_push( $redirects, $this->create_redirect($data['request'], $data['destination']) );
 			}
 
 			if (isset($data['wildcard'])) {
@@ -345,7 +345,7 @@ if (!class_exists("Simple301redirects")) {
 				$url_str = empty($url_obj->loc) ? '' : (string) $url_obj->loc;
 				if ( $url_str !== '' ) {
 					$redirect = $this->create_redirect($url_str, '');
-					$redirects[] = $redirect;
+					array_push( $redirects, $redirect );
 				}
 			}
 
