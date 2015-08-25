@@ -331,9 +331,11 @@ if (!class_exists("Simple301redirects")) {
 				return;
 			}
 			try {
-				$xml = simplexml_load_file($file['tmp_name']);
+				$dom = new DOMDocument;
+				$dom->loadXML( file_get_contents( $file['tmp_name'] ) );
+				$locs = $dom->getElementsByTagName('loc');
 			} catch (Exception $e) {
-				$this->messages_add( __('XML parser not installed or file could not be parsed'), 'error');
+				$this->messages_add( __('XML parser not installed or file is not a sitemap'), 'error');
 				return;
 			}
 
@@ -341,10 +343,10 @@ if (!class_exists("Simple301redirects")) {
 			$redirects = get_option( 's301r_redirects' );
 			if ($redirects == '') { $redirects = array(); }
 
-			foreach ($xml->url as $url_obj) {
-				$url_str = empty($url_obj->loc) ? '' : (string) $url_obj->loc;
-				if ( $url_str !== '' ) {
-					$redirect = $this->create_redirect($url_str, '');
+			foreach ($locs as $loc) {
+				$url = (string) $loc->nodeValue;
+				if ( $url !== '' ) {
+					$redirect = $this->create_redirect($url, '');
 					array_push( $redirects, $redirect );
 				}
 			}
