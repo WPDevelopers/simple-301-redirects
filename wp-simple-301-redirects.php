@@ -36,7 +36,7 @@ if (!class_exists("Simple301redirects")) {
 
 		protected $dropdown_data = array();
 
-		protected $messages = array();
+		protected $messages;
 
 		function initialize_admin() {
 			$this->maybe_upgrade_db(); // upgrade the storage format if needed
@@ -45,14 +45,16 @@ if (!class_exists("Simple301redirects")) {
 			wp_register_script( 's301r-script', plugins_url( '/js/simple-301-redirects.js', __FILE__ ), array('jquery') );
 			add_action('admin_enqueue_scripts', array($this,'write_scripts'));
 
+			$this->messages = new AdminNoticeManager();
+
 			// if submitted, process the data
 			if ( isset($_POST['_s301r_nonce_save']) ) {
-				$this->save_redirects();
+				if ( $this->save_redirects() ) $this->messages->add( __('Settings saved.'), 'updated' );
 			}
 
 			//if a sitemap was submitted, do that instead
 			else if ( isset($_POST['_s301r_nonce_upload']) ) {
-				$this->process_sitemap();
+				if ( $this->process_sitemap() ) $this->messages->add( __('File uploaded.'), 'updated' );
 			}
 		}
 
@@ -88,12 +90,6 @@ if (!class_exists("Simple301redirects")) {
 		<div class="wrap simple_301_redirects">
 
 		<h2>Simple 301 Redirects</h2>
-
-			<?php
-				if (isset($_POST['301_redirects'])) {
-					echo '<div id="message" class="updated"><p>Settings saved</p></div>';
-				}
-			?>
 
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 				<input type="hidden" name="cmd" value="_s-xclick">
@@ -300,8 +296,6 @@ if (!class_exists("Simple301redirects")) {
 				$redirects[] = $this->create_redirect($data['request'], $data['destination']);
 			}
 
-			update_option('s301r_redirects', $redirects);
-
 			if (isset($data['wildcard'])) {
 				$settings['wildcard'] = 'true';
 			}
@@ -310,6 +304,8 @@ if (!class_exists("Simple301redirects")) {
 			}
 
 			update_option('s301r_settings', $settings);
+
+			return update_option('s301r_redirects', $redirects);
 		}
 
 		/**
@@ -327,17 +323,17 @@ if (!class_exists("Simple301redirects")) {
 			$file = $_FILES['sitemap'];
 
 			if ( !$file['size'] ) {
-				//create flash for no file uploaded
+				$this->messages->add( __('No file or empty file uploaded.'), 'error');
 			}
 
 			if ( $file['type'] !== 'text/xml') {
-				//create flash for wrong file type		//!!TO DO!!!!!
+				$this->messages->add( __('Uploaded file is not an XML file.'), 'error');
 				return;
 			}
 			try {
 				$xml = simplexml_load_file($file['tmp_name']);
 			} catch (Exception $e) {
-				//create flash for no XML parser installed or not valid XML
+				$this->messages_add( __('XML parser not installed or file could not be parsed'), 'error');
 				return;
 			}
 
@@ -353,7 +349,7 @@ if (!class_exists("Simple301redirects")) {
 				}
 			}
 
-			update_option('s301r_redirects', $redirects);
+			return update_option('s301r_redirects', $redirects);
 		}
 
 		protected function create_redirect($request, $destination) {
@@ -542,4 +538,34 @@ if(!function_exists('str_ireplace')){
     $subject = str_replace($token,$replace,$subject);
     return $subject;
   }
+}
+
+
+if ( !class_exists('AdminMessageManager') ) {
+	class AdminNoticeManager {
+		protected $messages = array();
+
+		function __construct() {
+			add_action( 'admin_notices', array($this, 'print_all') );
+		}
+
+		public function add($text, $class) {
+			array_push( $this->messages, array('text' => $text, 'class' => $class) );
+		}
+
+		public function print_all() {
+			foreach ( $this->messages as $message ) {
+				$this->the_message($message);
+			}
+		}
+
+		private function get_the_message($message) {
+			return sprintf('<div class="%s"><p>%s</p></div>', $message['class'], $message['text']);
+		}
+
+		private function the_message($message) {
+			echo $this->get_the_message($message);
+		}
+
+	}
 }
