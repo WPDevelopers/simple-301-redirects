@@ -60,7 +60,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		/**
 		 * Set up Simple 301 Redirects functionality.
 		 */
-		private function __construct() {
+		public function __construct() {
 			// Check db version. Compares a class property against an autoloaded option--minimal performance impact.
 			$this->maybe_upgrade_db();
 
@@ -88,8 +88,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 
 		/**
 		 * Render the content of the settings page.
-		 * @todo Rebuild this into a listing page and forms for making edits.
-		 * @todo Enhance with ajax to keep the workflow on one page.
+		 * @todo Add the "Add Redirect" form to the top of the page with an option to add to the beginning or end of the list.
 		 */
 		function options_page() {
 		?>
@@ -106,56 +105,67 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			<h2><?php esc_html_e( 'Simple 301 Redirects', 's301r' ); ?></h2>
 
 			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options&savedata=true">
+				<h3><?php esc_html_e( 'Add a New Redirect', 's301r' ); ?></h3>
+				<?php wp_nonce_field( 'save_redirects', '_s301r_nonce' ); ?>
+				<p>
+					<?php esc_html_e( 'Request', 'simple-301-redirects' ); ?> <input type="text" name="request" />
+					<?php esc_html_e( 'Destination', 'simple-301-redirects' ); ?> <input type="text" name="destination" />
+					<div class="redirect-options">
+						<label><input type="checkbox" name="wildcard" /> <?php esc_html_e( 'Wildcard redirect', 'simple-301-redirects' ); ?></label>&nbsp;
+						<label><input type="radio" name="position" value="top" /> <?php esc_html_e( 'Insert before existing redirects', 'simple-301-redirects' ); ?></label>&nbsp;
+						<label><input type="radio" name="position" value="bottom" checked /><?php esc_html_e( 'Insert after existing redirects', 'simple-301-redirects' ); ?></label>
+					</div>
+					<div><input type="submit" name="submit_301" class="button-primary" value="<?php esc_attr_e( 'Add Redirect', 's301r' ) ?>" /></div>
+				</p>
+			</form>
 
-			<?php wp_nonce_field( 'save_redirects', '_s301r_nonce' ); ?>
-
-			<table class="widefat">
+			<table class="wp-list-table widefat striped">
 				<thead>
 					<tr>
-						<th colspan="2"><?php esc_html_e( 'Request', 's301r' ); ?></th>
-						<th colspan="1"><?php esc_html_e( 'Destination', 's301r' ); ?></th>
+						<th style="width: 40%;"><?php esc_html_e( 'Request', 's301r' ); ?></th>
+						<th style="width: 50%;"><?php esc_html_e( 'Destination', 's301r' ); ?></th>
+						<th><?php esc_html_e( 'Wildcard', 's301r' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php echo $this->expand_redirects(); ?>
-					<tr>
-						<td style="width:35%;"><input type="text" name="301_redirects[request][]" value="" style="width:99%;" /></td>
-						<td>&raquo;</td>
-						<td style="width:60%;"><input type="text" name="301_redirects[destination][]" value="" style="width:99%;" /></td>
-					</tr>
+					<?php $this->list_redirects(); ?>
 				</tbody>
 			</table>
-
-			<?php $wildcard_checked = (get_option('301_redirects_wildcard') === 'true' ? ' checked="checked"' : ''); ?>
-			<p><input type="checkbox" name="301_redirects[wildcard]" id="wps301-wildcard"<?php echo $wildcard_checked; ?> /><label for="wps301-wildcard"> <?php esc_html_e( 'Use Wildcards?', 's301r' ); ?></label></p>
-
-			<p class="submit"><input type="submit" name="submit_301" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 's301r' ) ?>" /></p>
-			</form>
 		<?php
-		} // end of function options_page
+		}
 
 		/**
-		 * Utility function to return the current list of redirects as form fields.
-		 * @return string <html>
+		 * Utility function to return the current list of redirects as admin table rows.
+		 * @todo Support for non-hover interface.
+		 * @todo Add actual edit and delete URLs.
 		 */
-		function expand_redirects() {
-			$redirects = $this->redirects_option;
-			$output = '';
-			if ( ! empty( $redirects ) ) {
-				foreach ($redirects as $request => $destination) {
-					$output .= '
-
-					<tr>
-						<td><input type="text" name="301_redirects[request][]" value="'.$request.'" style="width:99%" /></td>
-						<td>&raquo;</td>
-						<td><input type="text" name="301_redirects[destination][]" value="'.$destination.'" style="width:99%;" /></td>
-						<td><span class="wps301-delete"></span></td>
-					</tr>
-
-					';
+		function list_redirects() {
+			$redirects = get_option( $this->redirects_option );
+			if ( ! empty( $redirects ) && is_array( $redirects ) ) {
+				foreach ($redirects as $index => $data) {
+					if ( ! empty( $data['request'] ) && ! empty( $data['destination'] ) ) {
+						?>
+						<tr>
+							<td>
+								<?php echo esc_html( $data['request'] ); ?>
+								<div class="row-actions">
+									<span class="edit"><a href="#"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
+									<span class="trash"><a href="#"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
+								</div>
+							</td>
+							<td>
+								<?php echo esc_html( $data['destination'] ); ?>
+							</td>
+							<td>
+								<?php if ( ! empty( $data['wildcard'] ) && 'true' === $data['wildcard'] ) : ?>
+									&#10003;
+								<?php endif; ?>
+							</td>
+						</tr>
+						<?php
+					}
 				}
-			} // end if
-			return $output;
+			}
 		}
 
 		/**
@@ -276,7 +286,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 					else { unset($redirects); }
 				}
 			}
-		} // end funcion redirect
+		}
 
 		/**
 		 * Utility function to get the full address of the current request
@@ -297,7 +307,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			}
 
 			return $protocol;
-		} // end function get_protocol
+		}
 
 		/**
 		 * Maybe updgrade the database.
@@ -310,7 +320,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			}
 
 			// Upgrade through each version of the database, in case users jump multiple versions.
-			while ($current_db_version < $latest_db_version) {
+			while ( $current_db_version < $this->db_version ) {
 				if ( $current_db_version === 1 ) {
 					$this->upgrade_db_v2();
 				}
@@ -326,10 +336,6 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		function upgrade_db_v2() {
 			// New settings format
 			$wildcard = ( get_option( '301_redirects_wildcard' ) === 'true' ) ? 'true' : 'false';
-			$v2_settings = array(
-				'wildcard' => $wildcard,
-			);
-			update_option( $this->settings_option, $v2_settings );
 
 			// New redirect format, numerically indexed.
 			$counter = 0;
@@ -341,6 +347,10 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 						'request' => $request,
 						'destination' => $destination,
 					);
+					// Maybe add wildcard setting for this redirect.
+					if ( 'true' === $wildcard && false !== strpos( $request, '*' ) ) {
+						$v2_redirects[ $counter ]['wildcard'] === 'true';
+					}
 					$counter++;
 				}
 			}

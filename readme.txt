@@ -24,6 +24,7 @@ Simple 301 Redirects provides an easy method of redirecting requests to another 
 
 = 1.08 =
 * Interface rewrite - No longer limited to 499 redirects.
+* Dropped PHP 4 support, which was dropped from WordPress Core with version 3.2 back in 2011.
 
 = 1.07 =
 * Security update - Better handling of posted data.
