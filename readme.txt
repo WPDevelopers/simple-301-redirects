@@ -1,9 +1,12 @@
 === Simple 301 Redirects ===
 Contributors: scottnelle
+Donate link: https://www.paypal.me/scottnelle
 Tags: 301, redirect, url, seo
-Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 1.06
+Requires at least: 3.2
+Tested up to: 4.6.0
+Stable tag: 1.08a
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Simple 301 Redirects provides an easy method of redirecting requests to another page on your site or elsewhere on the web.
 
@@ -18,13 +21,15 @@ Simple 301 Redirects provides an easy method of redirecting requests to another 
 1. Add redirects on the Settings > 301 Redirects page.
 
 == Changelog ==
+
+= 1.08 =
+* Interface rewrite - No longer limited to 499 redirects.
+
 = 1.07 =
-* Interface updates
-* Updated data storage format
-* Bug fix: No longer limited to ~500 redirects on servers with default PHP configurations
+* Security update - Better handling of posted data.
 
 = 1.06 =
-* Security Updates - Special thanks to Ryan Hellyer!
+* Security updates - Special thanks to Ryan Hellyer.
 
 = 1.05 =
 * Wildcard support

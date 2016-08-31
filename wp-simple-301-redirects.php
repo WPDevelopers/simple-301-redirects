@@ -3,13 +3,12 @@
 Plugin Name: Simple 301 Redirects
 Plugin URI: http://www.scottnelle.com/simple-301-redirects-plugin-for-wordpress/
 Description: Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
-Version: 1.07a
+Version: 1.08a
 Author: Scott Nellé
 Author URI: http://www.scottnelle.com/
-License: GPLv3
 */
 
-/*  Copyright 2009-2014  Scott Nellé  (email : contact@scottnelle.com)
+/*  Copyright 2009-2016  Scott Nellé  (email : contact@scottnelle.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,254 +25,244 @@ License: GPLv3
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-//@todo: finish javascript edit functionality
-//@todo: only load js on the appropriate page - http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Link_Scripts_Only_on_a_Plugin_Administration_Screen
-//@todo: notify the bulk upload author that you'll be updating the storage format. maybe even patch his plugin for him. https://wordpress.org/plugins/simple-301-redirects-addon-bulk-uploader/
-
-if (!class_exists("Simple301redirects")) {
-	
+if ( ! class_exists( 'Simple301redirects' ) ) {
 	class Simple301Redirects {
-
-		function initialize_admin() {
-			$this->maybe_upgrade_db(); // upgrade the storage format if needed
-			
-			// load necessary js
-			wp_register_script( 's301r-script', plugins_url( '/js/simple-301-redirects.js', __FILE__ ), array('jquery') );
-			add_action('admin_enqueue_scripts', array($this,'write_scripts'));
-
-			// if submitted, process the data
-			if (isset($_POST['301_redirects'])) { $this->save_redirects(); }
-		}
-
-		function write_scripts() {
-			wp_enqueue_script( 's301r-script' );
-			
-			// make ajax_url available to the script
-			wp_localize_script( 's301r-script', 's301r_ajax', array( 
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'delete_nonce' => wp_create_nonce( 'delete-redirect-nonce' ),
-				)
-			);
-		}
-		
 		/**
-		 * create_menu function
-		 * generate the link to the options page under settings
-		 * @access public
-		 * @return void
+		 * Database version, for determining which storage format we should be using.
+		 * @var int
+		 */
+		private $db_version = 2;
+
+		/**
+		 * Capability required to manage redirects.
+		 * @var string
+		 */
+		private $capability;
+
+		/**
+		 * Option for storing plugin settings settings.
+		 * @var string
+		 */
+		private $settings_option = 's301r_settings';
+
+		/**
+		 * Option to use for storing redirects.
+		 * @var string
+		 */
+		private $redirects_option = 's301r_redirects';
+
+		/**
+		 * Option to use for storing redirects.
+		 * @var string
+		 */
+		private $db_version_option = 's301r_db_version';
+
+		/**
+		 * Set up Simple 301 Redirects functionality.
+		 */
+		private function __construct() {
+			// Check db version. Compares a class property against an autoloaded option--minimal performance impact.
+			$this->maybe_upgrade_db();
+
+			// Set capability required to manage redirects and settings.
+			$this->capability = apply_filters( 's301r_capability', 'manage_options' );
+
+			// Add the redirect action, high priority.
+			add_action( 'init', array( $this, 'redirect' ), apply_filters( 's301r_priority', 1 ) );
+
+			// Create the menu item.
+			add_action( 'admin_menu', array( $this, 'create_menu' ) );
+
+			// If submitted, process the data.
+			if ( isset( $_POST['301_redirects'] ) ) {
+				add_action( 'admin_init', array( $this, 'save_redirects' ) );
+			}
+		}
+
+		/**
+		 * Create the link to the settings page.
 		 */
 		function create_menu() {
-		  add_options_page('301 Redirects', '301 Redirects', 'manage_options', '301options', array($this,'options_page'));
+			add_options_page( __( '301 Redirects', 's301r' ), __( '301 Redirects', 's301r' ), $this->capability, '301options', array( $this, 'options_page' ) );
 		}
-		
+
 		/**
-		 * options_page function
-		 * generate the options page in the wordpress admin
-		 * @access public
-		 * @return void
+		 * Render the content of the settings page.
+		 * @todo Rebuild this into a listing page and forms for making edits.
+		 * @todo Enhance with ajax to keep the workflow on one page.
 		 */
 		function options_page() {
 		?>
-		<div class="wrap simple_301_redirects">
-		
-		<?php
-			if (isset($_POST['301_redirects'])) {
-				echo '<div id="message" class="updated"><p>Settings saved</p></div>';
-			}
-		?>
-		
-			<h2>Simple 301 Redirects</h2>
+		<div class="wrap s301r">
 
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="37PPAVKMDMHQW">
-				<p>
-					Love this plugin? Feeling generous?
-					<input style="vertical-align: middle;" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				</p>
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form>
-			
-			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options">
-			
+			<?php
+				if (isset($_POST['301_redirects'])) {
+					?>
+					<div id="message" class="updated"><p><?php esc_html_e( 'Settings saved.', 's301r' ); ?></p></div>
+					<?php
+				}
+			?>
+
+			<h2><?php esc_html_e( 'Simple 301 Redirects', 's301r' ); ?></h2>
+
+			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options&savedata=true">
+
 			<?php wp_nonce_field( 'save_redirects', '_s301r_nonce' ); ?>
 
 			<table class="widefat">
 				<thead>
 					<tr>
-						<th colspan="2">Request <small>example:&nbsp;/about.htm</small></th>
-						<th>Destination <small>example:&nbsp;<?php echo get_option('home'); ?>/about/</small></th>
-						<th class="s301r-delete-head">Delete</th>
+						<th colspan="2"><?php esc_html_e( 'Request', 's301r' ); ?></th>
+						<th colspan="1"><?php esc_html_e( 'Destination', 's301r' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php echo $this->expand_redirects(); ?>
 					<tr>
-						<td style="width:35%;"><input type="text" name="301_redirects[request]" value="" style="width:99%;" /></td>
-						<td style="width:2%;">&raquo;</td>
-						<td><input type="text" name="301_redirects[destination]" value="" style="width:99%;" /></td>
-						<td style="width:4%;">&nbsp;</td>
+						<td style="width:35%;"><input type="text" name="301_redirects[request][]" value="" style="width:99%;" /></td>
+						<td>&raquo;</td>
+						<td style="width:60%;"><input type="text" name="301_redirects[destination][]" value="" style="width:99%;" /></td>
 					</tr>
 				</tbody>
 			</table>
-			
-			<?php
-			$settings = get_option( 's301r_settings' );
-			$wildcard_checked = ($settings['wildcard'] === 'true') ? ' checked="checked"' : ''; ?>
-			<p><input type="checkbox" name="301_redirects[wildcard]" id="wps301-wildcard"<?php echo $wildcard_checked; ?> /><label for="wps301-wildcard"> Use Wildcards?</label></p>
-			
-			<p class="submit"><input type="submit" name="submit_s301r" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
-			</form>
 
-			<div class="documentation">
-				<h2>Documentation</h2>
-				<h3>Basic Redirects</h3>
-				<p>Basic redirects work similar to the format that Apache uses: the request should be relative to your WordPress root. The destination can be either a full URL to any page on the web, or relative to your WordPress root.</p>
-				<h4>Example</h4>
-				<ul>
-					<li><strong>Request:</strong> /old-page/</li>
-					<li><strong>Destination:</strong> /new-page/</li>
-				</ul>
-				
-				<h3>Wildcard Redirects</h3>
-				<p>Wildcard redirects can match more than one URL. They use an asterisk (*) to represent any characters. This is a powerful way to redirect an entire directory of pages with one line.</p>
-				<h4>Example</h4>
-				<ul>
-					<li><strong>Request:</strong> /old-folder/*</li>
-					<li><strong>Destination:</strong> /redirect-everything-here/</li>
-				</ul>
-		
-				<p>You can also use the asterisk in the destination to replace whatever it matched in the request if you like. Something like this:</p>
-				<h4>Example</h4>
-				<ul>
-					<li><strong>Request:</strong> /old-folder/*</li>
-					<li><strong>Destination:</strong> /some/other/folder/*</li>
-				</ul>
-				<p>Or:</p>
-				<ul>
-					<li><strong>Request:</strong> /old-folder/*/content/</li>
-					<li><strong>Destination:</strong> /some/other/folder/*</li>
-				</ul>
-			</div>
-		</div>
+			<?php $wildcard_checked = (get_option('301_redirects_wildcard') === 'true' ? ' checked="checked"' : ''); ?>
+			<p><input type="checkbox" name="301_redirects[wildcard]" id="wps301-wildcard"<?php echo $wildcard_checked; ?> /><label for="wps301-wildcard"> <?php esc_html_e( 'Use Wildcards?', 's301r' ); ?></label></p>
+
+			<p class="submit"><input type="submit" name="submit_301" class="button-primary" value="<?php esc_attr_e( 'Save Changes', 's301r' ) ?>" /></p>
+			</form>
 		<?php
 		} // end of function options_page
-		
+
 		/**
-		 * expand_redirects function
-		 * utility function to return the current list of redirects as form fields
-		 * @access public
+		 * Utility function to return the current list of redirects as form fields.
 		 * @return string <html>
 		 */
 		function expand_redirects() {
-			$redirects = get_option('s301r_redirects');
+			$redirects = $this->redirects_option;
 			$output = '';
-			$counter = 0;
-			if (!empty($redirects)) {
-				foreach ($redirects as $index => $redirect) {
-					$counter++;
-					$row_class = ($counter % 2 === 0) ? 'row_static' : 'row_static alternate';
+			if ( ! empty( $redirects ) ) {
+				foreach ($redirects as $request => $destination) {
 					$output .= '
-					
-					<tr id="s301r_row_'.$index.'" class="'.$row_class.'">
-						<td class="s301r_request">'.$redirect['request'].'</td>
+
+					<tr>
+						<td><input type="text" name="301_redirects[request][]" value="'.$request.'" style="width:99%" /></td>
 						<td>&raquo;</td>
-						<td class="s301r_destination">'.$redirect['destination'].'</td>
-						<td class="s301r-delete"><input type="checkbox" name="301_redirects[delete][]" value="'.$index.'"></td>
+						<td><input type="text" name="301_redirects[destination][]" value="'.$destination.'" style="width:99%;" /></td>
+						<td><span class="wps301-delete"></span></td>
 					</tr>
-					
+
 					';
 				}
 			} // end if
 			return $output;
 		}
-		
+
 		/**
-		 * save_redirects function
-		 * save the redirects from the options page to the database
-		 * @access public
-		 * @param mixed $data
-		 * @return void
+		 * Handle all posted data, checking nonces and calling the appropriate method to complete the request.
 		 */
-		function save_redirects() {
-			if ( !current_user_can('manage_options') )  { wp_die( 'You do not have sufficient permissions to access this page.' ); }
+		function handle_posted_data() {
+			if ( ! current_user_can( $this->capability ) ) {
+				wp_die( 'You do not have sufficient permissions to access this page.' );
+			}
+			check_admin_referer( 'save_redirects', '_s301r_save_nonce' );
+		}
+
+		/**
+		 * Create a new redirect.
+		 *
+		 */
+		function add_redirect( $request, $destination, $position = 'bottom' ) {
+
+		}
+
+		/**
+		 * Edit an existing redirect.
+		 *
+		 */
+		function edit_redirect( $request, $destination, $index ) {
+
+		}
+
+		/**
+		 * Delete an existing redirect.
+		 *
+		 */
+		function delete_redirect( $index ) {
+
+		}
+
+		/**
+		 * Save the redirects from the options page to the database.
+		 * @param mixed $data
+		 */
+		function save_redirects( $data ) {
+			if ( ! current_user_can( $this->capability ) ) {
+				wp_die( 'You do not have sufficient permissions to access this page.' );
+			}
 			check_admin_referer( 'save_redirects', '_s301r_nonce' );
-			
-			// get existing redirects
-			$redirects = get_option( 's301r_redirects' );
-			if ($redirects == '') { $redirects = array(); }
+
 			$data = $_POST['301_redirects'];
 
-			// delete checked redirect
-			if (isset($data['delete']) && is_array($data['delete'])) {
-				foreach ($data['delete'] as $index) {
-					unset($redirects[$index]);
-				}
+			$redirects = array();
+
+			for($i = 0; $i < sizeof($data['request']); ++$i) {
+				$request = trim( sanitize_text_field( $data['request'][$i] ) );
+				$destination = trim( sanitize_text_field( $data['destination'][$i] ) );
+
+				if ($request == '' && $destination == '') { continue; }
+				else { $redirects[$request] = $destination; }
 			}
 
-			// save new redirect
-			if ( trim( $data['request'] ) != '' && trim( $data['destination'] != '' ) ) {
-				$redirects[] = array( 
-					'request' => trim( $data['request'] ),
-					'destination' => trim( $data['destination'] ),
-				);
-			}
+			update_option( $this->redirects_option, $redirects);
 
-			update_option('s301r_redirects', $redirects);
-			
 			if (isset($data['wildcard'])) {
-				$settings['wildcard'] = 'true';
+				update_option('301_redirects_wildcard', 'true');
 			}
 			else {
-				$settings['wildcard'] = 'false';
+				delete_option('301_redirects_wildcard');
 			}
-
-			update_option('s301r_settings', $settings);
 		}
-		
+
 		/**
-		 * redirect function
-		 * Read the list of redirects and if the current page 
-		 * is found in the list, send the visitor on her way
-		 * @access public
-		 * @return void
+		 * Read the list of redirects and if the current page
+		 * is found in the list, send the visitor on her way.
 		 */
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = rtrim($userrequest,'/');
-			
-			$this->maybe_upgrade_db(); // upgrade the storage format if needed @todo: benchmark this, tune for speed
 
-			$redirects = get_option('s301r_redirects');
+			$redirects = get_option('301_redirects');
 			if (!empty($redirects)) {
-				$settings = get_option('s301r_settings');
+
+				$wildcard = get_option('301_redirects_wildcard');
 				$do_redirect = '';
-				
+
 				// compare user request to each 301 stored in the db
-				foreach ($redirects as $key => $redirect) {
-					// check if we should use regex search 
-					if ($settings['wildcard'] === 'true' && strpos($redirect['request'],'*') !== false) {
+				foreach ($redirects as $storedrequest => $destination) {
+					// check if we should use regex search
+					if ($wildcard === 'true' && strpos($storedrequest,'*') !== false) {
 						// wildcard redirect
-						
+
 						// don't allow people to accidentally lock themselves out of admin
 						if ( strpos($userrequest, '/wp-login') !== 0 && strpos($userrequest, '/wp-admin') !== 0 ) {
 							// Make sure it gets all the proper decoding and rtrim action
-							$redirect['request'] = str_replace('*','(.*)',$redirect['request']);
-							$pattern = '/^' . str_replace( '/', '\/', rtrim( $redirect['request'], '/' ) ) . '/';
-							$redirect['destination'] = str_replace('*','$1',$redirect['destination']);
-							$output = preg_replace($pattern, $redirect['destination'], $userrequest);
+							$storedrequest = str_replace('*','(.*)',$storedrequest);
+							$pattern = '/^' . str_replace( '/', '\/', rtrim( $storedrequest, '/' ) ) . '/';
+							$destination = str_replace('*','$1',$destination);
+							$output = preg_replace($pattern, $destination, $userrequest);
 							if ($output !== $userrequest) {
 								// pattern matched, perform redirect
 								$do_redirect = $output;
 							}
 						}
 					}
-					elseif(urldecode($userrequest) == rtrim($redirect['request'],'/')) {
+					elseif(urldecode($userrequest) == rtrim($storedrequest,'/')) {
 						// simple comparison redirect
-						$do_redirect = $redirect['destination'];
+						$do_redirect = $destination;
 					}
-					
+
 					// redirect. the second condition here prevents redirect loops as a result of wildcards.
 					if ($do_redirect !== '' && trim($do_redirect,'/') !== trim($userrequest,'/')) {
 						// check if destination needs the domain prepended
@@ -289,40 +278,16 @@ if (!class_exists("Simple301redirects")) {
 			}
 		} // end funcion redirect
 
-		function ajax_delete() {
-			if ( ! wp_verify_nonce( $_POST['delete_nonce'], 'delete-redirect-nonce' ) || !current_user_can( 'manage_options' )) {
-				echo 'failure'; exit;
-			}
-
-			$row = $_POST['row_id'];
-
-			// data check
-			if( preg_match('/^s301r_row_[0-9]+$/', $row) === 0 ) { echo 'failure'; exit; } // someone is messing with the dom
-
-			$index = intval( str_replace('s301r_row_', '', $row) );
-			$redirects = get_option( 's301r_redirects' );
-			
-			if (is_array( $redirects ) && isset( $redirects[$index] )) { // delete the redirect
-				unset($redirects[$index]);
-				update_option( 's301r_redirects', $redirects );
-				echo 'success';
-				exit;
-			}
-			else { echo 'failure'; exit; } // something went wrong
-		}
-		
 		/**
-		 * getAddress function
-		 * utility function to get the full address of the current request
+		 * Utility function to get the full address of the current request
 		 * credit: http://www.phpro.org/examples/Get-Full-URL.html
-		 * @access public
-		 * @return void
+		 * @todo Test to see if this is causing problems with query strings.
 		 */
 		function get_address() {
 			// return the full address
 			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		} // end function get_address
-		
+
 		function get_protocol() {
 			// Set the base protocol to http
 			$protocol = 'http';
@@ -330,84 +295,64 @@ if (!class_exists("Simple301redirects")) {
 			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
     			$protocol .= "s";
 			}
-			
+
 			return $protocol;
 		} // end function get_protocol
 
+		/**
+		 * Maybe updgrade the database.
+		 */
 		function maybe_upgrade_db() {
-			$latest_db_version = 2;
-			$db_version = ( get_option( 's301r_db_version' ) ) ? intval( get_option( 's301r_db_version' ) ) : 1;
-			if ( $latest_db_version === $db_version ) return; // return early, don't slow down the admin
-			
-			while ($db_version < $latest_db_version) { // upgrade through each version of the database, in case users jump multiple versions
-				if ( $db_version === 1 ) $this->upgrade_db_v2();
+			$current_db_version = ( get_option( 's301r_db_version' ) ) ? intval( get_option( 's301r_db_version' ) ) : 1;
+			if ( $this->db_version === $current_db_version ) {
+				// Up-to-date.
+				return;
+			}
+
+			// Upgrade through each version of the database, in case users jump multiple versions.
+			while ($current_db_version < $latest_db_version) {
+				if ( $current_db_version === 1 ) {
+					$this->upgrade_db_v2();
+				}
 				// elseif ( $db_version === 2 ) $this->upgrade_db_v3(); // a future version would look like this
-
-				$db_version++;
+				$current_db_version++;
 			} // end while
-		} // end function maybe_upgrade_db
+		}
 
+		/**
+		 * Upgrade to the db v2 storage format.
+		 * Specifically not deleting the old options to allow for easy roll-back. I'm a coward.
+		 */
 		function upgrade_db_v2() {
-			// new settings format
-			$wildcard = ( get_option('301_redirects_wildcard') === 'true' ) ? 'true' : 'false';
+			// New settings format
+			$wildcard = ( get_option( '301_redirects_wildcard' ) === 'true' ) ? 'true' : 'false';
 			$v2_settings = array(
 				'wildcard' => $wildcard,
 			);
-			update_option( 's301r_settings', $v2_settings );
-			delete_option( '301_redirects_wildcard' );
+			update_option( $this->settings_option, $v2_settings );
 
-			// new redirect format
+			// New redirect format, numerically indexed.
 			$counter = 0;
-			$v1_redirects = get_option('301_redirects');
+			$v1_redirects = get_option( '301_redirects' );
 			$v2_redirects  = array();
-
-			if (!empty($v1_redirects)) {
-				update_option( 's301r_archive_data', $v1_redirects ); // save a backup in case something goes wrong during upgrade
-				
+			if ( ! empty( $v1_redirects ) ) {
 				foreach ($v1_redirects as $request => $destination) {
-					$v2_redirects[$counter] = array(
+					$v2_redirects[ $counter ] = array(
 						'request' => $request,
 						'destination' => $destination,
 					);
 					$counter++;
 				}
 			}
-			update_option( 's301r_redirects', $v2_redirects );
-			delete_option( '301_redirects' );
+			update_option( $this->redirects_option, $v2_redirects );
 
-			// new db version
-			update_option( 's301r_db_version', 2 );
-		} // end function upgrade_db_v2
-		
+			// New db version.
+			update_option( $this->db_version_option, 2 );
+		}
+
 	} // end class Simple301Redirects
-	
+
 } // end check for existance of class
 
-// instantiate
-$redirect_plugin = new Simple301Redirects();
-
-if (isset($redirect_plugin)) {
-	add_action('init', array($redirect_plugin,'redirect'), 1); // add the redirect action, high priority
-
-	// set up admin
-	add_action('admin_init', array($redirect_plugin,'initialize_admin'));
-	add_action('admin_menu', array($redirect_plugin,'create_menu'));
-
-	// ajax
-	add_action( 'wp_ajax_s301r_delete_redirect', array($redirect_plugin,'ajax_delete'));
-}
-
-// this is here for php4 compatibility
-if(!function_exists('str_ireplace')){
-  function str_ireplace($search,$replace,$subject){
-    $token = chr(1);
-    $haystack = strtolower($subject);
-    $needle = strtolower($search);
-    while (($pos=strpos($haystack,$needle))!==FALSE){
-      $subject = substr_replace($subject,$token,$pos,strlen($search));
-      $haystack = substr_replace($haystack,$token,$pos,strlen($search));
-    }
-    $subject = str_replace($token,$replace,$subject);
-    return $subject;
-  }
-}
+// Instantiate
+$s301r_plugin = new Simple301Redirects();
