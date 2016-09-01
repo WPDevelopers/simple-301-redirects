@@ -40,12 +40,6 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		private $capability;
 
 		/**
-		 * Option for storing plugin settings settings.
-		 * @var string
-		 */
-		private $settings_option = 's301r_settings';
-
-		/**
 		 * Option to use for storing redirects.
 		 * @var string
 		 */
@@ -57,12 +51,16 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		 */
 		private $db_version_option = 's301r_db_version';
 
+		private $settings_url;
+
 		/**
 		 * Set up Simple 301 Redirects functionality.
 		 */
 		public function __construct() {
 			// Check db version. Compares a class property against an autoloaded option--minimal performance impact.
 			$this->maybe_upgrade_db();
+
+			$this->settings_url = admin_url( 'options-general.php?page=301options' );
 
 			// Set capability required to manage redirects and settings.
 			$this->capability = apply_filters( 's301r_capability', 'manage_options' );
@@ -72,11 +70,6 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 
 			// Create the menu item.
 			add_action( 'admin_menu', array( $this, 'create_menu' ) );
-
-			// If submitted, process the data.
-			if ( isset( $_POST['301_redirects'] ) ) {
-				add_action( 'admin_init', array( $this, 'save_redirects' ) );
-			}
 		}
 
 		/**
@@ -88,50 +81,60 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 
 		/**
 		 * Render the content of the settings page.
-		 * @todo Add the "Add Redirect" form to the top of the page with an option to add to the beginning or end of the list.
 		 */
 		function options_page() {
-		?>
-		<div class="wrap s301r">
-
-			<?php
-				if (isset($_POST['301_redirects'])) {
-					?>
-					<div id="message" class="updated"><p><?php esc_html_e( 'Settings saved.', 's301r' ); ?></p></div>
-					<?php
-				}
 			?>
+			<div class="wrap s301r">
+				<?php
+				if ( ! empty( $_POST ) ) {
+					$result = $this->handle_posted_data();
+					if ( ! empty( $result['status'] ) && ! empty( $result['message'] ) ) {
+						$this->admin_notice( $result['status'], $result['message'] );
+					}
+				}
+				?>
+				<h2><?php esc_html_e( 'Simple 301 Redirects', 's301r' ); ?></h2>
 
-			<h2><?php esc_html_e( 'Simple 301 Redirects', 's301r' ); ?></h2>
+				<?php if ( isset( $_GET['s301r_action'] ) && 'delete' === sanitize_text_field( $_GET['s301r_action'] ) && isset( $_GET['index'] ) && isset( $_GET['hash'] ) ) : ?>
+					<form method="post" id="simple_301_redirects_form" action="<?php echo esc_url( $this->settings_url . '&s301r_action=delete' ); ?>">
+						<?php wp_nonce_field( 'delete_redirect', '_s301r_nonce' ); ?>
+						<input type="hidden" name="index" value="<?php echo esc_attr( sanitize_text_field( $_GET['index'] ) ); ?>" />
+						<input type="hidden" name="hash" value="<?php echo esc_attr( sanitize_text_field( $_GET['hash'] ) ); ?>" />
+						<div><input type="submit" name="delete_301" class="button-primary" value="<?php esc_attr_e( 'Delete Redirect', 's301r' ) ?>" /></div>
+					</form>
+				<?php elseif ( isset( $_GET['s301r_action'] ) && 'edit' === sanitize_text_field( $_GET['s301r_action'] ) ) : ?>
 
-			<form method="post" id="simple_301_redirects_form" action="options-general.php?page=301options&savedata=true">
-				<h3><?php esc_html_e( 'Add a New Redirect', 's301r' ); ?></h3>
-				<?php wp_nonce_field( 'save_redirects', '_s301r_nonce' ); ?>
-				<p>
-					<?php esc_html_e( 'Request', 'simple-301-redirects' ); ?> <input type="text" name="request" />
-					<?php esc_html_e( 'Destination', 'simple-301-redirects' ); ?> <input type="text" name="destination" />
-					<div class="redirect-options">
-						<label><input type="checkbox" name="wildcard" /> <?php esc_html_e( 'Wildcard redirect', 'simple-301-redirects' ); ?></label>&nbsp;
-						<label><input type="radio" name="position" value="top" /> <?php esc_html_e( 'Insert before existing redirects', 'simple-301-redirects' ); ?></label>&nbsp;
-						<label><input type="radio" name="position" value="bottom" checked /><?php esc_html_e( 'Insert after existing redirects', 'simple-301-redirects' ); ?></label>
-					</div>
-					<div><input type="submit" name="submit_301" class="button-primary" value="<?php esc_attr_e( 'Add Redirect', 's301r' ) ?>" /></div>
-				</p>
-			</form>
+				<?php else : ?>
+					<form method="post" id="simple_301_redirects_form" action="<?php echo esc_url( $this->settings_url . '&s301r_action=add' ); ?>">
+						<h3><?php esc_html_e( 'Add a New Redirect', 's301r' ); ?></h3>
+						<?php wp_nonce_field( 'add_redirect', '_s301r_nonce' ); ?>
+						<p>
+							<?php esc_html_e( 'Request', 'simple-301-redirects' ); ?> <input type="text" name="request" />
+							<?php esc_html_e( 'Destination', 'simple-301-redirects' ); ?> <input type="text" name="destination" />
+							<div class="redirect-options">
+								<label><input type="checkbox" name="wildcard" value="true" /> <?php esc_html_e( 'Wildcard redirect', 'simple-301-redirects' ); ?></label>&nbsp;
+								<label><input type="radio" name="position" value="top" /> <?php esc_html_e( 'Insert before existing redirects', 'simple-301-redirects' ); ?></label>&nbsp;
+								<label><input type="radio" name="position" value="bottom" checked /><?php esc_html_e( 'Insert after existing redirects', 'simple-301-redirects' ); ?></label>
+							</div>
+							<div><input type="submit" name="submit_301" class="button-primary" value="<?php esc_attr_e( 'Add Redirect', 's301r' ) ?>" /></div>
+						</p>
+					</form>
 
-			<table class="wp-list-table widefat striped">
-				<thead>
-					<tr>
-						<th style="width: 40%;"><?php esc_html_e( 'Request', 's301r' ); ?></th>
-						<th style="width: 50%;"><?php esc_html_e( 'Destination', 's301r' ); ?></th>
-						<th><?php esc_html_e( 'Wildcard', 's301r' ); ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php $this->list_redirects(); ?>
-				</tbody>
-			</table>
-		<?php
+					<table class="wp-list-table widefat striped">
+						<thead>
+							<tr>
+								<th style="width: 40%;"><?php esc_html_e( 'Request', 's301r' ); ?></th>
+								<th style="width: 50%;"><?php esc_html_e( 'Destination', 's301r' ); ?></th>
+								<th><?php esc_html_e( 'Wildcard', 's301r' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php $this->list_redirects(); ?>
+						</tbody>
+					</table>
+				<?php endif; ?>
+			</div>
+			<?php
 		}
 
 		/**
@@ -147,10 +150,10 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 						?>
 						<tr>
 							<td>
-								<?php echo esc_html( $data['request'] ); ?>
+								<a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>" aria-label="<?php esc_attr_e( 'Edit Redirect', 's301r' ); ?>"><?php echo esc_html( $data['request'] ); ?></a>
 								<div class="row-actions">
-									<span class="edit"><a href="#"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
-									<span class="trash"><a href="#"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
+									<span class="edit"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
+									<span class="trash"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=delete&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
 								</div>
 							</td>
 							<td>
@@ -158,7 +161,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 							</td>
 							<td>
 								<?php if ( ! empty( $data['wildcard'] ) && 'true' === $data['wildcard'] ) : ?>
-									&#10003;
+									&#10003;<!-- checkmark -->
 								<?php endif; ?>
 							</td>
 						</tr>
@@ -168,70 +171,181 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			}
 		}
 
+		function admin_notice( $type, $message ) {
+			?>
+			<div class="<?php echo esc_attr( 'notice is-dismissible notice-' . $type ); ?>"><p><?php echo esc_html( $message ); ?></p></div>
+			<?php
+		}
+
 		/**
-		 * Handle all posted data, checking nonces and calling the appropriate method to complete the request.
+		 * Handle all posted data.
+		 * Check nonces and call the appropriate method to complete the request.
 		 */
 		function handle_posted_data() {
 			if ( ! current_user_can( $this->capability ) ) {
-				wp_die( 'You do not have sufficient permissions to access this page.' );
+				wp_die( __( 'You do not have sufficient permissions to access this page.', 's301r' ) );
 			}
-			check_admin_referer( 'save_redirects', '_s301r_save_nonce' );
+
+			if ( empty( $_POST ) ) {
+				wp_die( __( 'Empty POST data', 's301r' ) );
+			}
+
+			// Save new redirect.
+			if ( isset( $_GET['s301r_action'] ) && 'add' === sanitize_text_field( $_GET['s301r_action'] ) ) {
+				check_admin_referer( 'add_redirect', '_s301r_nonce' );
+
+				// Get posted values.
+				if ( ! empty( $_POST['request'] ) ) {
+					$request = sanitize_text_field( $_POST['request'] );
+				}
+				if ( ! empty( $_POST['destination'] ) ) {
+					$destination = sanitize_text_field( $_POST['destination'] );
+				}
+				if ( ! empty( $_POST['wildcard'] ) && 'true' === sanitize_text_field( $_POST['wildcard'] ) ) {
+					$wildcard = true;
+				} else {
+					$wildcard = false;
+				}
+				if ( ! empty( $_POST['position'] ) && 'top' === sanitize_text_field( $_POST['position'] ) ) {
+					$position = 'top';
+				} else {
+					$position = 'bottom';
+				}
+
+				// Add the new redirect and get a response.
+				return $this->add_redirect( $request, $destination, $wildcard, $position );
+			}
+
+			// Edit existing redirect.
+			if ( isset( $_GET['s301r_action'] ) && 'edit' === sanitize_text_field( $_GET['s301r_action'] ) ) {
+
+			}
+
+			// Delete existing redirect.
+			if ( isset( $_GET['s301r_action'] ) && 'delete' === sanitize_text_field( $_GET['s301r_action'] ) ) {
+				check_admin_referer( 'delete_redirect', '_s301r_nonce' );
+
+				// Get posted values.
+				if ( isset( $_POST['index'] ) && isset( $_POST['hash'] ) ) {
+					$index = absint( $_POST['index'] );
+					$hash = sanitize_text_field( $_POST['hash'] );
+				}
+				return $this->delete_redirect( $index, $hash );
+			}
 		}
 
 		/**
 		 * Create a new redirect.
 		 *
+		 * @param string URL path to match in order to trigger a redirect.
+		 * @param string URL or URL path to redirect to upon a successful match.
+		 * @param bool Is this a wildcard redirect?
+		 * @param string Where should this redirect be positioned in the list? Values are 'bottom' or 'top'.
+		 * @return array Result array with status and message.
 		 */
-		function add_redirect( $request, $destination, $position = 'bottom' ) {
+		function add_redirect( $request, $destination, $wildcard = false, $position = 'bottom' ) {
+			// Ensure we have appropriate values.
+			if ( empty( $request ) || empty( $destination ) ) {
+				return array( 'status' => 'error', 'message' => __( 'Redirects require a request and a destination.', 's301r' ) );
+			} elseif ( ! in_array( $position, array( 'bottom', 'top' ) ) ) {
+				return array( 'status' => 'error', 'message' => __( 'Invalid setting for the postition option.', 's301r' ) );
+			}
 
+			// Process the values.
+			$data = array(
+				'request' => trim( $request ),
+				'destination' => trim( $destination ),
+			);
+			if ( true === $wildcard ) {
+				$data['wildcard'] = 'true';
+			}
+
+			$redirects = (array) get_option( $this->redirects_option );
+
+			if ( 'top' === $position ) {
+				array_unshift( $redirects, $data );
+			} else {
+				$redirects[] = $data;
+			}
+			update_option( $this->redirects_option, $redirects );
+
+			return array( 'status' => 'success', 'message' => __( 'Your new redirect has been saved.', 's301r' ) );
 		}
 
 		/**
 		 * Edit an existing redirect.
 		 *
+		 * @param int Index of a specific redirect.
+		 * @param string Hash representing a single redirect.
+		 * @param string URL path to match in order to trigger a redirect.
+		 * @param string URL or URL path to redirect to upon a successful match.
+		 * @return array Result array with status and message.
 		 */
-		function edit_redirect( $request, $destination, $index ) {
+		function edit_redirect( $index, $hash, $request, $destination, $wildcard = false ) {
 
 		}
 
 		/**
 		 * Delete an existing redirect.
 		 *
+		 * @param int Index of a specific redirect.
+		 * @param string Hash representing a single redirect.
+		 * @return array Result array with status and message.
 		 */
-		function delete_redirect( $index ) {
+		function delete_redirect( $index, $hash ) {
+			if ( ! $this->check_hash( $index, $hash ) ) {
+				return array( 'status' => 'error', 'message' => __( 'There was a mismatch between the values in the database and the redirect you tried to delete. For safety, no redirects have been deleted.', 's301r' ) );
+			}
 
+			$redirects = (array) get_option( $this->redirects_option );
+			if ( isset( $redirects[ $index ] ) ) {
+				unset( $redirects[ $index ] );
+				update_option( $this->redirects_option, $redirects );
+
+				return array( 'status' => 'success', 'message' => __( 'The redirect was deleted.', 's301r' ) );
+			} else {
+				return array( 'status' => 'error', 'message' => __( 'That redirect seems to be missing. It may have already been deleted. No changes have been made to the database.', 's301r' ) );
+			}
 		}
 
 		/**
-		 * Save the redirects from the options page to the database.
-		 * @param mixed $data
+		 * Generate a hash based on a redirect's request and destination.
+		 *
+		 * @param int Index of a specific redirect.
+		 * @return string Hash representing a single redirect or empty string.
 		 */
-		function save_redirects( $data ) {
-			if ( ! current_user_can( $this->capability ) ) {
-				wp_die( 'You do not have sufficient permissions to access this page.' );
+		function generate_hash( $index ) {
+			$redirect = $this->get_redirect_by_index( $index );
+			return $redirect ? md5( serialize( $redirect ) ) : '';
+		}
+
+		/**
+		 * Make check an index/hash pair to ensure that operations on an existing redirect are safe.
+		 *
+		 * @param int Index of a specific redirect.
+		 * @param string Hash representing a single redirect.
+		 * @return bool
+		 */
+		function check_hash( $index, $hash ) {
+			return ( $this->generate_hash( $index ) === $hash );
+		}
+
+		/**
+		 * Get a redirect from the list by its index.
+		 *
+		 * @param int Index of a specific redirect.
+		 * @return array|bool Request data or false.
+		 */
+		function get_redirect_by_index( $index ) {
+			$redirects = get_option( $this->redirects_option );
+			if (
+				is_array( $redirects )
+				&& isset( $redirects[ $index ] )
+				&& is_array( $redirects[ $index ] )
+			) {
+				return $redirects[ $index ];
 			}
-			check_admin_referer( 'save_redirects', '_s301r_nonce' );
-
-			$data = $_POST['301_redirects'];
-
-			$redirects = array();
-
-			for($i = 0; $i < sizeof($data['request']); ++$i) {
-				$request = trim( sanitize_text_field( $data['request'][$i] ) );
-				$destination = trim( sanitize_text_field( $data['destination'][$i] ) );
-
-				if ($request == '' && $destination == '') { continue; }
-				else { $redirects[$request] = $destination; }
-			}
-
-			update_option( $this->redirects_option, $redirects);
-
-			if (isset($data['wildcard'])) {
-				update_option('301_redirects_wildcard', 'true');
-			}
-			else {
-				delete_option('301_redirects_wildcard');
-			}
+			return false;
 		}
 
 		/**
