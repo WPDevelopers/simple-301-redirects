@@ -51,6 +51,10 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		 */
 		private $db_version_option = 's301r_db_version';
 
+		/**
+		 * The URL for the plugin's admin page.
+		 * @var string
+		 */
 		private $settings_url;
 
 		/**
@@ -139,8 +143,6 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 
 		/**
 		 * Utility function to return the current list of redirects as admin table rows.
-		 * @todo Support for non-hover interface.
-		 * @todo Add actual edit and delete URLs.
 		 */
 		function list_redirects() {
 			$redirects = get_option( $this->redirects_option );
@@ -351,6 +353,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		/**
 		 * Read the list of redirects and if the current page
 		 * is found in the list, send the visitor on her way.
+		 * @todo Update this to work with the new storage format.
 		 */
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
