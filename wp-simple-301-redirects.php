@@ -420,57 +420,105 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			return false;
 		}
 
+		function match($redirect, $url) {
+
+			$do_redirect = false;
+			$destination = $redirect['destination'];
+			$request = $redirect['request'];
+			// check if we should use regex search
+			$wildcard = isset( $redirect['wildcard'] ) ? $redirect['wildcard'] : false;
+
+			if ($wildcard === 'true' && strpos($request,'*') !== false) {
+				// wildcard redirect
+
+				// don't allow people to accidentally lock themselves out of admin
+				if ( strpos($url, '/wp-login') !== 0 && strpos($url, '/wp-admin') !== 0 ) {
+
+					// Turn a glob (well, *'s only), into a valid regular expression
+					$request = preg_quote($request, '/');
+
+					// preg_quote will turn * into \*
+					$request = str_replace('\*','(.*)',$request);
+					$pattern = '/^' . str_replace( '/', '\/', rtrim( $request, '/' ) ) . '/';
+
+					// destination uses * as a replacement token for the first * match
+					// TODO possily remove this, it's confusing, right?
+					$destination = str_replace('*','$1',$destination);
+
+					// preg_replace will return NULL if the pattern is an error
+					// so best to preg_match first and make sure this is valid
+					// also slightly cheaper on misses to do matches than replacements
+					if( preg_match($pattern, $url) ) {
+						$do_redirect = preg_replace($pattern, $destination, $url);
+					}
+				}
+			}
+			elseif( rtrim( urldecode( $url ), '/' ) == rtrim( $request, '/' ) ) {
+				// simple comparison redirect
+				$do_redirect = $destination;
+			}
+			return $do_redirect;
+		}
+
+		/**
+		 * call recursively to flatten chained 301s
+		 */
+		function resolve($redirects, $request, $safety) {
+			if( $safety > 20 ) {
+				// we're in too deep!
+				return $request;
+			}
+			foreach($redirects as $key => $redirect) {
+				//pass
+				//echo $request['url'] . "\n";
+				//echo $redirect['request'] . "\n";
+				$dest_url = $this->match( $redirect, $request['url'] );
+				if( false !== $dest_url ) {
+					$request['url'] = $dest_url;
+					$request['do_redirect'] = true;
+					// don't evaluate this one twice
+					unset($redirects[$key]);
+					// look up the new dest url against the list again
+					return $this->resolve(
+						$redirects,
+						$request,
+						$safety+1
+					);
+				}
+			}
+			// otherwise
+			return $request;
+		}
+
 		/**
 		 * Read the list of redirects and if the current page
 		 * is found in the list, send the visitor on her way.
-		 * @todo Update this to work with the new storage format.
 		 */
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = rtrim($userrequest,'/');
 
-			$redirects = get_option('301_redirects');
+			$redirects = get_option($this->redirects_option);
+
 			if (!empty($redirects)) {
 
-				$wildcard = get_option('301_redirects_wildcard');
-				$do_redirect = '';
+				$request = [ 'url' => $userrequest, 'do_redirect' => false ];
 
-				// compare user request to each 301 stored in the db
-				foreach ($redirects as $storedrequest => $destination) {
-					// check if we should use regex search
-					if ($wildcard === 'true' && strpos($storedrequest,'*') !== false) {
-						// wildcard redirect
+				$request = $this->resolve( $redirects, $request, 0 );
 
-						// don't allow people to accidentally lock themselves out of admin
-						if ( strpos($userrequest, '/wp-login') !== 0 && strpos($userrequest, '/wp-admin') !== 0 ) {
-							// Make sure it gets all the proper decoding and rtrim action
-							$storedrequest = str_replace('*','(.*)',$storedrequest);
-							$pattern = '/^' . str_replace( '/', '\/', rtrim( $storedrequest, '/' ) ) . '/';
-							$destination = str_replace('*','$1',$destination);
-							$output = preg_replace($pattern, $destination, $userrequest);
-							if ($output !== $userrequest) {
-								// pattern matched, perform redirect
-								$do_redirect = $output;
-							}
-						}
+				// redirect. the second condition here prevents redirect loops as a result of wildcards.
+				if(
+					$request['do_redirect'] == true
+					&& trim( $request['url'], '/') !== trim( $userrequest, '/' )
+				) {
+					// check if destination needs the domain prepended
+					if( strpos( $do_redirect, '/' ) === 0 ) {
+						$request['url'] = home_url() . $request['url'];
 					}
-					elseif(urldecode($userrequest) == rtrim($storedrequest,'/')) {
-						// simple comparison redirect
-						$do_redirect = $destination;
-					}
-
-					// redirect. the second condition here prevents redirect loops as a result of wildcards.
-					if ($do_redirect !== '' && trim($do_redirect,'/') !== trim($userrequest,'/')) {
-						// check if destination needs the domain prepended
-						if (strpos($do_redirect,'/') === 0){
-							$do_redirect = home_url().$do_redirect;
-						}
-						header ('HTTP/1.1 301 Moved Permanently');
-						header ('Location: ' . $do_redirect);
-						exit();
-					}
-					else { unset($redirects); }
+					header( 'HTTP/1.1 301 Moved Permanently' );
+					header( 'Location: ' . $request['url'] );
+					exit();
 				}
 			}
 		}
@@ -488,6 +536,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		function get_protocol() {
 			// Set the base protocol to http
 			$protocol = 'http';
+
 			// check for https
 			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
     			$protocol .= "s";
