@@ -6,6 +6,8 @@ Description: Create a list of URLs that you would like to 301 redirect to anothe
 Version: 1.08a
 Author: Scott Nellé
 Author URI: http://www.scottnelle.com/
+Author: Mark Kennedy
+Author URI: https://github.com/mrmonkington
 */
 
 /*  Copyright 2009-2016  Scott Nellé  (email : contact@scottnelle.com)
@@ -439,7 +441,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 
 					// preg_quote will turn * into \*
 					$request = str_replace('\*','(.*)',$request);
-					$pattern = '/^' . str_replace( '/', '\/', rtrim( $request, '/' ) ) . '/';
+					$pattern = '/^' . rtrim( $request, '/' ) . '/';
 
 					// destination uses * as a replacement token for the first * match
 					// TODO possily remove this, it's confusing, right?
