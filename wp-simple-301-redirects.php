@@ -469,9 +469,6 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 				return $request;
 			}
 			foreach($redirects as $key => $redirect) {
-				//pass
-				//echo $request['url'] . "\n";
-				//echo $redirect['request'] . "\n";
 				$dest_url = $this->match( $redirect, $request['url'] );
 				if( false !== $dest_url ) {
 					$request['url'] = $dest_url;
