@@ -10,6 +10,8 @@ Author: Mark Kennedy
 Author URI: https://github.com/mrmonkington
 */
 
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 /*  Copyright 2009-2016  Scott Nellé  (email : contact@scottnelle.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -72,7 +74,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			$this->capability = apply_filters( 's301r_capability', 'manage_options' );
 
 			// Add the redirect action, high priority.
-			add_action( 'init', array( $this, 'redirect' ), apply_filters( 's301r_priority', 1 ) );
+			add_action( 'wp', array( $this, 'redirect' ), apply_filters( 's301r_priority', 1 ) );
 
 			// Create the menu item.
 			add_action( 'admin_menu', array( $this, 'create_menu' ) );
@@ -499,8 +501,16 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			$userrequest = rtrim($userrequest,'/');
 
 			$redirects = get_option($this->redirects_option);
-
+ 
 			if (!empty($redirects)) {
+
+				$is_amp = false;
+				if( is_plugin_active('amp/amp.php') ) {
+					if( is_amp_endpoint() ) {
+						$is_amp = true;
+						$userrequest = preg_replace( '|/' . AMP_QUERY_VAR . '$|', '', $userrequest );
+					}
+				}
 
 				$request = [ 'url' => $userrequest, 'do_redirect' => false ];
 
@@ -515,6 +525,14 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 					if( strpos( $do_redirect, '/' ) === 0 ) {
 						$request['url'] = home_url() . $request['url'];
 					}
+
+					if( $is_amp ) {
+						$request['url'] = rtrim( $request['url'], '/' );
+						$request['url'] = $request['url'] . '/' . AMP_QUERY_VAR;
+					}
+
+					$request['url'] = $request['url'] . $this->get_query_str();
+
 					header( 'HTTP/1.1 301 Moved Permanently' );
 					header( 'Location: ' . $request['url'] );
 					exit();
@@ -529,7 +547,18 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		 */
 		function get_address() {
 			// return the full address
-			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = explode('?', $url);
+			return $url[0];
+		} // end function get_address
+		function get_query_str() {
+			// return the full address
+			$url = $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = explode('?', $url);
+			if( '' != $url[1] ) {
+				return '?' . $url[1];
+			}
+			return '';
 		} // end function get_address
 
 		function get_protocol() {
