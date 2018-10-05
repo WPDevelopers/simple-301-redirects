@@ -189,13 +189,14 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			if ( ! empty( $redirects ) && is_array( $redirects ) ) {
 				foreach ($redirects as $index => $data) {
 					if ( ! empty( $data['request'] ) && ! empty( $data['destination'] ) ) {
+						$hash = $this->generate_hash($index);
 						?>
 						<tr>
 							<td>
-								<a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>" aria-label="<?php esc_attr_e( 'Edit Redirect', 's301r' ); ?>"><?php echo esc_html( $data['request'] ); ?></a>
+								<a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $hash ); ?>" aria-label="<?php esc_attr_e( 'Edit Redirect', 's301r' ); ?>"><?php echo esc_html( $data['request'] ); ?></a>
 								<div class="row-actions">
-									<span class="edit"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
-									<span class="trash"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=delete&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
+									<span class="edit"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $hash ); ?>"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
+									<span class="trash"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=delete&index=' . $index .'&hash=' . $hash ); ?>"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
 								</div>
 							</td>
 							<td>
