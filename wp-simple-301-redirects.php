@@ -6,7 +6,11 @@ Description: Create a list of URLs that you would like to 301 redirect to anothe
 Version: 1.08a
 Author: Scott Nellé
 Author URI: http://www.scottnelle.com/
+Author: Mark Kennedy
+Author URI: https://github.com/mrmonkington
 */
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 /*  Copyright 2009-2016  Scott Nellé  (email : contact@scottnelle.com)
 
@@ -70,7 +74,7 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			$this->capability = apply_filters( 's301r_capability', 'manage_options' );
 
 			// Add the redirect action, high priority.
-			add_action( 'init', array( $this, 'redirect' ), apply_filters( 's301r_priority', 1 ) );
+			add_action( 'wp', array( $this, 'redirect' ), apply_filters( 's301r_priority', 1 ) );
 
 			// Create the menu item.
 			add_action( 'admin_menu', array( $this, 'create_menu' ) );
@@ -185,13 +189,14 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			if ( ! empty( $redirects ) && is_array( $redirects ) ) {
 				foreach ($redirects as $index => $data) {
 					if ( ! empty( $data['request'] ) && ! empty( $data['destination'] ) ) {
+						$hash = $this->generate_hash($index);
 						?>
 						<tr>
 							<td>
-								<a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>" aria-label="<?php esc_attr_e( 'Edit Redirect', 's301r' ); ?>"><?php echo esc_html( $data['request'] ); ?></a>
+								<a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $hash ); ?>" aria-label="<?php esc_attr_e( 'Edit Redirect', 's301r' ); ?>"><?php echo esc_html( $data['request'] ); ?></a>
 								<div class="row-actions">
-									<span class="edit"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
-									<span class="trash"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=delete&index=' . $index .'&hash=' . $this->generate_hash( $index ) ); ?>"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
+									<span class="edit"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=edit&index=' . $index .'&hash=' . $hash ); ?>"><?php esc_html_e( 'Edit', 's301r' ); ?></a> |</span>
+									<span class="trash"><a href="<?php echo esc_url( $this->settings_url . '&s301r_action=delete&index=' . $index .'&hash=' . $hash ); ?>"><?php esc_html_e( 'Delete', 's301r' ); ?></a></span>
 								</div>
 							</td>
 							<td>
@@ -420,57 +425,118 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 			return false;
 		}
 
+		function match($redirect, $url) {
+
+			$do_redirect = false;
+			$destination = $redirect['destination'];
+			$request = $redirect['request'];
+			// check if we should use regex search
+			$wildcard = isset( $redirect['wildcard'] ) ? $redirect['wildcard'] : false;
+
+			if ($wildcard === 'true' && strpos($request,'*') !== false) {
+				// wildcard redirect
+
+				// don't allow people to accidentally lock themselves out of admin
+				if ( strpos($url, '/wp-login') !== 0 && strpos($url, '/wp-admin') !== 0 ) {
+
+					// Turn a glob (well, *'s only), into a valid regular expression
+					$request = preg_quote($request, '/');
+
+					// preg_quote will turn * into \*
+					$request = str_replace('\*','(.*)',$request);
+					$pattern = '/^' . rtrim( $request, '/' ) . '/';
+
+					// destination uses * as a replacement token for the first * match
+					// TODO possily remove this, it's confusing, right?
+					$destination = str_replace('*','$1',$destination);
+
+					// preg_replace will return NULL if the pattern is an error
+					// so best to preg_match first and make sure this is valid
+					// also slightly cheaper on misses to do matches than replacements
+					if( preg_match($pattern, $url) ) {
+						$do_redirect = preg_replace($pattern, $destination, $url);
+					}
+				}
+			}
+			elseif( rtrim( urldecode( $url ), '/' ) == rtrim( $request, '/' ) ) {
+				// simple comparison redirect
+				$do_redirect = $destination;
+			}
+			return $do_redirect;
+		}
+
+		/**
+		 * call recursively to flatten chained 301s
+		 */
+		function resolve($redirects, $request, $safety) {
+			if( $safety > 20 ) {
+				// we're in too deep!
+				return $request;
+			}
+			foreach($redirects as $key => $redirect) {
+				$dest_url = $this->match( $redirect, $request['url'] );
+				if( false !== $dest_url ) {
+					$request['url'] = $dest_url;
+					$request['do_redirect'] = true;
+					// don't evaluate this one twice
+					unset($redirects[$key]);
+					// look up the new dest url against the list again
+					return $this->resolve(
+						$redirects,
+						$request,
+						$safety+1
+					);
+				}
+			}
+			// otherwise
+			return $request;
+		}
+
 		/**
 		 * Read the list of redirects and if the current page
 		 * is found in the list, send the visitor on her way.
-		 * @todo Update this to work with the new storage format.
 		 */
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = rtrim($userrequest,'/');
 
-			$redirects = get_option('301_redirects');
+			$redirects = get_option($this->redirects_option);
+ 
 			if (!empty($redirects)) {
 
-				$wildcard = get_option('301_redirects_wildcard');
-				$do_redirect = '';
-
-				// compare user request to each 301 stored in the db
-				foreach ($redirects as $storedrequest => $destination) {
-					// check if we should use regex search
-					if ($wildcard === 'true' && strpos($storedrequest,'*') !== false) {
-						// wildcard redirect
-
-						// don't allow people to accidentally lock themselves out of admin
-						if ( strpos($userrequest, '/wp-login') !== 0 && strpos($userrequest, '/wp-admin') !== 0 ) {
-							// Make sure it gets all the proper decoding and rtrim action
-							$storedrequest = str_replace('*','(.*)',$storedrequest);
-							$pattern = '/^' . str_replace( '/', '\/', rtrim( $storedrequest, '/' ) ) . '/';
-							$destination = str_replace('*','$1',$destination);
-							$output = preg_replace($pattern, $destination, $userrequest);
-							if ($output !== $userrequest) {
-								// pattern matched, perform redirect
-								$do_redirect = $output;
-							}
-						}
+				$is_amp = false;
+				if( is_plugin_active('amp/amp.php') ) {
+					if( is_amp_endpoint() ) {
+						$is_amp = true;
+						$userrequest = preg_replace( '|/' . AMP_QUERY_VAR . '$|', '', $userrequest );
 					}
-					elseif(urldecode($userrequest) == rtrim($storedrequest,'/')) {
-						// simple comparison redirect
-						$do_redirect = $destination;
+				}
+
+				$request = [ 'url' => $userrequest, 'do_redirect' => false ];
+
+				$request = $this->resolve( $redirects, $request, 0 );
+
+				// redirect. the second condition here prevents redirect loops as a result of wildcards.
+				if(
+					$request['do_redirect'] == true
+					&& trim( $request['url'], '/') !== trim( $userrequest, '/' )
+				) {
+					// check if destination needs the domain prepended
+					if( strpos( $do_redirect, '/' ) === 0 ) {
+						$request['url'] = home_url() . $request['url'];
 					}
 
-					// redirect. the second condition here prevents redirect loops as a result of wildcards.
-					if ($do_redirect !== '' && trim($do_redirect,'/') !== trim($userrequest,'/')) {
-						// check if destination needs the domain prepended
-						if (strpos($do_redirect,'/') === 0){
-							$do_redirect = home_url().$do_redirect;
-						}
-						header ('HTTP/1.1 301 Moved Permanently');
-						header ('Location: ' . $do_redirect);
-						exit();
+					if( $is_amp ) {
+						$request['url'] = rtrim( $request['url'], '/' );
+						$request['url'] = $request['url'] . '/' . AMP_QUERY_VAR;
 					}
-					else { unset($redirects); }
+
+					$request['url'] = $request['url'] . $this->get_query_str();
+
+					header( 'HTTP/1.1 301 Moved Permanently' );
+					header( 'Location: ' . $request['url'] );
+					exit();
 				}
 			}
 		}
@@ -482,12 +548,24 @@ if ( ! class_exists( 'Simple301redirects' ) ) {
 		 */
 		function get_address() {
 			// return the full address
-			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = explode('?', $url);
+			return $url[0];
+		} // end function get_address
+		function get_query_str() {
+			// return the full address
+			$url = $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+			$url = explode('?', $url);
+			if( '' != $url[1] ) {
+				return '?' . $url[1];
+			}
+			return '';
 		} // end function get_address
 
 		function get_protocol() {
 			// Set the base protocol to http
 			$protocol = 'http';
+
 			// check for https
 			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
     			$protocol .= "s";
