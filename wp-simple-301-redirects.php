@@ -240,7 +240,7 @@ if (!class_exists("Simple301redirects")) {
 		 */
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
-			$userrequest = str_ireplace(get_option('home'),'',$this->get_address());
+			$userrequest = $_SERVER['REQUEST_URI'];
 			$userrequest = rtrim($userrequest,'/');
 			
 			$this->maybe_upgrade_db(); // upgrade the storage format if needed @todo: benchmark this, tune for speed
@@ -310,29 +310,6 @@ if (!class_exists("Simple301redirects")) {
 			}
 			else { echo 'failure'; exit; } // something went wrong
 		}
-		
-		/**
-		 * getAddress function
-		 * utility function to get the full address of the current request
-		 * credit: http://www.phpro.org/examples/Get-Full-URL.html
-		 * @access public
-		 * @return void
-		 */
-		function get_address() {
-			// return the full address
-			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		} // end function get_address
-		
-		function get_protocol() {
-			// Set the base protocol to http
-			$protocol = 'http';
-			// check for https
-			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
-    			$protocol .= "s";
-			}
-			
-			return $protocol;
-		} // end function get_protocol
 
 		function maybe_upgrade_db() {
 			$latest_db_version = 2;
