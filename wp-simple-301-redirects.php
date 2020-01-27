@@ -212,7 +212,9 @@ if (!class_exists("Simple301redirects")) {
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = str_ireplace(get_option('home'),'',$this->get_address());
-			$userrequest = rtrim($userrequest,'/');
+			// parse request
+			$parsed_userrequest = parse_url($userrequest);
+			$userrequest = $parsed_userrequest["path"];
 
 			$redirects = get_option('301_redirects');
 			if (!empty($redirects)) {
@@ -225,7 +227,6 @@ if (!class_exists("Simple301redirects")) {
 					// check if we should use regex search
 					if ($wildcard === 'true' && strpos($storedrequest,'*') !== false) {
 						// wildcard redirect
-
 						// don't allow people to accidentally lock themselves out of admin
 						if ( strpos($userrequest, '/wp-login') !== 0 && strpos($userrequest, '/wp-admin') !== 0 ) {
 							// Make sure it gets all the proper decoding and rtrim action
@@ -236,12 +237,22 @@ if (!class_exists("Simple301redirects")) {
 							if ($output !== $userrequest) {
 								// pattern matched, perform redirect
 								$do_redirect = $output;
+
+								// add query if set
+								if (isset($parsed_userrequest["query"])) {
+									$do_redirect .= $parsed_userrequest["query"];
+								}
 							}
 						}
 					}
 					elseif(urldecode($userrequest) == rtrim($storedrequest,'/')) {
 						// simple comparison redirect
 						$do_redirect = $destination;
+
+						// add query if set
+						if (isset($parsed_userrequest["query"])) {
+							$do_redirect .= $parsed_userrequest["query"];
+						}
 					}
 
 					// redirect. the second condition here prevents redirect loops as a result of wildcards.
