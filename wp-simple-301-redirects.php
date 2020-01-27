@@ -3,17 +3,17 @@
 Plugin Name: Simple 301 Redirects
 Plugin URI: http://www.scottnelle.com/simple-301-redirects-plugin-for-wordpress/
 Description: Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
-Version: 1.07
+Version: 1.08
 Author: Scott Nellé
 Author URI: http://www.scottnelle.com/
 */
 
-/*  Copyright 2009-2013  Scott Nellé  (email : contact@scottnelle.com)
+/*  Copyright 2009-2020  Scott Nellé  (email : contact@scottnelle.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+		This program is free software; you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation; either version 2 of the License, or
+		(at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
