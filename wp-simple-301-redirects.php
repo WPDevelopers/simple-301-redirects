@@ -240,7 +240,7 @@ if (!class_exists("Simple301redirects")) {
 
 								// add query if set
 								if (isset($parsed_userrequest["query"])) {
-									$do_redirect .= $parsed_userrequest["query"];
+									$do_redirect .= '?' . $parsed_userrequest["query"];
 								}
 							}
 						}
@@ -251,7 +251,7 @@ if (!class_exists("Simple301redirects")) {
 
 						// add query if set
 						if (isset($parsed_userrequest["query"])) {
-							$do_redirect .= $parsed_userrequest["query"];
+							$do_redirect .= '?' . $parsed_userrequest["query"];
 						}
 					}
 
