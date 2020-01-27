@@ -15,14 +15,14 @@ Author URI: http://www.scottnelle.com/
 		the Free Software Foundation; either version 2 of the License, or
 		(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+		This program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+		You should have received a copy of the GNU General Public License
+		along with this program; if not, write to the Free Software
+		Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 if (!class_exists("Simple301redirects")) {
@@ -36,7 +36,7 @@ if (!class_exists("Simple301redirects")) {
 		 * @return void
 		 */
 		function create_menu() {
-		  add_options_page('301 Redirects', '301 Redirects', 'manage_options', '301options', array($this,'options_page'));
+			add_options_page('301 Redirects', '301 Redirects', 'manage_options', '301options', array($this,'options_page'));
 		}
 
 		/**
@@ -287,7 +287,7 @@ if (!class_exists("Simple301redirects")) {
 			$protocol = 'http';
 			// check for https
 			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
-    			$protocol .= "s";
+				$protocol .= "s";
 			}
 
 			return $protocol;
@@ -315,15 +315,15 @@ if (isset($redirect_plugin)) {
 
 // this is here for php4 compatibility
 if(!function_exists('str_ireplace')){
-  function str_ireplace($search,$replace,$subject){
-    $token = chr(1);
-    $haystack = strtolower($subject);
-    $needle = strtolower($search);
-    while (($pos=strpos($haystack,$needle))!==FALSE){
-      $subject = substr_replace($subject,$token,$pos,strlen($search));
-      $haystack = substr_replace($haystack,$token,$pos,strlen($search));
-    }
-    $subject = str_replace($token,$replace,$subject);
-    return $subject;
-  }
+	function str_ireplace($search,$replace,$subject){
+		$token = chr(1);
+		$haystack = strtolower($subject);
+		$needle = strtolower($search);
+		while (($pos=strpos($haystack,$needle))!==FALSE){
+			$subject = substr_replace($subject,$token,$pos,strlen($search));
+			$haystack = substr_replace($haystack,$token,$pos,strlen($search));
+		}
+		$subject = str_replace($token,$replace,$subject);
+		return $subject;
+	}
 }
