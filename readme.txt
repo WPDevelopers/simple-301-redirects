@@ -1,9 +1,11 @@
 === Simple 301 Redirects ===
-Contributors: scottnelle
+Contributors: wpdevteam, scottnelle
 Tags: 301, redirect, url, seo
 Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 1.06
+Tested up to: 5.6
+Stable tag: 1.07
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Simple 301 Redirects provides an easy method of redirecting requests to another page on your site or elsewhere on the web.
 
@@ -17,11 +19,10 @@ Simple 301 Redirects provides an easy method of redirecting requests to another 
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Add redirects on the Settings > 301 Redirects page.
 
+
 == Changelog ==
 = 1.07 =
-* Interface updates
-* Updated data storage format
-* Bug fix: No longer limited to ~500 redirects on servers with default PHP configurations
+* Security Update - Better handling of posted data.
 
 = 1.06 =
 * Security Updates - Special thanks to Ryan Hellyer!
