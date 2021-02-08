@@ -4,11 +4,11 @@ Plugin Name: Simple 301 Redirects
 Plugin URI: https://wordpress.org/plugins/simple-301-redirects/
 Description: Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
 Version: 1.07
-Author: WPDeveloper.net and Scott Nellé
-Author URI: http://wpdeveloper.net/
+Author: WPDeveloper
+Author URI: https://wpdeveloper.net/
 */
 
-/*  Copyright 2009-2021  Scott Nellé  (email : contact@scottnelle.com)
+/*  Copyright 2009-2021  WPDeveloper
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
