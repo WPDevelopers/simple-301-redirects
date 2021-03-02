@@ -1,0 +1,16 @@
+.babelrc
+.gitignore
+.distignore
+package-lock.json
+package.json
+webpack.config.js
+.git
+node_modules
+composer.json
+prepros.config
+*.xml
+*.map
+.prettierignore
+.prettierrc.json
+src
+assets/scss

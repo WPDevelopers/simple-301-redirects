@@ -1,0 +1,15 @@
+{
+	"name": "wpdevteam/simple-301-redirects",
+	"description": "Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.",
+	"authors": [
+		{
+			"name": "wpdevteam"
+		}
+	],
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Simple301Redirects\\": "./includes"
+		}
+	}
+}
