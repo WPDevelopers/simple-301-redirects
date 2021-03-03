@@ -19,12 +19,29 @@ export default function ManageLinks(props) {
 	const clickHandler = (type, data = {}) => {
 		if (type == 'new') {
 			setLinks({ ...links, ...data });
+			const [key] = Object.keys(data);
+			const [value] = Object.values(data);
+			API.post(namespace + 'settings', {
+				key: key,
+				value: value,
+			});
 		} else if (type == 'update') {
 			setLinks({ ...links });
+			const [key] = Object.keys(data);
+			const [value] = Object.values(data);
+			API.put(namespace + 'settings', {
+				key: key,
+				value: value,
+			});
 		} else if (type == 'delete') {
-			const [deleteItemKey] = Object.keys(data);
+			const [key] = Object.keys(data);
 			const tempLinks = { ...links };
-			delete tempLinks[deleteItemKey];
+			API.delete(namespace + 'settings', {
+				params: {
+					key: key,
+				},
+			});
+			delete tempLinks[key];
 			setLinks({ ...tempLinks });
 		} else {
 			setLinks(links);
@@ -33,7 +50,6 @@ export default function ManageLinks(props) {
 
 	return (
 		<React.Fragment>
-			{console.log(links)}
 			<div className="simple301redirects__managelinks">
 				<div className="simple301redirects__managelinks__info">
 					<div className="simple301redirects__managelinks__info__inner">

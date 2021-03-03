@@ -27,6 +27,11 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 		} else {
 			setShowError(true);
 		}
+
+		if (type == 'new') {
+			setLocalRequest('');
+			setDestination('');
+		}
 	};
 	return (
 		<React.Fragment>
