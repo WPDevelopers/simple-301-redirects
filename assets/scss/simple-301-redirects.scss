@@ -1,0 +1,196 @@
+.simple301redirects {
+    padding-right: 20px;
+    padding-top: 20px;
+    @import "utilities/variable";
+    @import "utilities/header";
+    @import "utilities/form";
+
+    .simple301redirects__managelinks{
+        background: $white;
+        padding: 40px;
+        border: 1px solid $light-darken;
+        box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+        border-radius: 5px;
+        .simple301redirects__managelinks__info,
+        .simple301redirects__managelinks__item{
+            display: flex;
+            &__inner{
+                width: calc(100% - 350px);
+                display: flex;
+                .simple301redirects__managelinks__info__request,
+                .simple301redirects__managelinks__item__request{
+                    width: calc(50% - 45px);
+                    margin-right: 90px;
+                }
+                .simple301redirects__managelinks__info__destination,
+                .simple301redirects__managelinks__item__destination{
+                    width: calc(50% - 45px);
+                }
+            }
+            .simple301redirects__managelinks__item__control{
+                width: 350px;
+            }
+        }
+        .simple301redirects__managelinks__info{
+            margin-bottom: 25px;
+            .simple301redirects__managelinks__info__inner,
+            .simple301redirects__managelinks__info__destination{
+                h4{
+                    font-size: 20px;
+                    font-weight: 500;
+                    color: $dark;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+                p{
+                    color: $secondary;
+                    font-size: 16px;
+                    font-weight: 400;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    line-height: 1.5;
+                }
+            }
+        }
+        .simple301redirects__managelinks__item{
+            margin-bottom: 25px;
+            .simple301redirects__managelinks__item__control{
+                display: flex;
+                align-items: center;
+                padding-left: 30px;
+                button{
+                    margin-right: 10px;
+                }
+                .simple301redirects__icon__button{
+                    background: none;
+                    border: none;
+                    outline: none;
+                    max-height: 30px;
+                    max-width: 30px;
+                }
+                .simple301redirects__button{
+                    min-height: 36px;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 5px 20px;
+                    border-radius: 50px;
+                    background: $light;
+                    border: 1px solid $light-darken;
+                    color: $secondary;
+                    font-size: 13px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    transition: all 0.3s ease-in-out;
+                    outline: none;
+                    &:hover{
+                        background: $danger;
+                        border-color: $danger;
+                        color: $white;
+                    }
+                }
+            }
+        }
+        .simple301redirects__wildcards{
+            display: flex;
+            align-items: center;
+            input[type="checkbox"]{
+                margin-top :0;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .simple301redirects__betterlinks{
+        background: $white;
+        padding: 30px;
+        border: 1px solid $light-darken;
+        box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+        border-radius: 0 5px 5px 0;
+        display: flex;
+        border-left: 3px solid $blue;
+        align-items: center;
+        margin-top: 20px;
+        .simple301redirects__betterlinks__icon{
+            margin-right: 20px;
+        }
+        .simple301redirects__betterlinks__content{
+            margin-right: 20px;
+            h3{
+                font-size: 20px;
+                font-weight: 500;
+                color: $dark;
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+            p{
+                color: $secondary;
+                font-size: 16px;
+                font-weight: 400;
+                margin-top: 0;
+                margin-bottom: 0;
+                line-height: 1.5;
+            }
+            a{
+                color: $blue;
+                text-decoration: none;
+            }
+        }
+        .simple301redirects__betterlinks__control{
+            button{
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px 25px;
+                min-height: 36px;
+                background :$blue;
+                color: $white;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                outline: none;
+                &:hover{
+                    background: darken($blue, 1%);
+                    box-shadow: 0 10px 10px rgba($blue-lighten, 0.2);
+                }
+            }
+        }
+    }
+    .simple301redirects__documentation{
+        background: $white;
+        padding: 20px;
+        border: 1px solid $light-darken;
+        box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+        border-radius: 5px;
+        margin-top: 20px;
+        .simple301redirects__documentation__panel-header{
+            display: flex;
+            align-items: center;
+            h4{
+                margin-top: 0;
+                margin-bottom :0;
+                margin-right: 20px;
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+                font-weight: 500;
+                color: $dark;
+                height: 26px;
+                .dashicons{
+                    font-size: 26px;
+                    color: $secondary;
+                    height: 26px;
+                    margin-right: 10px;
+                }
+            }
+            button{
+                margin-left: auto;
+                background: none;
+                border: none;
+                cursor: pointer;
+                outline: none;
+            }
+        }
+    }
+}

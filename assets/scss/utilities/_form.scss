@@ -1,0 +1,17 @@
+
+	textarea,
+	input[type="text"] {
+		height: 50px;
+		border-radius: 5px;
+		background: $light;
+		padding: 0 15px;
+		width: 100%;
+		border: 1px solid $light-darken;
+        font-size: 18px;
+		&:focus {
+            background: #fffaf8;
+			border-color: #faccba;
+			outline: none;
+			box-shadow: none;
+		}
+	}

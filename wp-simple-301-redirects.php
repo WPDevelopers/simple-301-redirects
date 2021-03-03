@@ -111,7 +111,7 @@ if (!class_exists("Simple301redirects")) {
 			$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = rtrim($userrequest,'/');
 			
-			$redirects = json_decode(get_option('301_redirects'));
+			$redirects = get_option('301_redirects');
 			if (!empty($redirects)) {
 				
 				$wildcard = get_option('301_redirects_wildcard');

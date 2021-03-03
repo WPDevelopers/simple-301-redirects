@@ -1,0 +1,24 @@
+.simple301redirects__topbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $white;
+    padding: 20px;
+    border: 1px solid $light-darken;
+    box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+    margin-bottom: 20px;
+    border-radius: 5px;
+    .simple301redirects__topbar__logo{
+        display: flex;
+        margin-right: 15px;
+        img{
+            height: 40px;
+        }
+    }
+    .simple301redirects__topbar__title{
+        font-size: 23px;
+        font-weight: 400;
+        color: $dark;
+        margin: 0;
+    }
+}

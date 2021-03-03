@@ -137,7 +137,7 @@ class Menu {
      * @return string <html>
      */
 	public	function expand_redirects() {
-        $redirects = json_decode(get_option('301_redirects'));
+        $redirects = get_option('301_redirects');
         $output = '';
         if (!empty($redirects)) {
             foreach ($redirects as $request => $destination) {
