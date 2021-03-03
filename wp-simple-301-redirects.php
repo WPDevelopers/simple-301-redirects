@@ -3,7 +3,7 @@
 Plugin Name: Simple 301 Redirects
 Plugin URI: https://wordpress.org/plugins/simple-301-redirects/
 Description: Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
-Version: 1.07
+Version: 1.1
 Author: WPDeveloper
 Author URI: https://wpdeveloper.net/
 */
@@ -64,7 +64,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function define_constants()
 		{
-			define('SIMPLE301REDIRECTS_VERSION', '1.07');
+			define('SIMPLE301REDIRECTS_VERSION', '1.1');
 			define('SIMPLE301REDIRECTS_SETTINGS_NAME', '301_redirects');
 			define('SIMPLE301REDIRECTS_PLUGIN_FILE', __FILE__);
 			define('SIMPLE301REDIRECTS_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -86,17 +86,18 @@ if (!class_exists("Simple301redirects")) {
 			if (is_admin()) {
 				new Simple301Redirects\Admin();
 			}
+			$this->load_installer();
 		}
 
 		public function load_textdomain()
 		{
 			load_plugin_textdomain('simple-301-redirects', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages/');
 		}
-		
-		
-		
-		
-		
+		public function load_installer()
+		{
+			$Installer = new Simple301Redirects\Installer();
+			$Installer->migrate();
+		}
 		/**
 		 * redirect function
 		 * Read the list of redirects and if the current page 
@@ -109,7 +110,7 @@ if (!class_exists("Simple301redirects")) {
 			$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = rtrim($userrequest,'/');
 			
-			$redirects = get_option('301_redirects');
+			$redirects = json_decode(get_option('301_redirects'));
 			if (!empty($redirects)) {
 				
 				$wildcard = get_option('301_redirects_wildcard');
