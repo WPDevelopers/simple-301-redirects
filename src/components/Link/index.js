@@ -10,11 +10,13 @@ export default function Link(props) {
 	return (
 		<React.Fragment>
 			<div className="simple301redirects__managelinks__item">
-				<div className="simple301redirects__managelinks__item__request">
-					<input type="text" name="request" />
-				</div>
-				<div className="simple301redirects__managelinks__item__destination">
-					<input type="text" name="destination" />
+				<div className="simple301redirects__managelinks__item__inner">
+					<div className="simple301redirects__managelinks__item__request">
+						<input type="text" name="request" />
+					</div>
+					<div className="simple301redirects__managelinks__item__destination">
+						<input type="text" name="destination" />
+					</div>
 				</div>
 				<div className="simple301redirects__managelinks__item__control">
 					<button>
