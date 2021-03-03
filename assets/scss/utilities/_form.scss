@@ -14,4 +14,7 @@
 			outline: none;
 			box-shadow: none;
 		}
+		&.error {
+			border-color: red;
+		}
 	}

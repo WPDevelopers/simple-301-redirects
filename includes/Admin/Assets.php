@@ -50,7 +50,7 @@ class Assets {
 			wp_localize_script('simple-301-redirects-admin-core', 'Simple301Redirects', [
 				'nonce' => wp_create_nonce('wp_rest'),
 				'rest_url' => rest_url(),
-				'namespace' => SIMPLE301REDIRECTS_PLUGIN_SLUG . '/v1/',
+				'namespace' =>  'simple301redirects/v1/',
 				'plugin_root_url' => SIMPLE301REDIRECTS_PLUGIN_ROOT_URI,
 				'plugin_root_path' => SIMPLE301REDIRECTS_ROOT_DIR_PATH,
 				'site_url' => site_url(),
