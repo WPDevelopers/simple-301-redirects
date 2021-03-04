@@ -6,6 +6,7 @@ class Admin {
     {
         $this->add_menu();
         $this->load_assets();
+        $this->init_ajax();
         add_filter('Simple301Redirects/Admin/skip_no_conflict', [$this, 'skip_no_conflict']);
     }
     public function add_menu()
@@ -15,6 +16,10 @@ class Admin {
     public function load_assets()
     {
         new Admin\Assets();
+    }
+    public function init_ajax()
+    {
+        new Admin\Ajax();
     }
     public function skip_no_conflict()
 	{
