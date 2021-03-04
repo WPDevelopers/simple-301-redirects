@@ -76,7 +76,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 									3/1 CLICK
 									<div className="s3r-tooltiptext-wrapper">
 										<div className="s3r-tooltiptext">
-											To see Analytics data, install <InstallPlugin label="Install BetterLinks" />
+											To see Analytics data, <InstallPlugin label="Install BetterLinks" />
 										</div>
 									</div>
 								</div>

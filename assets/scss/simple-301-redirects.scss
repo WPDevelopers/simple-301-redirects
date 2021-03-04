@@ -447,7 +447,7 @@
             visibility: hidden;
             padding-bottom: 10px;
             z-index: 1;
-            width: 130px;
+            width: 160px;
             position: absolute;
             bottom: 100%;
             left: 50%;
@@ -468,15 +468,16 @@
                     margin-right: 0;
                     margin-top: 5px;
                     min-height: 18px;
-                    font-size: 11px;
-                    padding: 1px 10px;
+                    font-size: 12px;
+                    padding: 2px 10px;
                     outline: none;
                     border: none;
                     background: $blue;
                     color: $white;
                     border-radius: 3px;
                     display: flex;
-                    text-transform: uppercase;
+                    text-transform: capitalize;
+                    cursor: pointer;
                 }
                 &:after {
                     content: "";
