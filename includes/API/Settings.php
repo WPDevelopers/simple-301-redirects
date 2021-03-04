@@ -20,25 +20,25 @@ class Settings {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_items' ),
 					'permission_callback' => array( $this, 'permissions_check' ),
-					'args'                => [],
+					'args'                => $this->get_args_schema(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'create_item' ),
 					'permission_callback' => array( $this, 'permissions_check' ),
-					'args'                => [],
+					'args'                => $this->get_args_schema(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'update_item' ),
 					'permission_callback' => array( $this, 'permissions_check' ),
-					'args'                => [],
+					'args'                => $this->get_args_schema(),
 				),
 				array(
 					'methods'             => \WP_REST_Server::DELETABLE,
 					'callback'            => array( $this, 'delete_item' ),
 					'permission_callback' => array( $this, 'permissions_check' ),
-					'args'                => [],
+					'args'                => $this->get_args_schema(),
 				)
 			)
 		);
@@ -94,6 +94,19 @@ class Settings {
 		);
 	}
 
+	public function get_args_schema() 
+	{
+		return [
+			'key' => [
+				'type' => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			],
+			'value' => [
+				'type' => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			],
+		];
+	}
     public function permissions_check($request)
 	{
 		return true;
