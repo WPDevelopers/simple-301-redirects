@@ -67,6 +67,13 @@
                     outline: none;
                     max-height: 30px;
                     max-width: 30px;
+                    padding-left: 0;
+                    display: flex;
+                    cursor: pointer;
+                    img{
+                        height: 20px;
+                        max-width: 100%;
+                    }
                 }
                 .simple301redirects__button{
                     min-height: 36px;
@@ -74,7 +81,7 @@
                     justify-content: center;
                     align-items: center;
                     padding: 5px 20px;
-                    border-radius: 50px;
+                    border-radius: 5px;
                     background: $light;
                     border: 1px solid $light-darken;
                     color: $secondary;
@@ -84,6 +91,27 @@
                     cursor: pointer;
                     transition: all 0.3s ease-in-out;
                     outline: none;
+                    &.primary__button{
+                        background: $blue;
+                        border: 1px solid $blue;
+                        color: $white;
+                        &:hover{
+                            background: darken($blue, 1%);
+                            border-color: darken($blue, 1%);
+                            box-shadow: 0 10px 10px rgba($blue-lighten, 0.2);
+                        }
+                    }
+                    &.success__button{
+                        background: #d1f3dd;
+                        border: 1px solid $success;
+                        color: $success;
+                        &:hover{
+                            background: darken($success, 1%);
+                            border-color: darken($success, 1%);
+                            color: $white;
+                            box-shadow: 0 10px 10px rgba($success, 0.2);
+                        }
+                    }
                     &:hover{
                         background: $danger;
                         border-color: $danger;
@@ -109,20 +137,46 @@
         box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
         border-radius: 0 5px 5px 0;
         display: flex;
+        flex-direction: column;
         border-left: 3px solid $blue;
-        align-items: center;
         margin-top: 20px;
         .simple301redirects__betterlinks__icon{
             margin-right: 20px;
         }
         .simple301redirects__betterlinks__content{
-            margin-right: 20px;
+            margin-bottom: 10px;
             h3{
                 font-size: 20px;
                 font-weight: 500;
                 color: $dark;
                 margin-top: 0;
                 margin-bottom: 10px;
+            }
+            h4{
+                font-size: 18px;
+                font-weight: 600;
+                color: $secondary-darken;
+                margin-top: 15px;
+            }
+            ul{
+                li{
+                    color: $secondary;
+                    font-size: 16px;
+                    font-weight: 400;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    line-height: 1.5;
+                    &:before{
+                        content: "";
+                        height: 7px;
+                        width: 7px;
+                        min-width: 7px;
+                        background: $secondary-lighten;
+                        border-radius: 10px;
+                        display: inline-flex;
+                        margin-right: 10px;
+                    }
+                }
             }
             p{
                 color: $secondary;
@@ -135,6 +189,23 @@
             a{
                 color: $blue;
                 text-decoration: none;
+            }
+            button{
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                padding: 5px 25px;
+                min-height: 36px;
+                background :$blue;
+                color: $white;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                outline: none;
+                &:hover{
+                    background: darken($blue, 1%);
+                    box-shadow: 0 10px 10px rgba($blue-lighten, 0.2);
+                }
             }
         }
         .simple301redirects__betterlinks__control{
@@ -154,6 +225,30 @@
                     background: darken($blue, 1%);
                     box-shadow: 0 10px 10px rgba($blue-lighten, 0.2);
                 }
+            }
+            h3{
+                margin-top: 25px;
+                font-size: 20px;
+                font-weight: 500;
+                color: $dark;
+                margin-bottom: 0;
+            }
+            h4{
+                font-size: 18px;
+                font-weight: 600;
+                color: $secondary-darken;
+            }
+            p{
+                color: $secondary;
+                font-size: 16px;
+                font-weight: 400;
+                margin-top: 0;
+                margin-bottom: 0;
+                line-height: 1.5;
+            }
+            a{
+                color: $blue;
+                text-decoration: none;
             }
         }
     }

@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { plugin_root_url } from './../../utils/helper';
-
 const propTypes = {
 	request: PropTypes.string,
 	destination: PropTypes.string,
 	isNewLink: PropTypes.bool,
 	clickHandler: PropTypes.func,
 };
-
 const defaultProps = {
 	request: '',
 	destination: '',
 	isNewLink: false,
 };
-
 export default function Link({ request, destination, isNewLink, clickHandler }) {
 	const [localRequest, setLocalRequest] = useState(request);
 	const [localDestination, setDestination] = useState(destination);
@@ -27,7 +24,6 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 		} else {
 			setShowError(true);
 		}
-
 		if (type == 'new') {
 			setLocalRequest('');
 			setDestination('');
@@ -60,7 +56,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 				</div>
 				<div className="simple301redirects__managelinks__item__control">
 					{isNewLink ? (
-						<button className="simple301redirects__button" onClick={() => localClickHandler('new')}>
+						<button className="simple301redirects__button primary__button" onClick={() => localClickHandler('new')}>
 							Add New
 						</button>
 					) : (
@@ -68,7 +64,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							<button className="simple301redirects__icon__button">
 								<img src={plugin_root_url + 'assets/images/copy-icon.svg'} alt="copy" />
 							</button>
-							<button className="simple301redirects__button" onClick={() => localClickHandler('update')}>
+							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
 								UPDATE
 							</button>
 							<button className="simple301redirects__button" onClick={() => localClickHandler('delete')}>
@@ -81,6 +77,5 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 		</React.Fragment>
 	);
 }
-
 Link.propTypes = propTypes;
 Link.defaultProps = defaultProps;
