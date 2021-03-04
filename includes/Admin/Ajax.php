@@ -8,6 +8,7 @@ class Ajax {
         add_action('wp_ajax_simple301redirects/admin/get_wildcard', [$this, 'get_wildcard']);
         add_action('wp_ajax_simple301redirects/admin/install_plugin', [$this, 'install_plugin']);
         add_action('wp_ajax_simple301redirects/admin/activate_plugin', [$this, 'activate_plugin']);
+        add_action('wp_ajax_simple301redirects/admin/hide_notice', [$this, 'hide_notice']);
     }
     public function get_wildcard()
     {
@@ -46,5 +47,14 @@ class Ajax {
             wp_send_json_error(__('Plugin couldn\'t be activated.', 'simple-301-redirects'));
         }
         wp_send_json_success(__('Plugin is activated successfully!', 'simple-301-redirects'));
+        wp_die();
+    }
+    public function hide_notice()
+    {
+        check_ajax_referer('wp_rest', 'security');
+        $hide = isset($_POST['hide']) ? $_POST['hide'] : false;
+        update_option('simple301redirects_hide_btl_notice', $hide);
+        wp_send_json_success($hide);
+        wp_die();
     }
 }
