@@ -18,3 +18,33 @@ export const copyToClipboard = (copyText) => {
 	document.body.removeChild(tempInput);
 	return;
 };
+
+export const installPlugin = (slug) => {
+	let form_data = new FormData();
+	form_data.append('action', 'simple301redirects/admin/install_plugin');
+	form_data.append('security', nonce);
+	form_data.append('slug', slug);
+	return axios.post(ajaxurl, form_data).then(
+		(response) => {
+			return response.data;
+		},
+		(error) => {
+			console.log(error);
+		}
+	);
+};
+
+export const activePlugin = (slug) => {
+	let form_data = new FormData();
+	form_data.append('action', 'simple301redirects/admin/activate_plugin');
+	form_data.append('security', nonce);
+	form_data.append('basename', slug);
+	return axios.post(ajaxurl, form_data).then(
+		(response) => {
+			return response.data;
+		},
+		(error) => {
+			console.log(error);
+		}
+	);
+};
