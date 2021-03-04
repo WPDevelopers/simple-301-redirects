@@ -55,6 +55,7 @@ class Assets {
 				'plugin_root_path' => SIMPLE301REDIRECTS_ROOT_DIR_PATH,
 				'site_url' => site_url(),
 				'route_path' => parse_url(admin_url(), PHP_URL_PATH),
+				'is_betterlinks_activated' => in_array('betterlinks/betterlinks.php', apply_filters('active_plugins', get_option('active_plugins')))
 			]);
 		}
 	}

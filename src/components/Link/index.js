@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
-import { plugin_root_url } from './../../utils/helper';
+import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
 	destination: PropTypes.string,
@@ -69,15 +70,17 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
 								UPDATE
 							</button>
-							<div className="simple301redirects__button lock__button s3r-tooltip">
-								<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
-								3/1 CLICK
-								<div className="s3r-tooltiptext-wrapper">
-									<div className="s3r-tooltiptext">
-										To see Analytics data, install <button>BetterLinks</button>
+							{!is_betterlinks_activated && (
+								<div className="simple301redirects__button lock__button s3r-tooltip">
+									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
+									3/1 CLICK
+									<div className="s3r-tooltiptext-wrapper">
+										<div className="s3r-tooltiptext">
+											To see Analytics data, install <InstallPlugin label="Install BetterLinks" />
+										</div>
 									</div>
 								</div>
-							</div>
+							)}
 							<button className="simple301redirects__icon__button delete__button" onClick={() => localClickHandler('delete')}>
 								<img src={plugin_root_url + 'assets/images/icon-delete.svg'} alt="delete" />
 							</button>

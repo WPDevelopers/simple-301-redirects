@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import InstallPlugin from './../../components/InstallPlugin';
 const propTypes = {};
 const defaultProps = {};
 import { plugin_root_url } from './../../utils/helper';
@@ -24,7 +25,7 @@ export default function BetterLinks(props) {
 					<h4>You can migrate from 301 Redirects to BetterLinks within one click.</h4>
 				</div>
 				<div className="simple301redirects__betterlinks__control">
-					<button>Install BetterLinks</button>
+					<InstallPlugin label="Install BetterLinks" />
 					<h3>
 						Discount Offer: Grab BetterLinks PRO with 20% Off. <a href="#">Click Here</a> to grab the offer.
 					</h3>
