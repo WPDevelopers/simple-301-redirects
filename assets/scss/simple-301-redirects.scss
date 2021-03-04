@@ -69,6 +69,7 @@
                 padding-left: 30px;
                 max-width: 320px;
                 min-width: 320px;
+                .lock__button,
                 button{
                     margin-right: 10px;
                 }
@@ -107,6 +108,7 @@
                     cursor: pointer;
                     transition: all 0.3s ease-in-out;
                     outline: none;
+                    box-sizing: border-box;
                     &.primary__button{
                         background: $blue;
                         border: 1px solid $blue;
@@ -126,6 +128,16 @@
                             border-color: darken($success, 1%);
                             color: $white;
                             box-shadow: 0 10px 10px rgba($success, 0.2);
+                        }
+                    }
+                    &.lock__button{
+                        img{
+                            transform: translateX(-7px);
+                        }
+                        &:hover{
+                            background: $light;
+                            border: 1px solid $light-darken;
+                            color: $secondary;
                         }
                     }
                     &:hover{
@@ -366,32 +378,35 @@
     .s3r-tooltip {
         position: relative;
         display: inline-block;
-        .s3r-tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background: linear-gradient(202deg, #2961ff 0%, #003be2 100%);
-            font-size: 14px;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 150%;
-            left: 50%;
-            transform: translateX(-50%);
-            &:after {
-                content: "";
+        padding-bottom: 5px;
+        .s3r-tooltiptext-wrapper {
+            .s3r-tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background: linear-gradient(202deg, #2961ff 0%, #003be2 100%);
+                font-size: 14px;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 10px;
                 position: absolute;
-                top: 100%;
+                z-index: 1;
+                bottom: 100%;
                 left: 50%;
-                margin-left: -5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: #003be2 transparent transparent transparent;
+                transform: translateX(-50%);
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #003be2 transparent transparent transparent;
+                }
             }
         }
-        &:hover .s3r-tooltiptext {
+        &:hover .s3r-tooltiptext-wrapper .s3r-tooltiptext {
             visibility: visible;
         }
     }
