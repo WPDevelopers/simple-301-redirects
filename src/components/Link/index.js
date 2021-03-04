@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import CopyLink from './../CopyLink';
 import { plugin_root_url } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
@@ -64,9 +65,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 						</button>
 					) : (
 						<>
-							<button className="simple301redirects__icon__button">
-								<img src={plugin_root_url + 'assets/images/icon-copy.svg'} alt="copy" />
-							</button>
+							<CopyLink request={localRequest} />
 							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
 								UPDATE
 							</button>
