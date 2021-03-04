@@ -20,7 +20,16 @@
                 .simple301redirects__managelinks__info__request,
                 .simple301redirects__managelinks__item__request{
                     width: calc(50% - 45px);
+                }
+                .simple301redirects__managelinks__info__request{
                     margin-right: 90px;
+                }
+                .simple301redirects__managelinks__item__icon{
+                    width: 90px;
+                    height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
                 .simple301redirects__managelinks__info__destination,
                 .simple301redirects__managelinks__item__destination{
@@ -58,6 +67,8 @@
                 display: flex;
                 align-items: center;
                 padding-left: 30px;
+                max-width: 320px;
+                min-width: 320px;
                 button{
                     margin-right: 10px;
                 }
@@ -67,12 +78,17 @@
                     outline: none;
                     max-height: 30px;
                     max-width: 30px;
-                    padding-left: 0;
+                    padding: 0;
                     display: flex;
                     cursor: pointer;
                     img{
                         height: 20px;
                         max-width: 100%;
+                    }
+                    &.delete__button{
+                        img{
+                            height: 17px;
+                        }
                     }
                 }
                 .simple301redirects__button{
@@ -252,6 +268,8 @@
             }
         }
     }
+
+
     .simple301redirects__documentation{
         background: $white;
         padding: 20px;
@@ -278,6 +296,9 @@
                     height: 26px;
                     margin-right: 10px;
                 }
+                img{
+                    margin-right: 10px;
+                }
             }
             button{
                 margin-left: auto;
@@ -286,6 +307,92 @@
                 cursor: pointer;
                 outline: none;
             }
+        }
+        .simple301redirects__documentation__panel-body{
+            .documentation{
+                margin-top: 30px;
+                padding-left: 15px;
+                h4{
+                    font-size: 18px;
+                    font-weight: 500;
+                    color: $dark;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+                h5{
+                    font-size: 17px;
+                    font-weight: 600;
+                    color: $secondary-darken;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                }
+                ul{
+                    li{
+                        color: $secondary;
+                        font-size: 16px;
+                        font-weight: 400;
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        line-height: 1.5;
+                        &:before{
+                            content: "";
+                            height: 7px;
+                            width: 7px;
+                            min-width: 7px;
+                            background: $secondary-lighten;
+                            border-radius: 10px;
+                            display: inline-flex;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+                p{
+                    color: $secondary;
+                    font-size: 16px;
+                    font-weight: 400;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    line-height: 1.5;
+                }
+                a{
+                    color: $blue;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+
+    .s3r-tooltip {
+        position: relative;
+        display: inline-block;
+        .s3r-tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background: linear-gradient(202deg, #2961ff 0%, #003be2 100%);
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            &:after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #003be2 transparent transparent transparent;
+            }
+        }
+        &:hover .s3r-tooltiptext {
+            visibility: visible;
         }
     }
 }

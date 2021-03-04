@@ -22,13 +22,12 @@ export default function Documentation(props) {
 				<div className="simple301redirects__documentation__panel-body">
 					{isOpen && (
 						<div className="documentation">
-							<h2>Documentation</h2>
-							<h3>Simple Redirects</h3>
+							<h4>Simple Redirects</h4>
 							<p>
 								Simple redirects work similar to the format that Apache uses: the request should be relative to your WordPress root. The destination can be either a full URL to any
 								page on the web, or relative to your WordPress root.
 							</p>
-							<h4>Example</h4>
+							<h5>Example</h5>
 							<ul>
 								<li>
 									<strong>Request:</strong> /old-page/
@@ -38,9 +37,9 @@ export default function Documentation(props) {
 								</li>
 							</ul>
 
-							<h3>Wildcards</h3>
+							<h4>Wildcards</h4>
 							<p>To use wildcards, put an asterisk (*) after the folder name that you want to redirect.</p>
-							<h4>Example</h4>
+							<h5>Example</h5>
 							<ul>
 								<li>
 									<strong>Request:</strong> /old-folder/*
@@ -51,7 +50,7 @@ export default function Documentation(props) {
 							</ul>
 
 							<p>You can also use the asterisk in the destination to replace whatever it matched in the request if you like. Something like this:</p>
-							<h4>Example</h4>
+							<h5>Example</h5>
 							<ul>
 								<li>
 									<strong>Request:</strong> /old-folder/*
