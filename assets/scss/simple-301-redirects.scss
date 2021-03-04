@@ -17,12 +17,30 @@
             &__inner{
                 width: calc(100% - 350px);
                 display: flex;
+                @media screen and (max-width: 1199.88px) {
+                    width: calc(100% - 320px);
+                }
+                @media screen and (max-width: 991.88px) {
+                    width: calc(100% - 300px);
+                }
                 .simple301redirects__managelinks__info__request,
                 .simple301redirects__managelinks__item__request{
                     width: calc(50% - 45px);
+                    @media screen and (max-width: 1199.88px) {
+                        width: calc(50% - 30px);
+                    }
+                    @media screen and (max-width: 991.88px) {
+                        width: calc(50% - 10px);
+                    }
                 }
                 .simple301redirects__managelinks__info__request{
                     margin-right: 90px;
+                    @media screen and (max-width: 1199.88px) {
+                        margin-right: 60px;
+                    }
+                    @media screen and (max-width: 991.88px) {
+                        margin-right: 20px;
+                    }
                 }
                 .simple301redirects__managelinks__item__icon{
                     width: 90px;
@@ -30,14 +48,35 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    @media screen and (max-width: 1199.88px) {
+                        width: 60px;
+                    }
+                    @media screen and (max-width: 991.88px) {
+                        width: 20px;
+                        img{
+                            display: none;
+                        }
+                    }
                 }
                 .simple301redirects__managelinks__info__destination,
                 .simple301redirects__managelinks__item__destination{
                     width: calc(50% - 45px);
+                    @media screen and (max-width: 1199.88px) {
+                        width: calc(50% - 30px);
+                    }
+                    @media screen and (max-width: 991.88px) {
+                        width: calc(50% - 10px);
+                    }
                 }
             }
             .simple301redirects__managelinks__item__control{
                 width: 350px;
+                @media screen and (max-width: 1199.88px) {
+                    width: calc(100% - 320px);
+                }
+                @media screen and (max-width: 991.88px) {
+                    width: calc(100% - 300px);
+                }
             }
         }
         .simple301redirects__managelinks__info{
@@ -69,6 +108,16 @@
                 padding-left: 30px;
                 max-width: 320px;
                 min-width: 320px;
+                @media screen and (max-width: 1199.88px) {
+                    max-width: 300px;
+                    min-width: 300px;
+                    padding-left: 20px;
+                }
+                @media screen and (max-width: 991.88px) {
+                    max-width: 280px;
+                    min-width: 280px;
+                    padding-left: 20px;
+                }
                 .lock__button,
                 button{
                     margin-right: 10px;
@@ -168,6 +217,21 @@
         flex-direction: column;
         border-left: 3px solid $blue;
         margin-top: 20px;
+        position: relative;
+        .simple301redirects__betterlinks__close__button{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            outline: none;
+            background: none;
+            cursor: pointer;
+            img{
+                width: 13px;
+            }
+        }
         .simple301redirects__betterlinks__icon{
             margin-right: 20px;
         }

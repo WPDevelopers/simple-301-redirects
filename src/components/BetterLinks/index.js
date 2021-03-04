@@ -2,10 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 const propTypes = {};
 const defaultProps = {};
+import { plugin_root_url } from './../../utils/helper';
 export default function BetterLinks(props) {
 	return (
 		<React.Fragment>
 			<div className="simple301redirects__betterlinks">
+				<button className="simple301redirects__betterlinks__close__button">
+					<img width="20" src={plugin_root_url + 'assets/images/close.svg'} alt="logo" />
+				</button>
 				<div className="simple301redirects__betterlinks__content">
 					<h3>Betterlinks</h3>
 					<h4>Install BetterLinks to get the best out of 301 Redirects and get access to more advanced features. Check out the features below</h4>
