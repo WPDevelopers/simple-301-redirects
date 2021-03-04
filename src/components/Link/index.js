@@ -43,6 +43,9 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							required
 						/>
 					</div>
+					<div className="simple301redirects__managelinks__item__icon">
+						<img width="25" src={plugin_root_url + 'assets/images/icon-arrow.svg'} alt="doc" />
+					</div>
 					<div className="simple301redirects__managelinks__item__destination">
 						<input
 							className={showError && localDestination == '' ? 'error' : ''}
@@ -62,13 +65,13 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 					) : (
 						<>
 							<button className="simple301redirects__icon__button">
-								<img src={plugin_root_url + 'assets/images/copy-icon.svg'} alt="copy" />
+								<img src={plugin_root_url + 'assets/images/icon-copy.svg'} alt="copy" />
 							</button>
 							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
 								UPDATE
 							</button>
-							<button className="simple301redirects__button" onClick={() => localClickHandler('delete')}>
-								DELETE
+							<button className="simple301redirects__icon__button" onClick={() => localClickHandler('delete')}>
+								<img src={plugin_root_url + 'assets/images/icon-delete.svg'} alt="delete" />
 							</button>
 						</>
 					)}
