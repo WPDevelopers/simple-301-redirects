@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import { plugin_root_url } from './../../utils/helper';
 
@@ -22,50 +23,57 @@ export default function Documentation(props) {
 				<div className="simple301redirects__documentation__panel-body">
 					{isOpen && (
 						<div className="documentation">
-							<h4>Simple Redirects</h4>
+							<h4>{__('Simple Redirects', 'simple-301-redirects')}</h4>
 							<p>
-								Simple redirects work similar to the format that Apache uses: the request should be relative to your WordPress root. The destination can be either a full URL to any
-								page on the web, or relative to your WordPress root.
+								{__(
+									'Simple redirects work similar to the format that Apache uses: the request should be relative to your WordPress root. The destination can be either a full URL to any page on the web, or relative to your WordPress root.',
+									'simple-301-redirects'
+								)}
 							</p>
-							<h5>Example</h5>
+							<h5>{__('Example', 'simple-301-redirects')}</h5>
 							<ul>
 								<li>
-									<strong>Request:</strong> /old-page/
+									<strong>{__('Request:', 'simple-301-redirects')}</strong>
+									{__('/old-page/:', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>Destination:</strong> /new-page/
+									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/new-page/', 'simple-301-redirects')}
 								</li>
 							</ul>
 
-							<h4>Wildcards</h4>
-							<p>To use wildcards, put an asterisk (*) after the folder name that you want to redirect.</p>
-							<h5>Example</h5>
+							<h4>{__('Wildcards', 'simple-301-redirects')}</h4>
+							<p>{__('To use wildcards, put an asterisk (*) after the folder name that you want to redirect.', 'simple-301-redirects')}</p>
+							<h5>{__('Example', 'simple-301-redirects')}</h5>
 							<ul>
 								<li>
-									<strong>Request:</strong> /old-folder/*
+									<strong>{__('Request:', 'simple-301-redirects')}</strong>
+									{__('/old-folder/*', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>Destination:</strong> /redirect-everything-here/
+									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/redirect-everything-here/', 'simple-301-redirects')}
 								</li>
 							</ul>
 
-							<p>You can also use the asterisk in the destination to replace whatever it matched in the request if you like. Something like this:</p>
-							<h5>Example</h5>
+							<p>
+								{__('You can also use the asterisk in the destination to replace whatever it matched in the request if you like. Something like this:', 'simple-301-redirects')}
+							</p>
+							<h5>{__('Example', 'simple-301-redirects')}</h5>
 							<ul>
 								<li>
-									<strong>Request:</strong> /old-folder/*
+									<strong>{__('Request:', 'simple-301-redirects')}</strong>
+									{__('/old-folder/*', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>Destination:</strong> /some/other/folder/*
+									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/some/other/folder/*', 'simple-301-redirects')}
 								</li>
 							</ul>
 							<p>Or:</p>
 							<ul>
 								<li>
-									<strong>Request:</strong> /old-folder/*/content/
+									<strong>{__('/some/other/folder/*', 'simple-301-redirects')}</strong> {__('/old-folder/*/content/', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>Destination:</strong> /some/other/folder/*
+									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/some/other/folder/*', 'simple-301-redirects')}
 								</li>
 							</ul>
 						</div>

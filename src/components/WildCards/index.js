@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { __ } from '@wordpress/i18n';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { nonce, API } from './../../utils/helper';
@@ -43,7 +44,7 @@ export default function WildCards(props) {
 			{isFetch && (
 				<div className="simple301redirects__wildcards">
 					<input type="checkbox" name="wildcard" id="wildcard" defaultChecked={checked} onChange={() => onChangeHandler(!checked)} />
-					<label htmlFor="wildcard"> Use Wildcards?</label>
+					<label htmlFor="wildcard"> {__('Use Wildcards?', 'simple-301-redirects')}</label>
 				</div>
 			)}
 		</React.Fragment>
