@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { __ } from '@wordpress/i18n';
 import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
 import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
@@ -62,21 +63,21 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 				<div className="simple301redirects__managelinks__item__control">
 					{isNewLink ? (
 						<button className="simple301redirects__button primary__button" onClick={() => localClickHandler('new')}>
-							Add New
+							{__('Add New', 'simple-301-redirects')}
 						</button>
 					) : (
 						<>
 							<CopyLink request={localRequest} />
 							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
-								UPDATE
+								{__('UPDATE', 'simple-301-redirects')}
 							</button>
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
-									3/1 CLICK
+									{__('3/1 CLICK', 'simple-301-redirects')}
 									<div className="s3r-tooltiptext-wrapper">
 										<div className="s3r-tooltiptext">
-											To see Analytics data, <InstallPlugin label="Install BetterLinks" />
+											{__('To see Analytics data, install', 'simple-301-redirects')} <InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
 										</div>
 									</div>
 								</div>

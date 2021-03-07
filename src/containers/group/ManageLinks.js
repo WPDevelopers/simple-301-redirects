@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
-import { namespace, API } from './../../utils/helper';
+import { namespace, API, is_betterlinks_activated } from './../../utils/helper';
 import WildCards from './../../components/WildCards';
 import Link from './../../components/Link';
 
@@ -50,16 +51,16 @@ export default function ManageLinks(props) {
 
 	return (
 		<React.Fragment>
-			<div className="simple301redirects__managelinks">
+			<div className={`simple301redirects__managelinks ${is_betterlinks_activated ? 'simple301redirects__managelinks--activated-btl' : ''}`}>
 				<div className="simple301redirects__managelinks__info">
 					<div className="simple301redirects__managelinks__info__inner">
 						<div className="simple301redirects__managelinks__info__request">
-							<h4>Request</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+							<h4>{__('Request', 'simple-301-redirects')}</h4>
+							<p>{__('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'simple-301-redirects')} </p>
 						</div>
 						<div className="simple301redirects__managelinks__info__destination">
-							<h4>Destination</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+							<h4>{__('Destination', 'simple-301-redirects')}</h4>
+							<p>{__('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'simple-301-redirects')} </p>
 						</div>
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const { nonce, rest_url, namespace, plugin_root_url, plugin_root_path, site_url, route_path, is_betterlinks_activated } = window.Simple301Redirects;
+export const { nonce, rest_url, namespace, plugin_root_url, plugin_root_path, site_url, route_path, is_betterlinks_activated, hide_btl_notice } = window.Simple301Redirects;
 
 export const API = axios.create({
 	baseURL: rest_url,

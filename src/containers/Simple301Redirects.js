@@ -4,7 +4,6 @@ import TopBar from './../components/TopBar';
 import ManageLinks from './group/ManageLinks';
 import BetterLinks from './../components/BetterLinks';
 import Documentation from './../components/Documentation';
-import { is_betterlinks_activated } from './../utils/helper';
 const propTypes = {};
 
 const defaultProps = {};
@@ -14,7 +13,7 @@ export default function Simple301Redirects(props) {
 		<React.Fragment>
 			<TopBar />
 			<ManageLinks />
-			{!is_betterlinks_activated && <BetterLinks />}
+			<BetterLinks />
 			<Documentation />
 		</React.Fragment>
 	);
