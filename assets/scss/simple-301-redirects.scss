@@ -15,11 +15,8 @@
         .simple301redirects__managelinks__item{
             display: flex;
             &__inner{
-                width: calc(100% - 350px);
+                width: calc(100% - 320px);
                 display: flex;
-                @media screen and (max-width: 1199.88px) {
-                    width: calc(100% - 320px);
-                }
                 @media screen and (max-width: 991.88px) {
                     width: calc(100% - 300px);
                 }
@@ -69,15 +66,6 @@
                     }
                 }
             }
-            .simple301redirects__managelinks__item__control{
-                width: 350px;
-                @media screen and (max-width: 1199.88px) {
-                    width: calc(100% - 320px);
-                }
-                @media screen and (max-width: 991.88px) {
-                    width: calc(100% - 300px);
-                }
-            }
         }
         .simple301redirects__managelinks__info{
             margin-bottom: 25px;
@@ -106,13 +94,8 @@
                 display: flex;
                 align-items: center;
                 padding-left: 30px;
-                max-width: 320px;
-                min-width: 320px;
-                @media screen and (max-width: 1199.88px) {
-                    max-width: 300px;
-                    min-width: 300px;
-                    padding-left: 20px;
-                }
+                max-width: 290px;
+                min-width: 290px;
                 @media screen and (max-width: 991.88px) {
                     max-width: 280px;
                     min-width: 280px;
