@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
-import { namespace, API } from './../../utils/helper';
+import { namespace, API, is_betterlinks_activated } from './../../utils/helper';
 import WildCards from './../../components/WildCards';
 import Link from './../../components/Link';
 
@@ -51,7 +51,7 @@ export default function ManageLinks(props) {
 
 	return (
 		<React.Fragment>
-			<div className="simple301redirects__managelinks">
+			<div className={`simple301redirects__managelinks ${is_betterlinks_activated ? 'simple301redirects__managelinks--activated-btl' : ''}`}>
 				<div className="simple301redirects__managelinks__info">
 					<div className="simple301redirects__managelinks__info__inner">
 						<div className="simple301redirects__managelinks__info__request">
