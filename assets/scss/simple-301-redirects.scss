@@ -31,22 +31,22 @@
                     }
                 }
                 .simple301redirects__managelinks__info__request{
-                    margin-right: 90px;
+                    margin-right: 60px;
                     @media screen and (max-width: 1199.88px) {
-                        margin-right: 60px;
+                        margin-right: 40px;
                     }
                     @media screen and (max-width: 991.88px) {
                         margin-right: 20px;
                     }
                 }
                 .simple301redirects__managelinks__item__icon{
-                    width: 90px;
-                    height: 50px;
+                    width: 60px;
+                    height: 40px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     @media screen and (max-width: 1199.88px) {
-                        width: 60px;
+                        width: 40px;
                     }
                     @media screen and (max-width: 991.88px) {
                         width: 20px;
@@ -57,9 +57,9 @@
                 }
                 .simple301redirects__managelinks__info__destination,
                 .simple301redirects__managelinks__item__destination{
-                    width: calc(50% - 45px);
+                    width: calc(50% - 30px);
                     @media screen and (max-width: 1199.88px) {
-                        width: calc(50% - 30px);
+                        width: calc(50% - 20px);
                     }
                     @media screen and (max-width: 991.88px) {
                         width: calc(50% - 10px);
@@ -89,7 +89,7 @@
             }
         }
         .simple301redirects__managelinks__item{
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             .simple301redirects__managelinks__item__control{
                 display: flex;
                 align-items: center;
@@ -350,7 +350,6 @@
         }
     }
 
-
     .simple301redirects__documentation{
         background: $white;
         padding: 20px;
@@ -444,20 +443,25 @@
     }
 
     .simple301redirects__panel__divider{
-        display: grid;
-        grid-template-columns: repeat(2,1fr);
-        grid-gap: 20px;
-        margin-top: 20px;
-        @media screen and (max-width: 1199.88px) {
-            grid-template-columns: repeat(1,1fr);
+        border-radius: 5px;
+        background: $white;
+        padding: 20px;
+        border: 1px solid $light-darken;
+        box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+        .simple301redirects__import{
+            margin-bottom: 60px;
+            position: relative;
+            &:before{
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: calc(100% + 29px);
+                border-bottom: 2px solid $light-darken;
+            }
         }
         .simple301redirects__import,
         .simple301redirects__export{
-            background: $white;
-            padding: 30px;
-            border: 1px solid $light-darken;
-            box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
-            border-radius: 5px;
             .simple301redirects__import__head,
             .simple301redirects__export__head{
                 h4{
@@ -474,15 +478,15 @@
                 }
             }
             .simple301redirects-button-group{
-                display: flex;
-                align-items: center;
                 input[type="submit"],
                 button{
                     background: $blue;
                     border: 1px solid $blue;
                     color: $white;
-                    height: 34px;
-                    padding: 0 25px;
+                    min-height: 30px;
+                    padding: 5px 20px;
+                    line-height: 1;
+                    font-size: 15px;
                     border-radius: 5px;
                     display: inline-flex;
                     justify-content: center;
@@ -497,15 +501,15 @@
                         outline: none;
                     }
                 }
-                label{
-                    margin-left: 15px;
-                    font-size: 18px;
+                p{
+                    font-size: 15px;
                     color: #5a5a5a;
+                    margin-top: 10px;
+                    margin-bottom: 0;
                 }
             }
         }
     }
-
 
     .s3r-tooltip {
         position: relative;
@@ -561,6 +565,16 @@
         }
         &:hover .s3r-tooltiptext-wrapper {
             visibility: visible;
+        }
+    }
+    .Simple301Redirects__content__wrapper{
+        display: flex;
+        .Simple301Redirects__main__content{
+            width: calc(100% - 410px);
+        }
+        .Simple301Redirects__archive__sidebar{
+            width: 390px;
+            margin-left: 20px;
         }
     }
 }

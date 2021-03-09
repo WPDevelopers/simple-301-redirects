@@ -36,7 +36,7 @@ export default function Tools(props) {
 						<div role="group" className="simple301redirects-button-group" aria-labelledby="my-radio-group">
 							<input type="file" id="upload_file" name="upload_file" size="25" />
 							{importResponse && <p>{importResponse}</p>}
-							<input type="submit" name="submit" id="submit" className="button button-primary" value={__('Import File', 'simple-301-redirects')} disabled="" style={{marginLeft: "auto"}} />
+							<input type="submit" style={{marginTop: 10}} name="submit" id="submit" className="button button-primary" value={__('Import File', 'simple-301-redirects')} disabled="" />
 						</div>
 					</form>
 				</div>
@@ -50,7 +50,7 @@ export default function Tools(props) {
 							<button type="submit" className="btl-export-download-button">
 								{__('Export File', 'simple-301-redirects')}
 							</button>
-							<label>Export a backup copy of your redirects.</label>
+							<p>Export a backup copy of your redirects.</p>
 						</div>
 					</form>
 				</div>
