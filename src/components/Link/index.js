@@ -97,10 +97,10 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
-									{__('3/1 CLICK', 'simple-301-redirects')}
+									<span>{__('3/1 CLICK', 'simple-301-redirects')}</span>
 									<div className="s3r-tooltiptext-wrapper">
 										<div className="s3r-tooltiptext">
-											{__('To see Analytics data, install', 'simple-301-redirects')} <InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
+											{__('To see Analytics data', 'simple-301-redirects')} <InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
 										</div>
 									</div>
 								</div>

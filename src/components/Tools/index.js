@@ -26,30 +26,31 @@ export default function Tools(props) {
 	}, []);
 	return (
 		<React.Fragment>
-			<div className="simple301redirects__documentation">
-				<div className="simple301redirects__documentation__panel-header">
-					<h4>Tools</h4>
-					<button onClick={() => setOpen(!isOpen)}>
-						<span className={`dashicons dashicons-arrow-${isOpen ? 'up' : 'down'}-alt2`}></span>
-					</button>
-				</div>
-				<div className="simple301redirects__documentation__panel-body">
-					<form action={'admin.php?page=301options&export=true'} method="POST">
-						<button type="submit" className="btl-export-download-button">
-							{__('Export File', 'simple-301-redirects')}
-						</button>
-					</form>
-
+			<div className="simple301redirects__panel__divider">
+				<div className="simple301redirects__import">
+					<div className="simple301redirects__import__head">
+						<h4>Import Redirect Rules</h4>
+						<p>Import your 301 Redirect Links from your Device</p>
+					</div>
 					<form action={'admin.php?page=301options&import=true'} method="POST" encType="multipart/form-data">
-						<div role="group" className="btl-radio-group" aria-labelledby="my-radio-group">
-							<p className="btl-file-chooser">
-								<label htmlFor="upload">{__('Choose the File You Want to Import', 'simple-301-redirects')}</label>
-								<input type="file" id="upload_file" name="upload_file" size="25" />
-							</p>
+						<div role="group" className="simple301redirects-button-group" aria-labelledby="my-radio-group">
+							<input type="file" id="upload_file" name="upload_file" size="25" />
 							{importResponse && <p>{importResponse}</p>}
-							<p className="submit">
-								<input type="submit" name="submit" id="submit" className="button button-primary" value={__('Import File', 'simple-301-redirects')} disabled="" />
-							</p>
+							<input type="submit" name="submit" id="submit" className="button button-primary" value={__('Import File', 'simple-301-redirects')} disabled="" style={{marginLeft: "auto"}} />
+						</div>
+					</form>
+				</div>
+				<div className="simple301redirects__export">
+					<div className="simple301redirects__export__head">
+						<h4>Export Redirect Rules</h4>
+						<p>Export your 301 Redirect Links Settings & Links in .CSV format</p>
+					</div>
+					<form action={'admin.php?page=301options&export=true'} method="POST">
+						<div className="simple301redirects-button-group" >
+							<button type="submit" className="btl-export-download-button">
+								{__('Export File', 'simple-301-redirects')}
+							</button>
+							<label>Export a backup copy of your redirects.</label>
 						</div>
 					</form>
 				</div>
