@@ -44,10 +44,6 @@ export default function BetterLinks(props) {
 					</div>
 					<div className="simple301redirects__betterlinks__control">
 						<InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
-						<h3>
-							{__('Discount Offer: Grab BetterLinks PRO with 20% Off.', 'simple-301-redirects')} <a href="#">{__('Click Here', 'simple-301-redirects')}</a>{' '}
-							{__('to grab the offer.', 'simple-301-redirects')}
-						</h3>
 					</div>
 				</div>
 			)}
