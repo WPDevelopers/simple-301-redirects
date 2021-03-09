@@ -12,11 +12,11 @@ export default function Documentation(props) {
 	return (
 		<React.Fragment>
 			<div className="simple301redirects__documentation">
-				<div className="simple301redirects__documentation__panel-header">
+				<div className="simple301redirects__documentation__panel-header" onClick={() => setOpen(!isOpen)}>
 					<h4>
 						<img width="25" src={plugin_root_url + 'assets/images/icon-doc.svg'} alt="doc" /> Documentation
 					</h4>
-					<button onClick={() => setOpen(!isOpen)}>
+					<button>
 						<span className={`dashicons dashicons-arrow-${isOpen ? 'up' : 'down'}-alt2`}></span>
 					</button>
 				</div>
