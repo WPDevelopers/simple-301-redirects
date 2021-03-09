@@ -22,7 +22,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 	const [updateButtonText, setUpdateButtonText] = useState('UPDATE');
 	const localClickHandler = (type) => {
 		if (type == 'update') {
-			setUpdateButtonText(updateButtonText + '...');
+			setUpdateButtonText('...');
 			buttonHandler(localRequest, localDestination, type);
 		} else if (type == 'delete') {
 			let isDelete = confirm('Delete This Redirect?');
@@ -45,7 +45,9 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 			}
 			clickHandler(type, param).then((response) => {
 				if (type == 'update') {
-					setUpdateButtonText('UPDATED');
+					window.setTimeout(function () {
+						setUpdateButtonText('UPDATED');
+					}, 500);
 					window.setTimeout(function () {
 						setUpdateButtonText('UPDATE');
 					}, 3000);
