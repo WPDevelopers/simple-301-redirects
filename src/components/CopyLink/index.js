@@ -12,7 +12,7 @@ const CopyLink = (props) => {
 	};
 	return (
 		<React.Fragment>
-			<button className="simple301redirects__icon__button" onClick={() => copyShortUrl(site_url + '/' + props.request)}>
+			<button className="simple301redirects__icon__button" onClick={() => copyShortUrl(site_url + props.request)}>
 				{isCopyUrl ? <span className="dashicons dashicons-yes"></span> : <img src={plugin_root_url + 'assets/images/icon-copy.svg'} alt="copy" />}
 			</button>
 		</React.Fragment>
