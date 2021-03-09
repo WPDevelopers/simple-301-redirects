@@ -128,8 +128,8 @@
                     display: inline-flex;
                     justify-content: center;
                     align-items: center;
-                    padding: 5px 20px;
-                    border-radius: 5px;
+                    padding: 8px 20px;
+                    border-radius: 4px;
                     background: $light;
                     border: 1px solid $light-darken;
                     color: $secondary;
@@ -152,7 +152,7 @@
                     }
                     &.success__button{
                         width: 92px;
-                        background: #d1f3dd;
+                        background: rgba(29, 214, 133, .05);
                         border: 1px solid $success;
                         color: $success;
                         &:hover{
@@ -484,21 +484,21 @@
                 }
                 p{
                     color: $secondary;
-                    font-size: 16px;
+                    font-size: 15px;
                     margin-top: 0;
                 }
             }
             .simple301redirects-button-group{
                 input[type="submit"],
                 button{
-                    background: $blue;
+                    background: $white;
                     border: 1px solid $blue;
-                    color: $white;
-                    min-height: 30px;
-                    padding: 5px 20px;
+                    color: $blue;
+                    min-height: 36px;
+                    padding: 8px 20px;
                     line-height: 1;
                     font-size: 15px;
-                    border-radius: 5px;
+                    border-radius: 4px;
                     display: inline-flex;
                     justify-content: center;
                     align-items: center;
@@ -508,6 +508,7 @@
                     &:hover{
                         background: darken($blue, 1%);
                         border-color: darken($blue, 1%);
+                        color: $white;
                         box-shadow: 0 10px 10px rgba($blue-lighten, 0.15);
                         outline: none;
                     }
