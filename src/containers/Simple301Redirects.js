@@ -4,6 +4,7 @@ import TopBar from './../components/TopBar';
 import ManageLinks from './group/ManageLinks';
 import BetterLinks from './../components/BetterLinks';
 import Documentation from './../components/Documentation';
+import Tools from './../components/Tools';
 const propTypes = {};
 
 const defaultProps = {};
@@ -14,6 +15,7 @@ export default function Simple301Redirects(props) {
 			<TopBar />
 			<ManageLinks />
 			<BetterLinks />
+			<Tools />
 			<Documentation />
 		</React.Fragment>
 	);

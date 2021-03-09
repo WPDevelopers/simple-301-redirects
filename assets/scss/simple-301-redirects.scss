@@ -443,6 +443,69 @@
         }
     }
 
+    .simple301redirects__panel__divider{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-gap: 20px;
+        margin-top: 20px;
+        @media screen and (max-width: 1199.88px) {
+            grid-template-columns: repeat(1,1fr);
+        }
+        .simple301redirects__import,
+        .simple301redirects__export{
+            background: $white;
+            padding: 30px;
+            border: 1px solid $light-darken;
+            box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
+            border-radius: 5px;
+            .simple301redirects__import__head,
+            .simple301redirects__export__head{
+                h4{
+                    font-size: 20px;
+                    font-weight: 500;
+                    color: $dark;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+                p{
+                    color: $secondary;
+                    font-size: 16px;
+                    margin-top: 0;
+                }
+            }
+            .simple301redirects-button-group{
+                display: flex;
+                align-items: center;
+                input[type="submit"],
+                button{
+                    background: $blue;
+                    border: 1px solid $blue;
+                    color: $white;
+                    height: 34px;
+                    padding: 0 25px;
+                    border-radius: 5px;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-sizing: border-box;
+                    outline: none;
+                    &:focus,
+                    &:hover{
+                        background: darken($blue, 1%);
+                        border-color: darken($blue, 1%);
+                        box-shadow: 0 10px 10px rgba($blue-lighten, 0.15);
+                        outline: none;
+                    }
+                }
+                label{
+                    margin-left: 15px;
+                    font-size: 18px;
+                    color: #5a5a5a;
+                }
+            }
+        }
+    }
+
 
     .s3r-tooltip {
         position: relative;
