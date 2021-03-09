@@ -22,6 +22,7 @@ export default function InstallPlugin({ label }) {
 				setInstallButtonMessage(installButtonMessage + ' Activating...');
 				activePlugin('betterlinks/betterlinks.php').then((res) => {
 					setInstallButtonMessage(res.data);
+					window.location.reload();
 				});
 			});
 	};

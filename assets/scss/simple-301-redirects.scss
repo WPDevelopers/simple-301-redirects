@@ -7,7 +7,7 @@
 
     .simple301redirects__managelinks{
         background: $white;
-        padding: 40px;
+        padding: 30px;
         border: 1px solid $light-darken;
         box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
         border-radius: 5px;
@@ -15,16 +15,16 @@
         .simple301redirects__managelinks__item{
             display: flex;
             &__inner{
-                width: calc(100% - 320px);
+                width: calc(100% - 310px);
                 display: flex;
                 @media screen and (max-width: 991.88px) {
-                    width: calc(100% - 310px);
+                    width: calc(100% - 305px);
                 }
                 .simple301redirects__managelinks__info__request,
                 .simple301redirects__managelinks__item__request{
-                    width: calc(50% - 45px);
+                    width: calc(50% - 30px);
                     @media screen and (max-width: 1199.88px) {
-                        width: calc(50% - 30px);
+                        width: calc(50% - 20px);
                     }
                     @media screen and (max-width: 991.88px) {
                         width: calc(50% - 10px);
@@ -47,6 +47,9 @@
                     align-items: center;
                     @media screen and (max-width: 1199.88px) {
                         width: 40px;
+                        img{
+                            width: 20px;
+                        }
                     }
                     @media screen and (max-width: 991.88px) {
                         width: 20px;
@@ -93,9 +96,9 @@
             .simple301redirects__managelinks__item__control{
                 display: flex;
                 align-items: center;
-                padding-left: 30px;
+                padding-left: 20px;
                 @media screen and (max-width: 991.88px) {
-                    padding-left: 20px;
+                    padding-left: 15px;
                 }
                 .lock__button,
                 button{
@@ -370,6 +373,9 @@
                 font-weight: 500;
                 color: $dark;
                 height: 26px;
+                @media screen and (max-width: 1440.98px) {
+                    font-size: 16px;
+                }
                 .dashicons{
                     font-size: 26px;
                     color: $secondary;
@@ -378,6 +384,9 @@
                 }
                 img{
                     margin-right: 10px;
+                    @media screen and (max-width: 1440.98px) {
+                        margin-right: 5px;
+                    }
                 }
             }
             button{
@@ -470,6 +479,7 @@
                     color: $dark;
                     margin-top: 0;
                     margin-bottom: 10px;
+                    line-height: 1.1;
                 }
                 p{
                     color: $secondary;
@@ -571,10 +581,16 @@
         display: flex;
         .Simple301Redirects__main__content{
             width: calc(100% - 410px);
+            @media screen and (max-width: 1440.98px) {
+                width: calc(100% - 250px);
+            }
         }
         .Simple301Redirects__archive__sidebar{
             width: 390px;
             margin-left: 20px;
+            @media screen and (max-width: 1440.98px) {
+                width: 230px;
+            }
         }
     }
 }

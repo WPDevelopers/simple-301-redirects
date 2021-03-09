@@ -70,7 +70,10 @@ class Settings {
 	{
 		$param = $request->get_params();
 		$current_data = get_option('301_redirects');
-		if(isset($current_data[$param['key']])){
+		if(isset($current_data[$param['oldKey']])){
+			if(isset($param['oldKey']) && $param['oldKey'] != $param['key']){
+				unset($current_data[$param['oldKey']]);
+			}
 			$current_data[$param['key']] = $param['value'];
 			update_option('301_redirects', $current_data);
 		}
@@ -105,6 +108,10 @@ class Settings {
 				'type' => 'string',
 				'sanitize_callback' => 'sanitize_text_field',
 			],
+			'oldKey' => [
+				'type' => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+			]
 		];
 	}
     public function permissions_check($request)
