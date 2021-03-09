@@ -374,7 +374,7 @@
                 font-weight: 500;
                 color: $dark;
                 height: 26px;
-                @media screen and (max-width: 1440.98px) {
+                @media screen and (max-width: 1439.98px) {
                     font-size: 16px;
                 }
                 .dashicons{
@@ -385,7 +385,7 @@
                 }
                 img{
                     margin-right: 10px;
-                    @media screen and (max-width: 1440.98px) {
+                    @media screen and (max-width: 1439.98px) {
                         margin-right: 5px;
                     }
                 }
@@ -583,15 +583,15 @@
         display: flex;
         .Simple301Redirects__main__content{
             width: calc(100% - 410px);
-            @media screen and (max-width: 1440.98px) {
-                width: calc(100% - 250px);
+            @media screen and (max-width: 1439.98px) {
+                width: calc(100% - 270px);
             }
         }
         .Simple301Redirects__archive__sidebar{
             width: 390px;
             margin-left: 20px;
-            @media screen and (max-width: 1440.98px) {
-                width: 230px;
+            @media screen and (max-width: 1439.98px) {
+                width: 250px;
             }
         }
     }
