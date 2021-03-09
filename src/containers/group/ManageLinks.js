@@ -22,28 +22,29 @@ export default function ManageLinks(props) {
 			setLinks({ ...links, ...data });
 			const [key] = Object.keys(data);
 			const [value] = Object.values(data);
-			API.post(namespace + 'settings', {
+			return API.post(namespace + 'settings', {
 				key: key,
 				value: value,
 			});
 		} else if (type == 'update') {
 			setLinks({ ...links });
 			const [key] = Object.keys(data);
-			const [value] = Object.values(data);
-			API.put(namespace + 'settings', {
+			const [value, oldKey] = Object.values(data);
+			return API.put(namespace + 'settings', {
 				key: key,
 				value: value,
+				oldKey: oldKey,
 			});
 		} else if (type == 'delete') {
 			const [key] = Object.keys(data);
 			const tempLinks = { ...links };
-			API.delete(namespace + 'settings', {
+			delete tempLinks[key];
+			setLinks({ ...tempLinks });
+			return API.delete(namespace + 'settings', {
 				params: {
 					key: key,
 				},
 			});
-			delete tempLinks[key];
-			setLinks({ ...tempLinks });
 		} else {
 			setLinks(links);
 		}
