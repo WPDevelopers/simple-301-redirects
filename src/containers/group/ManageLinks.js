@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
-import { namespace, API, is_betterlinks_activated } from './../../utils/helper';
+import { namespace, API, site_url, is_betterlinks_activated } from './../../utils/helper';
 import WildCards from './../../components/WildCards';
 import Link from './../../components/Link';
 
@@ -57,11 +57,11 @@ export default function ManageLinks(props) {
 					<div className="simple301redirects__managelinks__info__inner">
 						<div className="simple301redirects__managelinks__info__request">
 							<h4>{__('Request', 'simple-301-redirects')}</h4>
-							<p>{__('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'simple-301-redirects')} </p>
+							<p>{'example: /about.html'}</p>
 						</div>
 						<div className="simple301redirects__managelinks__info__destination">
 							<h4>{__('Destination', 'simple-301-redirects')}</h4>
-							<p>{__('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'simple-301-redirects')} </p>
+							<p>{`example: ${site_url}/about/`}</p>
 						</div>
 					</div>
 				</div>

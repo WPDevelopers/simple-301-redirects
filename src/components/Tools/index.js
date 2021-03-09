@@ -29,28 +29,36 @@ export default function Tools(props) {
 			<div className="simple301redirects__panel__divider">
 				<div className="simple301redirects__import">
 					<div className="simple301redirects__import__head">
-						<h4>Import Redirect Rules</h4>
-						<p>Import your 301 Redirect Links from your Device</p>
+						<h4>{__('Import Redirect Rules', 'simple-301-redirects')}</h4>
+						<p>{__('Import your 301 Redirect Links from your Device', 'simple-301-redirects')}</p>
 					</div>
 					<form action={'admin.php?page=301options&import=true'} method="POST" encType="multipart/form-data">
 						<div role="group" className="simple301redirects-button-group" aria-labelledby="my-radio-group">
 							<input type="file" id="upload_file" name="upload_file" size="25" />
-							{importResponse && <p>{importResponse}</p>}
-							<input type="submit" name="submit" id="submit" className="button button-primary" value={__('Import File', 'simple-301-redirects')} disabled="" style={{marginLeft: "auto"}} />
+							<input
+								type="submit"
+								name="submit"
+								id="submit"
+								className="button button-primary"
+								value={__('Import File', 'simple-301-redirects')}
+								disabled=""
+								style={{ marginLeft: 'auto' }}
+							/>
 						</div>
+						{importResponse && <p>{importResponse}</p>}
 					</form>
 				</div>
 				<div className="simple301redirects__export">
 					<div className="simple301redirects__export__head">
-						<h4>Export Redirect Rules</h4>
-						<p>Export your 301 Redirect Links Settings & Links in .CSV format</p>
+						<h4>{__('Export Redirect Rules', 'simple-301-redirects')}</h4>
+						<p>{__('Export your 301 Redirect Links in .json format', 'simple-301-redirects')}</p>
 					</div>
 					<form action={'admin.php?page=301options&export=true'} method="POST">
-						<div className="simple301redirects-button-group" >
+						<div className="simple301redirects-button-group">
 							<button type="submit" className="btl-export-download-button">
 								{__('Export File', 'simple-301-redirects')}
 							</button>
-							<label>Export a backup copy of your redirects.</label>
+							<label>{__('Export a backup copy of your redirects.', 'simple-301-redirects')}</label>
 						</div>
 					</form>
 				</div>
