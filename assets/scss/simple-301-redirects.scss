@@ -14,11 +14,17 @@
         .simple301redirects__managelinks__info,
         .simple301redirects__managelinks__item{
             display: flex;
+            @media screen and (max-width: 767.98px) {
+                flex-wrap: wrap;
+            }
             &__inner{
                 width: calc(100% - 310px);
                 display: flex;
                 @media screen and (max-width: 991.88px) {
                     width: calc(100% - 305px);
+                }
+                @media screen and (max-width: 767.98px) {
+                    width: 100%;
                 }
                 .simple301redirects__managelinks__info__request,
                 .simple301redirects__managelinks__item__request{
@@ -87,18 +93,25 @@
                     font-weight: 400;
                     margin-top: 0;
                     margin-bottom: 0;
-                    line-height: 1.5;
+                    line-height: 1.3;
                 }
             }
         }
         .simple301redirects__managelinks__item{
             margin-bottom: 15px;
+            @media screen and (max-width: 991.88px) {
+                margin-bottom: 16px;
+            }
             .simple301redirects__managelinks__item__control{
                 display: flex;
                 align-items: center;
                 padding-left: 20px;
                 @media screen and (max-width: 991.88px) {
                     padding-left: 15px;
+                }
+                @media screen and (max-width: 767.98px) {
+                    padding-left: 0;
+                    padding-top: 9px;
                 }
                 .lock__button,
                 button{
@@ -489,6 +502,9 @@
                 }
             }
             .simple301redirects-button-group{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
                 input[type="submit"],
                 button{
                     background: $white;
@@ -553,7 +569,7 @@
                     margin-top: 5px;
                     min-height: 18px;
                     font-size: 11px;
-                    padding: 1px 8px;
+                    padding: 5px 8px;
                     outline: none;
                     border: none;
                     background: $blue;
@@ -581,17 +597,28 @@
     }
     .Simple301Redirects__content__wrapper{
         display: flex;
+        @media screen and (max-width: 1999.98px) {
+            flex-wrap: wrap;
+        }
         .Simple301Redirects__main__content{
-            width: calc(100% - 410px);
+            width: calc(100% - 380px);
             @media screen and (max-width: 1439.98px) {
                 width: calc(100% - 270px);
             }
+            @media screen and (max-width: 1999.98px) {
+                width: 100%;
+            }
         }
         .Simple301Redirects__archive__sidebar{
-            width: 390px;
+            width: 360px;
             margin-left: 20px;
             @media screen and (max-width: 1439.98px) {
                 width: 250px;
+            }
+            @media screen and (max-width: 1999.98px) {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 20px;
             }
         }
     }
