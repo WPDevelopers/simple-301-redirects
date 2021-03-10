@@ -96,6 +96,18 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
 								{updateButtonText}
 							</button>
+							<div class="loading-dock">
+								<svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">
+								<circle class="loading-inner" cx="75" cy="75" r="60"/>
+								</svg>
+								<svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
+									<circle class="loading-inner" cx="75" cy="75" r="60"/>
+								</svg>
+								<button class="submit">Submit</button>
+								<svg id="check" style="width:24px;height:24px" viewBox="0 0 24 24">
+									<path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+								</svg>
+							</div>
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
