@@ -506,6 +506,10 @@
 				display: flex;
 				flex-direction: column;
 				align-items: flex-start;
+                input[type="file"]{
+                    cursor: pointer;
+                    outline: none;
+                }
 				input[type='submit'],
 				button {
 					background: $blue;
