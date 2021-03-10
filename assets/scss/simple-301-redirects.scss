@@ -216,6 +216,9 @@
                     @media screen and (max-width: 991.88px) {
                         width: calc(100% - 190px);
                     }
+                    @media screen and (max-width: 767.98px) {
+                        width: 100%;
+                    }
                 }
             }
             .simple301redirects__wildcards{
