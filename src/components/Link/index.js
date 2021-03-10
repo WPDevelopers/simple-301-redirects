@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
+import UpdateLink from './../UpdateLink';
 import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
@@ -93,21 +94,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 					) : (
 						<>
 							<CopyLink request={localRequest} />
-							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
-								{updateButtonText}
-							</button>
-							<div class="loading-dock">
-								<svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">
-								<circle class="loading-inner" cx="75" cy="75" r="60"/>
-								</svg>
-								<svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
-									<circle class="loading-inner" cx="75" cy="75" r="60"/>
-								</svg>
-								<button class="submit">Submit</button>
-								<svg id="check" style="width:24px;height:24px" viewBox="0 0 24 24">
-									<path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-								</svg>
-							</div>
+							<UpdateLink request={localRequest} />
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
