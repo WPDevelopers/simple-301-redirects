@@ -507,10 +507,10 @@
 				display: flex;
 				flex-direction: column;
 				align-items: flex-start;
-                input[type="file"]{
-                    cursor: pointer;
-                    outline: none;
-                }
+				input[type='file'] {
+					cursor: pointer;
+					outline: none;
+				}
 				input[type='submit'],
 				button {
 					background: $blue;
@@ -526,7 +526,7 @@
 					align-items: center;
 					box-sizing: border-box;
 					outline: none;
-                    cursor: pointer;
+					cursor: pointer;
 					&:focus,
 					&:hover {
 						background: darken($blue, 1%);
@@ -635,22 +635,22 @@
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		width:84px;
+		width: 84px;
 	}
 
 	.Simple301Redirects__loading__button__submit {
 		cursor: pointer;
-		width:84px;
+		width: 84px;
 		height: 36px;
 		padding: 2px 5px;
 		font-size: 13px;
-        font-weight: 500;
+		font-weight: 500;
 		color: darken($success, 1%);
 		background: rgba(29, 214, 133, 0.05);
 		border-radius: 40px;
 		border: 1px solid darken($success, 1%);
 		transition: all 0.3s;
-        text-transform: uppercase;
+		text-transform: uppercase;
 		&:hover {
 			background: darken($success, 1%);
 			color: white;
@@ -666,7 +666,7 @@
 		}
 
 		&.Simple301Redirects__popout {
-			animation: Simple301Redirects__circle-to-button 0.5s linear forwards;
+			animation: Simple301Redirects__circle-to-button 0.4s linear forwards;
 		}
 		&.Simple301Redirects__return {
 			animation: Simple301Redirects__fade-to-original 0.3s linear;
@@ -680,12 +680,12 @@
 	.Simple301Redirects__loaded {
 		.Simple301Redirects__loading__button__submit {
 			background-color: darken($success, 1%);
-			animation: Simple301Redirects__button-to-circle 0.5s linear forwards;
-			animation-delay: 0.3s;
+			animation: Simple301Redirects__button-to-circle 0.25s linear forwards;
+			animation-delay: 0s;
 		}
 		#Simple301Redirects__load {
-			animation: Simple301Redirects__loading-circle 3s linear forwards;
-			animation-delay: 1s;
+			animation: Simple301Redirects__loading-circle 1s linear forwards;
+			animation-delay: 0.4s;
 		}
 	}
 
@@ -737,7 +737,7 @@
 
 	@keyframes Simple301Redirects__button-to-circle {
 		0% {
-			width:84px;
+			width: 84px;
 			color: darken($success, 1%);
 			border-color: darken($success, 1%);
 			background-color: darken($success, 1%);
@@ -771,7 +771,7 @@
 		}
 		100% {
 			height: 36px;
-			width:84px;
+			width: 84px;
 			border-color: darken($success, 1%);
 			background-color: darken($success, 1%);
 		}

@@ -17,11 +17,11 @@ const UpdateLink = (props) => {
 
 			setTimeout(() => {
 				loadRef.current.style.opacity = 1;
-			}, 750);
+			}, 225);
 
 			setTimeout(() => {
 				loadBRef.current.style.opacity = 1;
-			}, 900);
+			}, 350);
 
             setTimeout(() => {
                 loadingDockRef.current.classList.remove("Simple301Redirects__loaded");
@@ -34,15 +34,15 @@ const UpdateLink = (props) => {
 
                 setTimeout( ()=> {
                     checkRef.current.style.display = "block"
-                }, 300)
-            }, 3600)
+                }, 150)
+            }, 1450)
 			setTimeout(() => {
 				buttonRef.current.classList.remove("Simple301Redirects__popout");
 				buttonRef.current.classList.add("Simple301Redirects__return");
 				buttonRef.current.innerHTML = "Update";
 				checkRef.current.style.display = "none";
 				setClicked(false);
-			}, 5300);
+			}, 2000);
 		}
     };
 
