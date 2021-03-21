@@ -31,7 +31,7 @@ class Assets {
 					$pluginUrl = plugins_url();
 					foreach ($wp_scripts->queue as $script) {
 						$src = $wp_scripts->registered[$script]->src;
-						if (strpos($src, $pluginUrl) !== false && !strpos($src, '301options') !== false) {
+						if (strpos($src, $pluginUrl) !== false && !strpos($src, 'simple-301-redirects') !== false) {
 							wp_dequeue_script($wp_scripts->registered[$script]->handle);
 						}
 					}
