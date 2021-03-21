@@ -31,7 +31,7 @@ class Assets {
 					$pluginUrl = plugins_url();
 					foreach ($wp_scripts->queue as $script) {
 						$src = $wp_scripts->registered[$script]->src;
-						if (strpos($src, $pluginUrl) !== false && !strpos($src, '301options') !== false) {
+						if (strpos($src, $pluginUrl) !== false && !strpos($src, 'simple-301-redirects') !== false) {
 							wp_dequeue_script($wp_scripts->registered[$script]->handle);
 						}
 					}
@@ -55,7 +55,7 @@ class Assets {
 				'plugin_root_path' => SIMPLE301REDIRECTS_ROOT_DIR_PATH,
 				'site_url' => site_url(),
 				'route_path' => parse_url(admin_url(), PHP_URL_PATH),
-				'is_betterlinks_activated' => in_array('betterlinks/betterlinks.php', apply_filters('active_plugins', get_option('active_plugins'))),
+				'is_betterlinks_activated' => \Simple301Redirects\Helper::is_activated_betterlinks(),
 				'hide_btl_notice' => get_option('simple301redirects_hide_btl_notice')
 			]);
 		}
