@@ -17,8 +17,13 @@ const defaultProps = {
 	isNewLink: false,
 };
 export default function Link({ request, destination, isNewLink, clickHandler }) {
-	const [localRequest, setLocalRequest] = useState(request);
-	const [localDestination, setDestination] = useState(destination);
+	const [localRequest, setLocalRequest] = useState('');
+	const [localDestination, setDestination] = useState('');
+	useEffect(() => {
+		setLocalRequest(request);
+		setDestination(destination);
+	}, [request, destination]);
+
 	const [showError, setShowError] = useState(false);
 	const localClickHandler = (type) => {
 		if (type == 'update') {

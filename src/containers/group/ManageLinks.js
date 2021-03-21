@@ -37,9 +37,8 @@ export default function ManageLinks(props) {
 			});
 		} else if (type == 'delete') {
 			const [key] = Object.keys(data);
-			const tempLinks = { ...links };
-			delete tempLinks[key];
-			setLinks({ ...tempLinks });
+			delete links[key];
+			setLinks({ ...links });
 			return API.delete(namespace + 'settings', {
 				params: {
 					key: key,
