@@ -57,6 +57,15 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 			setShowError(true);
 		}
 	};
+	const keyPressEventHandler = (event) => {
+		if (event.key === 'Enter') {
+			if (request == '' || destination == '') {
+				localClickHandler('new');
+			} else {
+				localClickHandler('update');
+			}
+		}
+	};
 	return (
 		<React.Fragment>
 			<div className="simple301redirects__managelinks__item">
@@ -68,6 +77,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							name="request"
 							value={localRequest}
 							onChange={(e) => setLocalRequest(e.target.value)}
+							onKeyPress={keyPressEventHandler}
 							required
 						/>
 					</div>
@@ -81,6 +91,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							name="destination"
 							value={localDestination}
 							onChange={(e) => setDestination(e.target.value)}
+							onKeyPress={keyPressEventHandler}
 							required
 						/>
 					</div>
