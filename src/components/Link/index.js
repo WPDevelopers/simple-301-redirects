@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
+import UpdateLink from './../UpdateLink';
 import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
@@ -104,9 +105,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 					) : (
 						<>
 							<CopyLink request={localRequest} />
-							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
-								{updateButtonText}
-							</button>
+							<UpdateLink request={localRequest} />
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
