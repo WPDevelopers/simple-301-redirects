@@ -46,7 +46,7 @@ class Ajax {
         if ($result === false) {
             wp_send_json_error(__('Plugin couldn\'t be activated.', 'simple-301-redirects'));
         }
-        wp_send_json_success(__('Plugin is activated successfully!', 'simple-301-redirects'));
+        wp_send_json_success(__('BetterLinks is activated!', 'simple-301-redirects'));
         wp_die();
     }
     public function hide_notice()
