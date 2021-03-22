@@ -39,7 +39,7 @@ class Ajax {
     {
         check_ajax_referer('wp_rest', 'security');
         $basename = isset($_POST['basename']) ? $_POST['basename'] : '';
-        $result = activate_plugin($basename, '', false, true);
+        $result = activate_plugin($basename, '', false );
         if (is_wp_error($result)) {
             wp_send_json_error($result->get_error_message());
         }
