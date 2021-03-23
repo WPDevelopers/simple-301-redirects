@@ -43,7 +43,7 @@ export default function BetterLinks(props) {
 							<li>{__('Optimized queries to reduce load time & make faster', 'simple-301-redirects')}</li>
 							<li>{__('Individual Analytics for each links', 'simple-301-redirects')}</li>
 						</ul>
-						<h4>{__('You can migrate from 301 Redirects to BetterLinks within one click.', 'simple-301-redirects')}</h4>
+						<h4>{__('You can migrate from Simple 301 Redirects to BetterLinks within one click.', 'simple-301-redirects')}</h4>
 					</div>
 					<div className="simple301redirects__betterlinks__control">
 						<InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
