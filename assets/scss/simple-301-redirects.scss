@@ -89,7 +89,7 @@
 				}
 				p {
 					color: $secondary;
-					font-size: 16px;
+					font-size: 14px;
 					font-weight: 400;
 					margin-top: 0;
 					margin-bottom: 0;
@@ -379,6 +379,7 @@
 		.simple301redirects__documentation__panel-header {
 			display: flex;
 			align-items: center;
+			cursor: pointer;
 			h4 {
 				margin-top: 0;
 				margin-bottom: 0;
@@ -499,7 +500,7 @@
 				}
 				p {
 					color: $secondary;
-					font-size: 15px;
+					font-size: 14px;
 					margin-top: 0;
 				}
 			}
