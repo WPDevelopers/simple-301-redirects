@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-23T06:14:10+00:00\n"
+"POT-Creation-Date: 2021-03-23T06:31:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: simple-301-redirects\n"
@@ -48,42 +48,42 @@ msgid "BetterLinks is activated!"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:33
-msgid "Betterlinks"
+msgid "BetterLinks – Shorten, Track and Manage any URL"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:34
-msgid "Install BetterLinks to get the best out of 301 Redirects and get access to more advanced features. Check out the features below"
-msgstr ""
-
-#: src/components/BetterLinks/index.js:36
-msgid "Easy-to-use & Simple Link Shortener"
-msgstr ""
-
-#: src/components/BetterLinks/index.js:37
-msgid "Create attractive looking links instantly"
-msgstr ""
-
-#: src/components/BetterLinks/index.js:38
-msgid "Safe Redirection URLs"
+#: src/components/BetterLinks/index.js:35
+msgid "Install BetterLinks to get the best out of Simple 301 Redirects and get access to more advanced features. Check out the features below"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:39
-msgid "Analyze and Track your marketing campaigns from one place"
+msgid "Easy-to-use & Simple Link Shortener"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:40
-msgid "Optimized queries to reduce load time & make faster"
+msgid "Create attractive looking links instantly"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:41
-msgid "Individual Analytics for each links"
+msgid "Safe Redirection URLs"
+msgstr ""
+
+#: src/components/BetterLinks/index.js:42
+msgid "Analyze and Track your marketing campaigns from one place"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:43
-msgid "You can migrate from 301 Redirects to BetterLinks within one click."
+msgid "Optimized queries to reduce load time & make faster"
+msgstr ""
+
+#: src/components/BetterLinks/index.js:44
+msgid "Individual Analytics for each links"
 msgstr ""
 
 #: src/components/BetterLinks/index.js:46
+msgid "You can migrate from 301 Redirects to BetterLinks within one click."
+msgstr ""
+
+#: src/components/BetterLinks/index.js:49
 #: src/components/Link/index.js:109
 msgid "Install BetterLinks"
 msgstr ""
