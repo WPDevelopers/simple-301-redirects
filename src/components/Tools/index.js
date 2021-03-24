@@ -41,7 +41,7 @@ export default function Tools(props) {
 								name="submit"
 								id="submit"
 								className="button button-primary"
-								style={{marginTop: 10}}
+								style={{ marginTop: 10 }}
 								value={__('Import File', 'simple-301-redirects')}
 								disabled=""
 							/>
@@ -59,7 +59,6 @@ export default function Tools(props) {
 							<button type="submit" className="btl-export-download-button">
 								{__('Export File', 'simple-301-redirects')}
 							</button>
-							<p>{__('Export a backup copy of your redirects.', 'simple-301-redirects')}</p>
 						</div>
 					</form>
 				</div>

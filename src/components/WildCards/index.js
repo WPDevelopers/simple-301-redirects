@@ -8,6 +8,7 @@ const propTypes = {};
 const defaultProps = {};
 
 export default function WildCards(props) {
+	const [savedText, setSavedText] = useState('');
 	const [checked, setChecked] = useState(false);
 	const [isFetch, setFetch] = useState(false);
 	useEffect(() => {
@@ -25,6 +26,7 @@ export default function WildCards(props) {
 		);
 	}, []);
 	const onChangeHandler = (param) => {
+		setSavedText('Saving...');
 		setChecked(param);
 		let form_data = new FormData();
 		form_data.append('action', 'simple301redirects/admin/wildcard');
@@ -32,7 +34,14 @@ export default function WildCards(props) {
 		form_data.append('toggle', param);
 		return axios.post(ajaxurl, form_data).then(
 			(response) => {
-				console.log(response);
+				if (response.data.success) {
+					setTimeout(() => {
+						setSavedText('Saved!');
+						setTimeout(() => {
+							setSavedText('');
+						}, 3000);
+					}, 1000);
+				}
 			},
 			(error) => {
 				console.log(error);
@@ -44,7 +53,9 @@ export default function WildCards(props) {
 			{isFetch && (
 				<div className="simple301redirects__wildcards">
 					<input type="checkbox" name="wildcard" id="wildcard" defaultChecked={checked} onChange={() => onChangeHandler(!checked)} />
-					<label htmlFor="wildcard"> {__('Use Wildcards?', 'simple-301-redirects')}</label>
+					<label htmlFor="wildcard">
+						{__('Use Wildcards?', 'simple-301-redirects')} {savedText}
+					</label>
 				</div>
 			)}
 		</React.Fragment>

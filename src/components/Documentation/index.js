@@ -33,24 +33,38 @@ export default function Documentation(props) {
 							<h5>{__('Example', 'simple-301-redirects')}</h5>
 							<ul>
 								<li>
-									<strong>{__('Request:', 'simple-301-redirects')}</strong>
-									{__('/old-page/:', 'simple-301-redirects')}
+									<strong>{__('Request: ', 'simple-301-redirects')}</strong>
+									{__('/old-page/', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/new-page/', 'simple-301-redirects')}
+									<strong>{__('Destination: ', 'simple-301-redirects')}</strong> {__('/new-page/', 'simple-301-redirects')}
 								</li>
 							</ul>
 
 							<h4>{__('Wildcards', 'simple-301-redirects')}</h4>
-							<p>{__('To use wildcards, put an asterisk (*) after the folder name that you want to redirect.', 'simple-301-redirects')}</p>
+							<p>{__('Wildcards Redirect will redirect all files within a directory to the same filename in the redirected directory. To use wildcards, put an asterisk (*) after the folder name that you want to redirect.', 'simple-301-redirects')}</p>
 							<h5>{__('Example', 'simple-301-redirects')}</h5>
 							<ul>
 								<li>
-									<strong>{__('Request:', 'simple-301-redirects')}</strong>
+									<strong>{__('Request: ', 'simple-301-redirects')}</strong>
 									{__('/old-folder/*', 'simple-301-redirects')}
 								</li>
 								<li>
-									<strong>{__('Destination:', 'simple-301-redirects')}</strong> {__('/redirect-everything-here/', 'simple-301-redirects')}
+									<strong>{__('Destination: ', 'simple-301-redirects')}</strong> {__('/new-folder/* ', 'simple-301-redirects')}
+								</li>
+							</ul>
+
+							<p>
+								{__('You can also use wildcards to redirect all the dynamic files of a certain directory to a same destination URL as well.', 'simple-301-redirects')}
+							</p>
+							<h5>{__('Example', 'simple-301-redirects')}</h5>
+							<ul>
+								<li>
+									<strong>{__('Request: ', 'simple-301-redirects')}</strong>
+									{__('/old-folder/*', 'simple-301-redirects')}
+								</li>
+								<li>
+									<strong>{__('Destination: ', 'simple-301-redirects')}</strong> {__('/new-page/', 'simple-301-redirects')}
 								</li>
 							</ul>
 

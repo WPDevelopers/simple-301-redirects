@@ -30,8 +30,11 @@ export default function BetterLinks(props) {
 						<img width="20" src={plugin_root_url + 'assets/images/close.svg'} alt="logo" />
 					</button>
 					<div className="simple301redirects__betterlinks__content">
-						<h3>{__('Betterlinks', 'simple-301-redirects')}</h3>
-						<h4>{__('Install BetterLinks to get the best out of 301 Redirects and get access to more advanced features. Check out the features below', 'simple-301-redirects')}</h4>
+						<h3>{__('BetterLinks – Shorten, Track and Manage any URL', 'simple-301-redirects')}</h3>
+						<h4>
+							{__('Install BetterLinks to get the best out of Simple 301 Redirects and get access to more advanced features. Check out the features below', 'simple-301-redirects')}
+							<img width="18" style={{ transform: 'translateY(6px) scale(1.5)', marginLeft: 8 }} src={plugin_root_url + 'assets/images/pointing-down.svg'} alt="logo" />
+						</h4>
 						<ul>
 							<li>{__('Easy-to-use & Simple Link Shortener', 'simple-301-redirects')}</li>
 							<li>{__('Create attractive looking links instantly', 'simple-301-redirects')}</li>
@@ -40,7 +43,7 @@ export default function BetterLinks(props) {
 							<li>{__('Optimized queries to reduce load time & make faster', 'simple-301-redirects')}</li>
 							<li>{__('Individual Analytics for each links', 'simple-301-redirects')}</li>
 						</ul>
-						<h4>{__('You can migrate from 301 Redirects to BetterLinks within one click.', 'simple-301-redirects')}</h4>
+						<h4>{__('You can migrate from Simple 301 Redirects to BetterLinks within one click.', 'simple-301-redirects')}</h4>
 					</div>
 					<div className="simple301redirects__betterlinks__control">
 						<InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />

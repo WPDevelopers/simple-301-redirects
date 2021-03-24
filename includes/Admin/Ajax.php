@@ -39,14 +39,14 @@ class Ajax {
     {
         check_ajax_referer('wp_rest', 'security');
         $basename = isset($_POST['basename']) ? $_POST['basename'] : '';
-        $result = activate_plugin($basename, '', false, true);
+        $result = activate_plugin($basename, '', false );
         if (is_wp_error($result)) {
             wp_send_json_error($result->get_error_message());
         }
         if ($result === false) {
             wp_send_json_error(__('Plugin couldn\'t be activated.', 'simple-301-redirects'));
         }
-        wp_send_json_success(__('Plugin is activated successfully!', 'simple-301-redirects'));
+        wp_send_json_success(__('BetterLinks is activated!', 'simple-301-redirects'));
         wp_die();
     }
     public function hide_notice()

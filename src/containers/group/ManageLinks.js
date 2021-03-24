@@ -37,9 +37,8 @@ export default function ManageLinks(props) {
 			});
 		} else if (type == 'delete') {
 			const [key] = Object.keys(data);
-			const tempLinks = { ...links };
-			delete tempLinks[key];
-			setLinks({ ...tempLinks });
+			delete links[key];
+			setLinks({ ...links });
 			return API.delete(namespace + 'settings', {
 				params: {
 					key: key,
@@ -57,11 +56,11 @@ export default function ManageLinks(props) {
 					<div className="simple301redirects__managelinks__info__inner">
 						<div className="simple301redirects__managelinks__info__request">
 							<h4>{__('Request', 'simple-301-redirects')}</h4>
-							<p>{'example: /about.html'}</p>
+							<p>{'example: /old-page/'}</p>
 						</div>
 						<div className="simple301redirects__managelinks__info__destination">
 							<h4>{__('Destination', 'simple-301-redirects')}</h4>
-							<p>{`example: ${site_url}/about/`}</p>
+							<p>{`example: ${site_url}/new-page/`}</p>
 						</div>
 					</div>
 				</div>

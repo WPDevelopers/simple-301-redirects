@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
+import UpdateLink from './../UpdateLink';
 import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
@@ -16,13 +17,16 @@ const defaultProps = {
 	isNewLink: false,
 };
 export default function Link({ request, destination, isNewLink, clickHandler }) {
-	const [localRequest, setLocalRequest] = useState(request);
-	const [localDestination, setDestination] = useState(destination);
+	const [localRequest, setLocalRequest] = useState('');
+	const [localDestination, setDestination] = useState('');
+	useEffect(() => {
+		setLocalRequest(request);
+		setDestination(destination);
+	}, [request, destination]);
+
 	const [showError, setShowError] = useState(false);
-	const [updateButtonText, setUpdateButtonText] = useState('UPDATE');
 	const localClickHandler = (type) => {
 		if (type == 'update') {
-			setUpdateButtonText('...');
 			buttonHandler(localRequest, localDestination, type);
 		} else if (type == 'delete') {
 			let isDelete = confirm('Delete This Redirect?');
@@ -43,18 +47,18 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 			if (request) {
 				param.oldKey = request;
 			}
-			clickHandler(type, param).then((response) => {
-				if (type == 'update') {
-					window.setTimeout(function () {
-						setUpdateButtonText('UPDATED');
-					}, 500);
-					window.setTimeout(function () {
-						setUpdateButtonText('UPDATE');
-					}, 3000);
-				}
-			});
+			clickHandler(type, param);
 		} else {
 			setShowError(true);
+		}
+	};
+	const keyPressEventHandler = (event) => {
+		if (event.key === 'Enter') {
+			if (request == '' || destination == '') {
+				localClickHandler('new');
+			} else {
+				localClickHandler('update');
+			}
 		}
 	};
 	return (
@@ -68,6 +72,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							name="request"
 							value={localRequest}
 							onChange={(e) => setLocalRequest(e.target.value)}
+							onKeyPress={keyPressEventHandler}
 							required
 						/>
 					</div>
@@ -81,6 +86,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 							name="destination"
 							value={localDestination}
 							onChange={(e) => setDestination(e.target.value)}
+							onKeyPress={keyPressEventHandler}
 							required
 						/>
 					</div>
@@ -93,9 +99,7 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 					) : (
 						<>
 							<CopyLink request={localRequest} />
-							<button className="simple301redirects__button success__button" onClick={() => localClickHandler('update')}>
-								{updateButtonText}
-							</button>
+							<UpdateLink localClickHandler={localClickHandler} />
 							{!is_betterlinks_activated && (
 								<div className="simple301redirects__button lock__button s3r-tooltip">
 									<img width="15" src={plugin_root_url + 'assets/images/icon-lock.svg'} alt="local" />
