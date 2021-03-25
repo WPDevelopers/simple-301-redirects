@@ -35,7 +35,6 @@ export default function Tools(props) {
 					<form action={'admin.php?page=301options&import=true'} method="POST" encType="multipart/form-data">
 						<div role="group" className="simple301redirects-button-group" aria-labelledby="my-radio-group">
 							<input type="file" id="upload_file" name="upload_file" size="25" />
-							{importResponse && <p>{importResponse}</p>}
 							<input
 								type="submit"
 								name="submit"
@@ -46,7 +45,11 @@ export default function Tools(props) {
 								disabled=""
 							/>
 						</div>
-						{importResponse && <p>{importResponse}</p>}
+						{importResponse && (
+							<p>
+								<strong>{importResponse.replace(/"|"/g, '')}</strong>
+							</p>
+						)}
 					</form>
 				</div>
 				<div className="simple301redirects__export">

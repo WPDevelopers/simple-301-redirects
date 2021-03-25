@@ -51,7 +51,7 @@ class Tools {
             $value = (!empty($oldData) ? array_unique (array_merge (get_option(SIMPLE301REDIRECTS_SETTINGS_NAME), $data)) : $data);
             $restuls = update_option(SIMPLE301REDIRECTS_SETTINGS_NAME, $value);
             if( $restuls){
-                $message = 'All Data Imported Successfully.';
+                $message = 'All Data has been successfully Imported.';
             } else {
                 $message = 'Import Failed.';
             }
