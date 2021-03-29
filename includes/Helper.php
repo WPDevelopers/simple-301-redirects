@@ -82,7 +82,7 @@ class Helper {
 
         // activate plugin
         if ($install === true && $active) {
-            $active = activate_plugin($upgrader->plugin_info(), '', false, true);
+            $active = activate_plugin($upgrader->plugin_info(), '', false);
 
             if (is_wp_error($active)) {
                 return $active;
