@@ -4,7 +4,7 @@ Tags: 301, redirect, url, seo, redirection, link redirect, link, 310, Permalink
 Requires at least: 3.0
 Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.07
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,13 @@ Simple 301 Redirects provides an easy method of redirecting requests to another 
 
 
 == Changelog ==
+
+= 2.0.0 =
+* Revamped: New UI/UX
+* Added: Support for WordPress 5.7
+* Added: Options to Export/Import Links
+* Few minor bug fix and improvements
+
 = 1.07 =
 * Security Update - Better handling of posted data.
 
