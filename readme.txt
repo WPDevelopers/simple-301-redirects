@@ -1,8 +1,8 @@
 === Simple 301 Redirects ===
 Contributors: wpdevteam, asif2bd, re_enter_rupok, scottnelle
 Tags: 301, redirect, url, seo, redirection, link redirect, link, 310, Permalink
-Requires at least: 3.0
-Tested up to: 5.6
+Requires at least: 4.0
+Tested up to: 5.7
 Requires PHP: 5.4
 Stable tag: 2.0.0
 License: GPLv2 or later
