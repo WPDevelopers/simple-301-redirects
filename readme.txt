@@ -23,7 +23,7 @@ Simple 301 Redirects provides an easy method of redirecting requests to another 
 
 == Changelog ==
 
-= 2.0.0 =
+= 2.0.0 - 01/04/2021 =
 * Revamped: New UI/UX
 * Added: Support for WordPress 5.7
 * Added: Options to Export/Import Links
