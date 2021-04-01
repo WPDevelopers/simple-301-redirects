@@ -1,5 +1,5 @@
-=== Simple 301 Redirects ===
-Contributors: wpdevteam, asif2bd, re_enter_rupok, scottnelle
+=== Simple 301 Redirects by BetterLinks ===
+Contributors: wpdevteam, asif2bd, re_enter_rupok, tusharimran, scottnelle
 Tags: 301, redirect, url, seo, redirection, link redirect, link, 310, Permalink
 Requires at least: 4.0
 Tested up to: 5.7
