@@ -3,8 +3,13 @@ import { __ } from '@wordpress/i18n';
 import { site_url, plugin_root_url, copyToClipboard } from './../../utils/helper';
 const CopyLink = (props) => {
 	const [isCopyUrl, setCopyUrl] = useState(false);
-	const copyShortUrl = (url) => {
-		copyToClipboard(url);
+	const copyShortUrl = (site_url, request_url) => {
+		let pattern = /^((http|https|ftp):\/\/)/;
+		if (!pattern.test(request_url)) {
+			copyToClipboard(site_url + request_url);
+		} else {
+			copyToClipboard(request_url);
+		}
 		setCopyUrl(true);
 		window.setTimeout(function () {
 			setCopyUrl(false);
@@ -12,7 +17,7 @@ const CopyLink = (props) => {
 	};
 	return (
 		<React.Fragment>
-			<button className="simple301redirects__icon__button" onClick={() => copyShortUrl(site_url + props.request)}>
+			<button className="simple301redirects__icon__button" onClick={() => copyShortUrl(site_url, props.request)}>
 				{isCopyUrl ? <span className="dashicons dashicons-yes"></span> : <img src={plugin_root_url + 'assets/images/icon-copy.svg'} alt="copy" />}
 			</button>
 		</React.Fragment>
