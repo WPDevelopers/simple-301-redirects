@@ -78,6 +78,12 @@ If you like Simple 301 Redirects, then consider checking out our other WordPress
 1. Add redirects on the Settings > 301 Redirects page.
 
 
+== Screenshots ==
+
+1. Simple 301 Redirects - Dashboard
+2. Simple 301 Redirects - Setup
+
+
 == Changelog ==
 
 = 2.0.0 - 01/04/2021 =
@@ -115,3 +121,6 @@ If you like Simple 301 Redirects, then consider checking out our other WordPress
 
 = 1.0 =
 * Initial Release
+
+== Upgrade Notice == 
+[Major Update] Bugfix, new design, and stability
