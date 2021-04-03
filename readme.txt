@@ -1,6 +1,6 @@
 === Simple 301 Redirects by BetterLinks ===
 Contributors: wpdevteam, asif2bd, re_enter_rupok, tusharimran, scottnelle
-Tags: 301 redirects, 301, short link, link shortner, permalink. redirects, seo redirects, not found, url redirect, 301 redirect, url, forward, meta, error
+Tags: 301 redirects, 301, shortlinks, link shortener, links, permalink, redirects, seo redirects, url redirect, 301 redirect, url, pretty links, short links, link tracking, affiliate links, urls
 Requires at least: 4.0
 Tested up to: 5.7
 Requires PHP: 5.4
