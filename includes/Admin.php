@@ -43,7 +43,7 @@ class Admin {
             'item_id'      => 'c1e613119bf3e9188767'
         ] );
         $tracker->set_notice_options(array(
-            'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? if you allow us to track the usage.', 'simple-301-redirects' ),
+            'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? You can get a <strong>10% discount</strong> coupon on our Premium products if you allow us to track the non-sensitive usage data.', 'simple-301-redirects' ),
             'extra_notice' => __( 'We collect non-sensitive diagnostic data and plugin usage information. 
             Your site URL, WordPress & PHP version, plugins & themes and email address to send you the 
             discount coupon. This data lets us make sure this plugin always stays compatible with the most 
