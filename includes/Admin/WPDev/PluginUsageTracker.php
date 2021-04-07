@@ -56,7 +56,7 @@ class PluginUsageTracker {
      */
     public function __construct( $plugin_file, $args = [] ){
         $this->plugin_file          = $plugin_file;
-        $this->plugin_name          = basename( $this->plugin_file, '.php' );
+        $this->plugin_name          = 'simple-301-redirects';
         $this->disabled_wp_cron     = defined('DISABLE_WP_CRON') && DISABLE_WP_CRON == true;
         $this->enable_self_cron     = $this->disabled_wp_cron == true ? true : false;
 
