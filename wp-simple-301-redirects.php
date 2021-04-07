@@ -1,12 +1,14 @@
 <?php
-/*
-Plugin Name: Simple 301 Redirects
-Plugin URI: https://wordpress.org/plugins/simple-301-redirects/
-Description: Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
-Version: 2.0.1
-Author: WPDeveloper
-Author URI: https://wpdeveloper.net/
-*/
+/**
+ * Plugin Name:     Simple 301 Redirects
+ * Plugin URI:      https://wordpress.org/plugins/simple-301-redirects/
+ * Description:     Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.
+ * Author:          WPDeveloper
+ * Author URI:      https://wpdeveloper.net/
+ * Text Domain:     simple-301-redirects
+ * Domain Path:     /languages
+ * Version:         2.0.1
+ */
 
 /*  Copyright 2009-2021  WPDeveloper
 
