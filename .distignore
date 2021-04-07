@@ -11,6 +11,7 @@ composer.lock
 prepros.config
 *.xml
 *.map
+*.md
 .prettierignore
 .prettierrc.json
 src
