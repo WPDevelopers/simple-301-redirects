@@ -111,7 +111,9 @@ if (!class_exists("Simple301redirects")) {
 		function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
-			$userrequest = rtrim($userrequest,'/');
+			$userrequest = ltrim($userrequest, parse_url(site_url(), PHP_URL_PATH));
+			$param = explode('?', $userrequest, 2);
+			$userrequest = current($param);
 			
 			$redirects = get_option('301_redirects');
 			if (!empty($redirects)) {
