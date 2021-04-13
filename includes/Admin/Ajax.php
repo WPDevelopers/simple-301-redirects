@@ -19,7 +19,7 @@ class Ajax {
     public function wildcard() 
     {
         check_ajax_referer('wp_rest', 'security');
-        update_option('301_redirects_wildcard', $_POST['toggle']);
+        update_option('301_redirects_wildcard', sanitize_text_field($_POST['toggle']));
 		wp_send_json_success($_POST['toggle']);
 		wp_die();
     }
