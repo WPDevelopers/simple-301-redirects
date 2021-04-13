@@ -5,13 +5,13 @@ import axios from 'axios';
 import InstallPlugin from './../../components/InstallPlugin';
 const propTypes = {};
 const defaultProps = {};
-import { plugin_root_url, nonce, is_betterlinks_activated, hide_btl_notice } from './../../utils/helper';
+import { plugin_root_url, s3r_nonce, is_betterlinks_activated, hide_btl_notice } from './../../utils/helper';
 export default function BetterLinks(props) {
 	const [isHideNotice, setHideNotice] = useState(hide_btl_notice);
 	const noticCloseHandler = () => {
 		let form_data = new FormData();
 		form_data.append('action', 'simple301redirects/admin/hide_notice');
-		form_data.append('security', nonce);
+		form_data.append('security', s3r_nonce);
 		form_data.append('hide', true);
 		return axios.post(ajaxurl, form_data).then(
 			(response) => {

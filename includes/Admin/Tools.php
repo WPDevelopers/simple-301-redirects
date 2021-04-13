@@ -60,7 +60,7 @@ class Tools {
     }
     public function get_import_info()
 	{
-		check_ajax_referer('wp_rest', 'security');
+		check_ajax_referer('simple301redirects', 'security');
 		$results = '';
 		if (isset($_SESSION['simple_301_redirects_import_info'])) {
 			$results = $_SESSION['simple_301_redirects_import_info'];

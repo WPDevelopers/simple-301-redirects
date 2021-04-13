@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { nonce } from './../../utils/helper';
+import { s3r_nonce } from './../../utils/helper';
 
 const propTypes = {};
 
@@ -14,7 +14,7 @@ export default function Tools(props) {
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		if (urlParams.get('import') == 'true') {
-			axios.post(`${ajaxurl}?action=simple301redirects/admin/get_import_info&security=${nonce}`).then(
+			axios.post(`${ajaxurl}?action=simple301redirects/admin/get_import_info&security=${s3r_nonce}`).then(
 				(response) => {
 					setImportResponse(response.data.data);
 				},
