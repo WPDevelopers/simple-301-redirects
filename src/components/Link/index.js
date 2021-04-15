@@ -80,13 +80,12 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 						<img width="25" src={plugin_root_url + 'assets/images/icon-arrow.svg'} alt="doc" />
 					</div>
 					<div className="simple301redirects__managelinks__item__destination">
-						<input
+						<textarea
 							className={showError && localDestination == '' ? 'error' : ''}
-							type="text"
-							name="destination"
 							value={localDestination}
 							onChange={(e) => setDestination(e.target.value)}
 							onKeyPress={keyPressEventHandler}
+							rows="1"
 							required
 						/>
 					</div>

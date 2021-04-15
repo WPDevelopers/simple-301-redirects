@@ -7,7 +7,7 @@
 
 	.simple301redirects__managelinks {
 		background: $white;
-		padding: 30px;
+		padding: 30px 5px 30px 20px;
 		border: 1px solid $light-darken;
 		box-shadow: 0 5px 5px rgba(#ebebeb, 0.05);
 		border-radius: 5px;
@@ -20,6 +20,7 @@
 			&__inner {
 				width: calc(100% - 310px);
 				display: flex;
+				align-items: center;
 				@media screen and (max-width: 991.88px) {
 					width: calc(100% - 305px);
 				}
@@ -28,12 +29,12 @@
 				}
 				.simple301redirects__managelinks__info__request,
 				.simple301redirects__managelinks__item__request {
-					width: calc(50% - 30px);
+					width: calc(35% - 30px);
 					@media screen and (max-width: 1199.88px) {
-						width: calc(50% - 20px);
+						width: calc(35% - 20px);
 					}
 					@media screen and (max-width: 991.88px) {
-						width: calc(50% - 10px);
+						width: calc(35% - 10px);
 					}
 				}
 				.simple301redirects__managelinks__info__request {
@@ -66,12 +67,12 @@
 				}
 				.simple301redirects__managelinks__info__destination,
 				.simple301redirects__managelinks__item__destination {
-					width: calc(50% - 30px);
+					width: calc(65% - 30px);
 					@media screen and (max-width: 1199.88px) {
-						width: calc(50% - 20px);
+						width: calc(65% - 20px);
 					}
 					@media screen and (max-width: 991.88px) {
-						width: calc(50% - 10px);
+						width: calc(65% - 10px);
 					}
 				}
 			}
