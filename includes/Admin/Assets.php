@@ -54,7 +54,7 @@ class Assets {
 				'namespace' =>  'simple301redirects/v1/',
 				'plugin_root_url' => SIMPLE301REDIRECTS_PLUGIN_ROOT_URI,
 				'plugin_root_path' => SIMPLE301REDIRECTS_ROOT_DIR_PATH,
-				'site_url' => site_url(),
+				'site_url' => site_url('/'),
 				'route_path' => parse_url(admin_url(), PHP_URL_PATH),
 				'is_betterlinks_activated' => \Simple301Redirects\Helper::is_activated_betterlinks(),
 				'hide_btl_notice' => get_option('simple301redirects_hide_btl_notice')

@@ -4,6 +4,9 @@ import { site_url, plugin_root_url, copyToClipboard } from './../../utils/helper
 const CopyLink = (props) => {
 	const [isCopyUrl, setCopyUrl] = useState(false);
 	const copyShortUrl = (site_url, request_url) => {
+		if (request_url[0] === '/') {
+			request_url = request_url.substring(1);
+		}
 		let pattern = /^((http|https|ftp):\/\/)/;
 		if (!pattern.test(request_url)) {
 			copyToClipboard(site_url + request_url);
