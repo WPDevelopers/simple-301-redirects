@@ -143,6 +143,9 @@ if (!class_exists("Simple301redirects")) {
 					elseif(urldecode($userrequest) == rtrim($storedrequest,'/')) {
 						// simple comparison redirect
 						$do_redirect = $destination;
+					}elseif(urldecode($userrequest) == ltrim($storedrequest,'/')) {
+						// simple comparison redirect
+						$do_redirect = $destination;
 					}
 					
 					// redirect. the second condition here prevents redirect loops as a result of wildcards.
