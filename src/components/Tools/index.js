@@ -13,7 +13,7 @@ export default function Tools(props) {
 	const [importResponse, setImportResponse] = useState(false);
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
-		if (urlParams.get('import') == 'true') {
+		if (urlParams.get('isImport') == 'true') {
 			axios.post(`${ajaxurl}?action=simple301redirects/admin/get_import_info&security=${s3r_nonce}`).then(
 				(response) => {
 					setImportResponse(response.data.data);
@@ -32,8 +32,10 @@ export default function Tools(props) {
 						<h4>{__('Import Redirect Rules', 'simple-301-redirects')}</h4>
 						<p>{__('Import your 301 Redirect Links from your Device', 'simple-301-redirects')}</p>
 					</div>
-					<form action={'admin.php?page=301options&import=true'} method="POST" encType="multipart/form-data">
+					<form action={'admin.php?page=301options&isImport=true'} method="POST" encType="multipart/form-data">
 						<div role="group" className="simple301redirects-button-group" aria-labelledby="my-radio-group">
+							<input type="hidden" name="import" value={true} />
+							<input type="hidden" name="security" value={s3r_nonce} />
 							<input type="file" id="upload_file" name="upload_file" size="25" />
 							<input
 								type="submit"
@@ -57,7 +59,9 @@ export default function Tools(props) {
 						<h4>{__('Export Redirect Rules', 'simple-301-redirects')}</h4>
 						<p>{__('Export your 301 Redirect Links in .json format', 'simple-301-redirects')}</p>
 					</div>
-					<form action={'admin.php?page=301options&export=true'} method="POST">
+					<form action={'admin.php?page=301options'} method="POST">
+						<input type="hidden" name="export" value={true} />
+						<input type="hidden" name="security" value={s3r_nonce} />
 						<div className="simple301redirects-button-group">
 							<button type="submit" className="btl-export-download-button">
 								{__('Export File', 'simple-301-redirects')}

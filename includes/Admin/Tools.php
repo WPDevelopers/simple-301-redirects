@@ -11,8 +11,9 @@ class Tools {
     public function export_data()
     {
         $page = isset($_GET['page']) ? $_GET['page'] : '';
-		$export = isset($_GET['export']) ? $_GET['export'] : false;
+		$export = isset($_REQUEST['export']) ? $_REQUEST['export'] : false;
 		if ($page === '301options' && $export == true) {
+			check_ajax_referer('simple301redirects', 'security');
 			$content = json_encode(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME));
 			$filename = 'simple-301-redirects.' . date('Y-m-d') . '.json';
 			($file = fopen($filename, 'w')) or die('Unable to open file!');
@@ -32,8 +33,9 @@ class Tools {
     public function import_data()
 	{
 		$page = isset($_GET['page']) ? $_GET['page'] : '';
-		$import = isset($_GET['import']) ? $_GET['import'] : false;
+		$import = isset($_REQUEST['import']) ? $_REQUEST['import'] : false;
 		if ($page === '301options' && $import == true) {
+			check_ajax_referer('simple301redirects', 'security');
 			if (!empty($_FILES['upload_file']['tmp_name'])) {
 				$fileContent = json_decode(file_get_contents($_FILES['upload_file']['tmp_name']), true);
                 if (!empty($fileContent)) {
