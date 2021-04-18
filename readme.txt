@@ -101,7 +101,7 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 == Changelog ==
 
 = 2.0.3 - 18/04/2021 =
-* Fixed: Redirects fail with trailing slash in the Requst URL
+* Fixed: Redirects fail with trailing slash in the Request URL
 * Improved: Import/Export feature for security enhancements
 * Few minor bug fix and improvements
 
