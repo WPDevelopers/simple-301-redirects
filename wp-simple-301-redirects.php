@@ -7,7 +7,7 @@
  * Author URI:      https://wpdeveloper.net/
  * Text Domain:     simple-301-redirects
  * Domain Path:     /languages
- * Version:         2.0.2
+ * Version:         2.0.3
  */
 
 /*  Copyright 2009-2021  WPDeveloper
@@ -66,7 +66,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function define_constants()
 		{
-			define('SIMPLE301REDIRECTS_VERSION', '2.0.2');
+			define('SIMPLE301REDIRECTS_VERSION', '2.0.3');
 			define('SIMPLE301REDIRECTS_SETTINGS_NAME', '301_redirects');
 			define('SIMPLE301REDIRECTS_PLUGIN_FILE', __FILE__);
 			define('SIMPLE301REDIRECTS_PLUGIN_BASENAME', plugin_basename(__FILE__));

@@ -1,10 +1,10 @@
 === Simple 301 Redirects by BetterLinks ===
 Contributors: wpdevteam, asif2bd, re_enter_rupok, tusharimran, scottnelle
 Tags: 301 redirects, 301, shortlinks, link shortener, links, permalink, redirects, seo redirects, url redirect, 301 redirect, url, pretty links, short links, link tracking, affiliate links, urls
-Requires at least: 4.0
+Requires at least: 5.0
 Tested up to: 5.7.1
 Requires PHP: 5.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -99,6 +99,11 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 
 == Changelog ==
+
+= 2.0.3 - 18/04/2021 =
+* Fixed: Redirects fail with trailing slash in the Requst URL
+* Improved: Import/Export feature for security enhancements
+* Few minor bug fix and improvements
 
 = 2.0.2 - 15/04/2021 =
 * Fixed: Link Redirection not working when Shortend URL is shared on Facebook
