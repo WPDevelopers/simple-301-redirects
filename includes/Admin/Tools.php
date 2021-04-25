@@ -12,7 +12,7 @@ class Tools {
     {
         $page = isset($_GET['page']) ? $_GET['page'] : '';
 		$export = isset($_REQUEST['export']) ? $_REQUEST['export'] : false;
-		if ($page === '301options' && $export == true) {
+		if ($page === '301options' && $export == true && current_user_can( 'manage_options' )) {
 			check_ajax_referer('simple301redirects', 'security');
 			$content = json_encode(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME));
 			$filename = 'simple-301-redirects.' . date('Y-m-d') . '.json';
@@ -34,7 +34,7 @@ class Tools {
 	{
 		$page = isset($_GET['page']) ? $_GET['page'] : '';
 		$import = isset($_REQUEST['import']) ? $_REQUEST['import'] : false;
-		if ($page === '301options' && $import == true) {
+		if ($page === '301options' && $import == true && current_user_can( 'manage_options' )) {
 			check_ajax_referer('simple301redirects', 'security');
 			if (!empty($_FILES['upload_file']['tmp_name'])) {
 				$fileContent = json_decode(file_get_contents($_FILES['upload_file']['tmp_name']), true);
