@@ -45,6 +45,7 @@ if (!class_exists("Simple301redirects")) {
 			$this->define_constants();
 			add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
 			add_action('simple301redirects_loaded', [$this, 'init_plugin']);
+			add_filter('jwt_auth_whitelist', [$this, 'whitelist_API']);
 			// add the redirect action, high priority
 			add_action('init', array($this,'redirect'), 1);
 		}
@@ -108,7 +109,7 @@ if (!class_exists("Simple301redirects")) {
 		 * @access public
 		 * @return void
 		 */
-		function redirect() {
+		public function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
 			$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
 			$userrequest = ltrim($userrequest, parse_url(site_url(), PHP_URL_PATH));
@@ -166,12 +167,12 @@ if (!class_exists("Simple301redirects")) {
 		 * @access public
 		 * @return void
 		 */
-		function get_address() {
+		public function get_address() {
 			// return the full address
 			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		} // end function get_address
 		
-		function get_protocol() {
+		public function get_protocol() {
 			// Set the base protocol to http
 			$protocol = 'http';
 			// check for https
@@ -181,10 +182,15 @@ if (!class_exists("Simple301redirects")) {
 			
 			return $protocol;
 		} // end function get_protocol
-		
-	} // end class Simple301Redirects
-	
-} // end check for existance of class
+
+		public function whitelist_API($endpoints)
+		{
+			$endpoints[] = '/wp-json/simple301redirects/v1/*';
+			$endpoints[] = '/index.php?rest_route=/simple301redirects/v1/*';
+			return $endpoints;
+		}
+	} 
+}
 
 
 /**
