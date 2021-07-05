@@ -1,9 +1,6 @@
 import axios from 'axios';
 export const {
-	nonce,
 	s3r_nonce,
-	rest_url,
-	namespace,
 	plugin_root_url,
 	plugin_root_path,
 	site_url,
@@ -11,14 +8,6 @@ export const {
 	is_betterlinks_activated,
 	hide_btl_notice,
 } = window.Simple301Redirects;
-
-export const API = axios.create({
-	baseURL: rest_url,
-	headers: {
-		'content-type': 'application/json',
-		'X-WP-Nonce': nonce,
-	},
-});
 
 export const copyToClipboard = (copyText) => {
 	var tempInput = document.createElement('input');

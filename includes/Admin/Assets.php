@@ -49,10 +49,7 @@ class Assets {
 				true
 			);
 			wp_localize_script('simple-301-redirects-admin-core', 'Simple301Redirects', [
-				'nonce' => wp_create_nonce('wp_rest'),
 				's3r_nonce' => wp_create_nonce('simple301redirects'),
-				'rest_url' => rest_url(),
-				'namespace' =>  'simple301redirects/v1/',
 				'plugin_root_url' => SIMPLE301REDIRECTS_PLUGIN_ROOT_URI,
 				'plugin_root_path' => SIMPLE301REDIRECTS_ROOT_DIR_PATH,
 				'site_url' => site_url('/'),

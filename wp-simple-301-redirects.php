@@ -45,7 +45,6 @@ if (!class_exists("Simple301redirects")) {
 			$this->define_constants();
 			add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
 			add_action('simple301redirects_loaded', [$this, 'init_plugin']);
-			add_filter('jwt_auth_whitelist', [$this, 'whitelist_API']);
 			// add the redirect action, high priority
 			add_action('init', array($this,'redirect'), 1);
 		}
@@ -89,7 +88,6 @@ if (!class_exists("Simple301redirects")) {
 			if (is_admin()) {
 				new Simple301Redirects\Admin();
 			}
-			new Simple301Redirects\API();
 			$this->load_installer();
 		}
 
@@ -182,13 +180,6 @@ if (!class_exists("Simple301redirects")) {
 			
 			return $protocol;
 		} // end function get_protocol
-
-		public function whitelist_API($endpoints)
-		{
-			$endpoints[] = '/wp-json/simple301redirects/v1/*';
-			$endpoints[] = '/index.php?rest_route=/simple301redirects/v1/*';
-			return $endpoints;
-		}
 	} 
 }
 
