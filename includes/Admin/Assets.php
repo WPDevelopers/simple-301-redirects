@@ -40,11 +40,12 @@ class Assets {
 			);
 			wp_enqueue_style('simple-301-redirects-admin-style', SIMPLE301REDIRECTS_ASSETS_URI . 'css/simple-301-redirects.css', [], filemtime(SIMPLE301REDIRECTS_ASSETS_DIR_PATH . 'css/simple-301-redirects.css'), 'all');
 
+			$dependencies = include_once SIMPLE301REDIRECTS_ASSETS_DIR_PATH . 'js/simple-301-redirects.core.min.asset.php';
 			wp_enqueue_script(
 				'simple-301-redirects-admin-core',
 				SIMPLE301REDIRECTS_ASSETS_URI . 'js/simple-301-redirects.core.min.js',
-				['jquery'],
-				filemtime(SIMPLE301REDIRECTS_ASSETS_DIR_PATH . 'js/simple-301-redirects.core.min.js'),
+				$dependencies['dependencies'],
+				$dependencies['version'],
 				true
 			);
 			wp_localize_script('simple-301-redirects-admin-core', 'Simple301Redirects', [
