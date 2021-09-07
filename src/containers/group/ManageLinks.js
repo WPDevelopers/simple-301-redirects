@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import { site_url, s3r_nonce, is_betterlinks_activated } from './../../utils/helper';
@@ -13,30 +13,32 @@ const defaultProps = {};
 export default function ManageLinks(props) {
 	const [links, setLinks] = useState({});
 	useEffect(() => {
-		return axios.get(ajaxurl, {
-			params: {
-				action: 'simple301redirects/admin/fetch_all_links',
-				security: s3r_nonce
-			}
-		}).then(
-			(response) => {
-				if(response.data){
-					setLinks(response.data.data)
+		return axios
+			.get(ajaxurl, {
+				params: {
+					action: 'simple301redirects/admin/fetch_all_links',
+					security: s3r_nonce,
+				},
+			})
+			.then(
+				(response) => {
+					if (response.data) {
+						setLinks(response.data.data);
+					}
+				},
+				(error) => {
+					console.log(error);
 				}
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
+			);
 	}, []);
 
 	const clickHandler = (type, data = {}) => {
 		if (type == 'new') {
-			createLink(data)
+			createLink(data);
 		} else if (type == 'update') {
-			updateLink(data)
+			updateLink(data);
 		} else if (type == 'delete') {
-			deleteLink(data)
+			deleteLink(data);
 		}
 	};
 
@@ -48,7 +50,7 @@ export default function ManageLinks(props) {
 		form_data.append('value', Object.values(data));
 		return axios.post(ajaxurl, form_data).then(
 			(response) => {
-				if(response.data){
+				if (response.data) {
 					setLinks({ ...links, ...data });
 				}
 			},
@@ -56,7 +58,7 @@ export default function ManageLinks(props) {
 				console.log(error);
 			}
 		);
-	}
+	};
 
 	const updateLink = (data) => {
 		const [key] = Object.keys(data);
@@ -69,17 +71,17 @@ export default function ManageLinks(props) {
 		form_data.append('oldKey', oldKey);
 		return axios.post(ajaxurl, form_data).then(
 			(response) => {
-				if(response.data){
+				if (response.data) {
 					setTimeout(() => {
 						setLinks(response.data.data);
-					}, 2000)
+					}, 2000);
 				}
 			},
 			(error) => {
 				console.log(error);
 			}
 		);
-	}
+	};
 
 	const deleteLink = (data) => {
 		const [key] = Object.keys(data);
@@ -89,7 +91,7 @@ export default function ManageLinks(props) {
 		form_data.append('key', key);
 		return axios.post(ajaxurl, form_data).then(
 			(response) => {
-				if(response.data){
+				if (response.data) {
 					delete links[key];
 					setLinks({ ...links });
 				}
@@ -98,7 +100,7 @@ export default function ManageLinks(props) {
 				console.log(error);
 			}
 		);
-	}
+	};
 
 	return (
 		<React.Fragment>
@@ -111,7 +113,7 @@ export default function ManageLinks(props) {
 						</div>
 						<div className="simple301redirects__managelinks__info__destination">
 							<h4>{__('Destination', 'simple-301-redirects')}</h4>
-							<p>{`example: ${site_url}/new-page/`}</p>
+							<p>{`example: ${site_url}new-page/`}</p>
 						</div>
 					</div>
 				</div>
