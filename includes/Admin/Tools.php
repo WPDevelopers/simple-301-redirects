@@ -52,7 +52,7 @@ class Tools
                 $fileContent = fopen($file['tmp_name'], "r");
                 if (!empty($fileContent)) {
                     $results = $this->process_data($fileContent);
-                    $_SESSION['simple_301_redirects_import_info'] = json_encode($results);
+                    set_transient('simple_301_redirects_import_info', json_encode($results), 60 * 60 * 5);
                 }
             }
         }
@@ -72,7 +72,6 @@ class Tools
             $item = \Simple301Redirects\Helper::sanitize_text_or_array_field($item);
             $data[$item['request']] = $item['destination'];
         }
-        
         if (count($data) > 0) {
             $oldData = get_option(SIMPLE301REDIRECTS_SETTINGS_NAME);
             $value = (!empty($oldData) ? array_unique(array_merge(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME), $data)) : $data);
@@ -88,12 +87,13 @@ class Tools
     public function get_import_info()
     {
         check_ajax_referer('simple301redirects', 'security');
-        $results = '';
-        if (isset($_SESSION['simple_301_redirects_import_info'])) {
-            $results = $_SESSION['simple_301_redirects_import_info'];
-            unset($_SESSION['simple_301_redirects_import_info']);
+        $results = get_transient('simple_301_redirects_import_info');
+        if ($results) {
+            delete_transient('simple_301_redirects_import_info');
+            wp_send_json_success($results);
+            wp_die();
         }
-        wp_send_json_success($results);
+        wp_send_json_error($results);
         wp_die();
     }
 }
