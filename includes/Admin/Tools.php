@@ -48,7 +48,7 @@ class Tools
         if ($page === '301options' && $import == true && current_user_can('manage_options')) {
             check_ajax_referer('simple301redirects', 'security');
             $file = $_FILES['upload_file'];
-            if (!empty($file['tmp_name']) && $file['type'] === 'text/csv') {
+            if (!empty($file['tmp_name']) && 'csv' === pathinfo($file['name'])[ 'extension' ]) {
                 $fileContent = fopen($file['tmp_name'], "r");
                 if (!empty($fileContent)) {
                     $results = $this->process_data($fileContent);
