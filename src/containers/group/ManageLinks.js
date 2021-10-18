@@ -13,7 +13,7 @@ const defaultProps = {};
 export default function ManageLinks(props) {
 	const [links, setLinks] = useState({});
 	useEffect(() => {
-		return axios
+		axios
 			.get(ajaxurl, {
 				params: {
 					action: 'simple301redirects/admin/fetch_all_links',

@@ -15,7 +15,7 @@ export default function WildCards(props) {
 		let form_data = new FormData();
 		form_data.append('action', 'simple301redirects/admin/get_wildcard');
 		form_data.append('security', s3r_nonce);
-		return axios.post(ajaxurl, form_data).then(
+		axios.post(ajaxurl, form_data).then(
 			(response) => {
 				setChecked(response.data.data == 'true' ? true : false);
 				setFetch(true);
