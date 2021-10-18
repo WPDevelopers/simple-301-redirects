@@ -57,7 +57,7 @@ export default function Tools(props) {
 				<div className="simple301redirects__export">
 					<div className="simple301redirects__export__head">
 						<h4>{__('Export Redirect Rules', 'simple-301-redirects')}</h4>
-						<p>{__('Export your 301 Redirect Links in .json format', 'simple-301-redirects')}</p>
+						<p>{__('Export your 301 Redirect Links in .csv format', 'simple-301-redirects')}</p>
 					</div>
 					<form action={'admin.php?page=301options'} method="POST">
 						<input type="hidden" name="export" value={true} />

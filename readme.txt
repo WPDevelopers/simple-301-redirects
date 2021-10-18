@@ -31,7 +31,7 @@ By setting up 301 redirects from your old pages to your new pages, any incoming 
 
 **◾Import Redirect Rules:** You can import redirects links in bulk from your device and upload using this plugin to manage links
 
-**◾ Export Redirect Rules:** You can also export your 301 Redirect Links in .json format to use in future
+**◾ Export Redirect Rules:** You can also export your 301 Redirect Links in .csv format to use in future
 
 ◾ **Wildcards:** It will redirect all files within a directory to the same filename in the redirected directory. To use wildcards, put an asterisk (\*) after the folder name that you want to redirect. Example:
 
