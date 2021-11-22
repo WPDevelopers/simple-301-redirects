@@ -594,7 +594,7 @@ class PluginUsageTracker {
         if( isset( $block_notice[$this->plugin_name] ) ) {
             return;
         }
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( ! current_user_can( SIMPLE301REDIRECTS_CAPABILITY ) ) {
             return;
         }
 

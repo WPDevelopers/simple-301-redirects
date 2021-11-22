@@ -18,7 +18,7 @@ class Menu {
      * @return void
      */
     public function create_menu() {
-        add_options_page('301 Redirects', '301 Redirects', 'manage_options', '301options', array($this,'load_main_template'));
+        add_options_page('301 Redirects', '301 Redirects', SIMPLE301REDIRECTS_CAPABILITY, '301options', array($this,'load_main_template'));
     }
 
     public function load_main_template()

@@ -75,6 +75,9 @@ if (!class_exists("Simple301redirects")) {
 			define('SIMPLE301REDIRECTS_ROOT_DIR_PATH', plugin_dir_path(__FILE__));
 			define('SIMPLE301REDIRECTS_ASSETS_DIR_PATH', SIMPLE301REDIRECTS_ROOT_DIR_PATH . 'assets/');
 			define('SIMPLE301REDIRECTS_ASSETS_URI', SIMPLE301REDIRECTS_PLUGIN_ROOT_URI . 'assets/');
+			if (!defined('SIMPLE301REDIRECTS_CAPABILITY')) {
+				define('SIMPLE301REDIRECTS_CAPABILITY', 'manage_options');
+			}
 		}
 
 		/**
