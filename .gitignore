@@ -6,3 +6,4 @@ assets/js/*.txt
 .git
 *.xml
 **/*.map
+.vscode/launch.json
