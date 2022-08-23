@@ -186,6 +186,7 @@ class PluginUsageTracker {
      * @param $force	Force tracking if it's not the correct time to track/
      */
     public function do_tracking( $force = false ) {
+        error_log('do_tracking');
         /**
          * Check URL is set or not.
          */

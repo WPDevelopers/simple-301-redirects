@@ -37,16 +37,19 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
 
 
 if (!class_exists("Simple301redirects")) {
-	
+
 	final class Simple301Redirects {
 
 		private function __construct()
 		{
 			$this->define_constants();
 			add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
-			add_action('simple301redirects_loaded', [$this, 'init_plugin']);
-			// add the redirect action, high priority
-			add_action('init', array($this,'redirect'), 1);
+
+			if( ! defined('WP_CLI') || ( defined('WP_CLI') && ! WP_CLI ) ) {
+				add_action('simple301redirects_loaded', [$this, 'init_plugin']);
+				// add the redirect action, high priority
+				add_action('init', array($this,'redirect'), 1);
+			}
 		}
 		public static function init()
 		{
@@ -102,30 +105,30 @@ if (!class_exists("Simple301redirects")) {
 		}
 		/**
 		 * redirect function
-		 * Read the list of redirects and if the current page 
+		 * Read the list of redirects and if the current page
 		 * is found in the list, send the visitor on her way
 		 * @access public
 		 * @return void
 		 */
 		public function redirect() {
 			// this is what the user asked for (strip out home portion, case insensitive)
-			$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
-			$userrequest = ltrim($userrequest, parse_url(site_url(), PHP_URL_PATH));
-			$param = explode('?', $userrequest, 2);
-			$userrequest = current($param);
-			
+
 			$redirects = get_option('301_redirects');
 			if (!empty($redirects)) {
-				
+				$userrequest = \Simple301Redirects\Helper::str_ireplace(get_option('home'),'',$this->get_address());
+				$userrequest = ltrim($userrequest);
+				$param = explode('?', $userrequest, 2);
+				$userrequest = current($param);
+
 				$wildcard = get_option('301_redirects_wildcard');
 				$do_redirect = '';
-				
+
 				// compare user request to each 301 stored in the db
 				foreach ($redirects as $storedrequest => $destination) {
-					// check if we should use regex search 
+					// check if we should use regex search
 					if ($wildcard === 'true' && strpos($storedrequest,'*') !== false) {
 						// wildcard redirect
-						
+
 						// don't allow people to accidentally lock themselves out of admin
 						if ( strpos($userrequest, '/wp-login') !== 0 && strpos($userrequest, '/wp-admin') !== 0 ) {
 							// Make sure it gets all the proper decoding and rtrim action
@@ -142,7 +145,7 @@ if (!class_exists("Simple301redirects")) {
 						// simple comparison redirect
 						$do_redirect = $destination;
 					}
-					
+
 					// redirect. the second condition here prevents redirect loops as a result of wildcards.
 					if ($do_redirect !== '' && trim($do_redirect,'/') !== trim($userrequest,'/')) {
 						// check if destination needs the domain prepended
@@ -157,7 +160,7 @@ if (!class_exists("Simple301redirects")) {
 				}
 			}
 		} // end funcion redirect
-		
+
 		/**
 		 * getAddress function
 		 * utility function to get the full address of the current request
@@ -169,18 +172,18 @@ if (!class_exists("Simple301redirects")) {
 			// return the full address
 			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 		} // end function get_address
-		
+
 		public function get_protocol() {
 			// Set the base protocol to http
 			$protocol = 'http';
 			// check for https
 			if ( isset( $_SERVER["HTTPS"] ) && strtolower( $_SERVER["HTTPS"] ) == "on" ) {
-    			$protocol .= "s";
+				$protocol .= "s";
 			}
-			
+
 			return $protocol;
 		} // end function get_protocol
-	} 
+	}
 }
 
 
