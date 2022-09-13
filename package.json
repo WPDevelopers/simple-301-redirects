@@ -20,9 +20,12 @@
 	},
 	"author": "wpdevteam",
 	"dependencies": {
-		"@wordpress/i18n": "^4.1.1",
-		"@wordpress/scripts": "^16.1.4",
 		"axios": "^0.21.1",
 		"prop-types": "^15.7.2"
+	},
+	"devDependencies": {
+		"@wordpress/dependency-extraction-webpack-plugin": "^4.0.0",
+		"@wordpress/i18n": "^4.16.0",
+		"@wordpress/scripts": "^24.0.0"
 	}
 }
