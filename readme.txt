@@ -1,10 +1,10 @@
 === Simple 301 Redirects by BetterLinks ===
-Contributors: wpdevteam, asif2bd, re_enter_rupok, tusharimran, scottnelle
+Contributors: wpdevteam, asif2bd, re_enter_rupok, scottnelle
 Tags: 301 redirects, 301, shortlinks, link shortener, links, permalink, redirects, seo redirects, url redirect, 301 redirect, url, pretty links, short links, link tracking, affiliate links, urls
 Requires at least: 5.0
 Tested up to: 5.8
 Requires PHP: 5.4
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -100,6 +100,10 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 == Changelog ==
 
+= 2.0.7 - 13/09/2022 =
+* Fixed: WP-CLI issue.
+* Few minor bug fix and improvements
+
 = 2.0.6 - 19/10/2021 =
 * Added: CSV Import/Export option
 * Few minor bug fix and improvements
@@ -163,5 +167,5 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 = 1.0 =
 * Initial Release
 
-== Upgrade Notice == 
+== Upgrade Notice ==
 [Major Update] Bugfix, new design, and stability

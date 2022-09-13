@@ -3,7 +3,8 @@
 	"description": "Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support.",
 	"authors": [
 		{
-			"name": "wpdevteam"
+			"name": "WPDeveloper",
+			"email": "support@wpdeveloper.com"
 		}
 	],
 	"require": {},
