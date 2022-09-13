@@ -20,3 +20,4 @@ src                export-ignore
 assets/scss        export-ignore
 .editorconfig      export-ignore
 .eslintrc.json     export-ignore
+.wordpress-org     export-ignore

@@ -20,3 +20,4 @@ src
 assets/scss
 .editorconfig
 .eslintrc.json
+.wordpress-org
