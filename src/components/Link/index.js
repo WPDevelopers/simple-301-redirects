@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import InstallPlugin from './../InstallPlugin';
 import CopyLink from './../CopyLink';
-import UpdateLink from './../UpdateLink';
+import UpdateLink from './../updateLink';
 import { plugin_root_url, is_betterlinks_activated } from './../../utils/helper';
 const propTypes = {
 	request: PropTypes.string,
