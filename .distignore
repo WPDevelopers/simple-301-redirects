@@ -1,5 +1,7 @@
 .babelrc
+.github
 .gitignore
+.gitattributes
 .distignore
 package-lock.json
 package.json
@@ -16,3 +18,5 @@ prepros.config
 .prettierrc.json
 src
 assets/scss
+.editorconfig
+.eslintrc.json
