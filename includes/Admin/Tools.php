@@ -1,6 +1,7 @@
 <?php
 namespace Simple301Redirects\Admin;
 
+#[\AllowDynamicProperties]
 class Tools
 {
     public function __construct()
@@ -74,7 +75,7 @@ class Tools
         }
         if (count($data) > 0) {
             $oldData = get_option(SIMPLE301REDIRECTS_SETTINGS_NAME);
-            $value = (!empty($oldData) ? array_unique(array_merge(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME), $data)) : $data);
+            $value = (!empty($oldData) ? array_merge(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME), $data) : $data);
             $restuls = update_option(SIMPLE301REDIRECTS_SETTINGS_NAME, $value);
             if ($restuls) {
                 $message = 'All Data has been successfully Imported.';

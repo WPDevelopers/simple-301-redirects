@@ -7,6 +7,7 @@ namespace Simple301Redirects\Admin\WPDev;
  * @version 3.0.0
  */
 
+ #[\AllowDynamicProperties]
 class PluginUsageTracker {
     /**
      * WP Insights Version

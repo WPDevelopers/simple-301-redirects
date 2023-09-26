@@ -169,9 +169,11 @@ if (!class_exists("Simple301redirects")) {
 		 * @return void
 		 */
 		public function get_address() {
+			if( !( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) ) return;
+			
 			// return the full address
 			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		} // end function get_address
+		}
 
 		public function get_protocol() {
 			// Set the base protocol to http
