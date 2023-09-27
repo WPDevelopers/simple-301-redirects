@@ -4,7 +4,7 @@ Tags: 301 redirects, 301, shortlinks, link shortener, links, permalink, redirect
 Requires at least: 5.0
 Tested up to: 6.3
 Requires PHP: 5.4
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -99,6 +99,10 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 
 == Changelog ==
+
+= 2.0.9 - 27/09/2023 =
+* Fixed: Import Related Issue.
+* Few minor bug fix and improvements
 
 = 2.0.8 - 30/08/2023 =
 * Fixed: Vulnerability Issue.
