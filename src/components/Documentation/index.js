@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
 import { plugin_root_url } from './../../utils/helper';
-
-const propTypes = {};
-
-const defaultProps = {};
 
 export default function Documentation(props) {
 	const [isOpen, setOpen] = useState(false);
@@ -97,6 +92,3 @@ export default function Documentation(props) {
 		</React.Fragment>
 	);
 }
-
-Documentation.propTypes = propTypes;
-Documentation.defaultProps = defaultProps;

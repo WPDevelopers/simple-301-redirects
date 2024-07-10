@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { s3r_nonce } from './../../utils/helper';
-const propTypes = {};
-
-const defaultProps = {};
 
 export default function WildCards(props) {
 	const [savedText, setSavedText] = useState('');
@@ -61,6 +57,3 @@ export default function WildCards(props) {
 		</React.Fragment>
 	);
 }
-
-WildCards.propTypes = propTypes;
-WildCards.defaultProps = defaultProps;

@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
 import { site_url, s3r_nonce, is_betterlinks_activated } from './../../utils/helper';
 import WildCards from './../../components/WildCards';
 import Link from './../../components/Link';
-
-const propTypes = {};
-
-const defaultProps = {};
 
 export default function ManageLinks(props) {
 	const [links, setLinks] = useState({});
@@ -126,6 +121,3 @@ export default function ManageLinks(props) {
 		</React.Fragment>
 	);
 }
-
-ManageLinks.propTypes = propTypes;
-ManageLinks.defaultProps = defaultProps;
