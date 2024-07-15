@@ -1,7 +1,7 @@
 === Simple 301 Redirects By BetterLinks - Easy WordPress Redirect Manager for Redirects, 404 Error Log & More ===
 Contributors: wpdevteam, asif2bd, re_enter_rupok, scottnelle
 Tags: 301 redirect, 404 error log, redirect url, link shortener, url redirects, 301, shortlinks, links, permalink, redirects, seo redirects, url redirect, url, pretty links, short links, link tracking, affiliate links, urls
-Requires at least: 6.2
+Requires at least: 5.3
 Tested up to: 6.6
 Requires PHP: 7.4
 Stable tag: 2.1.0
@@ -127,7 +127,7 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 == Changelog ==
 
 = 2.0.10 - 14/07/2024 =
-* Added: WordPress 6.6 compatibility 
+* Added: WordPress 6.6 Compatibility 
 * Few minor bug fix and improvements
 
 = 2.0.9 - 27/09/2023 =
