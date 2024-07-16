@@ -44,7 +44,7 @@ class Assets {
 			wp_enqueue_script(
 				'simple-301-redirects-admin-core',
 				SIMPLE301REDIRECTS_ASSETS_URI . 'js/simple-301-redirects.core.min.js',
-				$dependencies['dependencies'],
+				array_merge( $dependencies['dependencies'], ['regenerator-runtime'] ),
 				$dependencies['version'],
 				true
 			);
