@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import InstallPlugin from './../../components/InstallPlugin';
-const propTypes = {};
-const defaultProps = {};
+
 import { plugin_root_url, s3r_nonce, is_betterlinks_activated, hide_btl_notice } from './../../utils/helper';
 export default function BetterLinks(props) {
 	const [isHideNotice, setHideNotice] = useState(hide_btl_notice);
@@ -19,7 +17,7 @@ export default function BetterLinks(props) {
 			},
 			(error) => {
 				console.log(error);
-			}
+			},
 		);
 	};
 	return (
@@ -32,8 +30,16 @@ export default function BetterLinks(props) {
 					<div className="simple301redirects__betterlinks__content">
 						<h3>{__('BetterLinks – Shorten, Track and Manage any URL', 'simple-301-redirects')}</h3>
 						<h4>
-							{__('Install BetterLinks to get the best out of Simple 301 Redirects and get access to more advanced features. Check out the features below', 'simple-301-redirects')}
-							<img width="18" style={{ transform: 'translateY(6px) scale(1.5)', marginLeft: 8 }} src={plugin_root_url + 'assets/images/pointing-down.svg'} alt="logo" />
+							{__(
+								'Install BetterLinks to get the best out of Simple 301 Redirects and get access to more advanced features. Check out the features below',
+								'simple-301-redirects',
+							)}
+							<img
+								width="18"
+								style={{ transform: 'translateY(6px) scale(1.5)', marginLeft: 8 }}
+								src={plugin_root_url + 'assets/images/pointing-down.svg'}
+								alt="logo"
+							/>
 						</h4>
 						<ul>
 							<li>{__('Easy-to-use & Simple Link Shortener', 'simple-301-redirects')}</li>
@@ -53,5 +59,3 @@ export default function BetterLinks(props) {
 		</React.Fragment>
 	);
 }
-BetterLinks.propTypes = propTypes;
-BetterLinks.defaultProps = defaultProps;

@@ -1,11 +1,6 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
 import { plugin_root_url } from './../../utils/helper';
-
-const propTypes = {};
-
-const defaultProps = {};
 
 export default function TopBar(props) {
 	return (
@@ -19,6 +14,3 @@ export default function TopBar(props) {
 		</React.Fragment>
 	);
 }
-
-TopBar.propTypes = propTypes;
-TopBar.defaultProps = defaultProps;

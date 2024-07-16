@@ -11,12 +11,7 @@ const propTypes = {
 	isNewLink: PropTypes.bool,
 	clickHandler: PropTypes.func,
 };
-const defaultProps = {
-	request: '',
-	destination: '',
-	isNewLink: false,
-};
-export default function Link({ request, destination, isNewLink, clickHandler }) {
+export default function Link({ request = '', destination = '', isNewLink = false, clickHandler }) {
 	const [localRequest, setLocalRequest] = useState('');
 	const [localDestination, setDestination] = useState('');
 	useEffect(() => {
@@ -121,4 +116,3 @@ export default function Link({ request, destination, isNewLink, clickHandler }) 
 	);
 }
 Link.propTypes = propTypes;
-Link.defaultProps = defaultProps;
