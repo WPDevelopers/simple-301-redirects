@@ -6,11 +6,8 @@ const propTypes = {
 	label: PropTypes.string,
 };
 
-const defaultProps = {
-	label: '',
-};
 
-export default function InstallPlugin({ label }) {
+export default function InstallPlugin({ label = '' }) {
 	const [installButtonMessage, setInstallButtonMessage] = useState(label);
 	const installHandler = async () => {
 		setInstallButtonMessage('Installing...');
@@ -36,4 +33,3 @@ export default function InstallPlugin({ label }) {
 }
 
 InstallPlugin.propTypes = propTypes;
-InstallPlugin.defaultProps = defaultProps;

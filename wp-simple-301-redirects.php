@@ -7,7 +7,7 @@
  * Author URI:      https://wpdeveloper.net/
  * Text Domain:     simple-301-redirects
  * Domain Path:     /languages
- * Version:         2.0.9
+ * Version:         2.0.10
  */
 
 /*  Copyright 2009-2021  WPDeveloper
@@ -69,7 +69,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function define_constants()
 		{
-			define('SIMPLE301REDIRECTS_VERSION', '2.0.9');
+			define('SIMPLE301REDIRECTS_VERSION', '2.0.10');
 			define('SIMPLE301REDIRECTS_SETTINGS_NAME', '301_redirects');
 			define('SIMPLE301REDIRECTS_PLUGIN_FILE', __FILE__);
 			define('SIMPLE301REDIRECTS_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -169,7 +169,7 @@ if (!class_exists("Simple301redirects")) {
 		 * @return void
 		 */
 		public function get_address() {
-			if( !( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) ) return;
+			if( ! isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) return;
 
 			// return the full address
 			return $this->get_protocol().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

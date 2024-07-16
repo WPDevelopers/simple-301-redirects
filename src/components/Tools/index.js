@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { __ } from '@wordpress/i18n';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import { s3r_nonce } from './../../utils/helper';
 
-const propTypes = {};
-
-const defaultProps = {};
-
 export default function Tools(props) {
-	const [isOpen, setOpen] = useState(false);
 	const [importResponse, setImportResponse] = useState(false);
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
@@ -73,6 +67,3 @@ export default function Tools(props) {
 		</React.Fragment>
 	);
 }
-
-Tools.propTypes = propTypes;
-Tools.defaultProps = defaultProps;
