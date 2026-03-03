@@ -141,7 +141,7 @@ if (!class_exists("Simple301redirects")) {
 								$do_redirect = $output;
 							}
 						}
-					}elseif(urldecode(trim($userrequest, '/')) == trim($storedrequest,'/')){
+					}elseif(urldecode(trim((string) $userrequest, '/')) == trim((string) $storedrequest,'/')){
 						// simple comparison redirect
 						$do_redirect = $destination;
 					}
