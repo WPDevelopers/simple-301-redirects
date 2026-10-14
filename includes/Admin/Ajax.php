@@ -32,8 +32,12 @@ class Ajax {
     public function install_plugin()
     {
         check_ajax_referer('simple301redirects', 'security');
-        if( ! current_user_can( 'manage_options' ) ) wp_die();
+        if( ! current_user_can( 'install_plugins' ) ) wp_die();
         $slug = isset($_POST['slug']) ? sanitize_text_field($_POST['slug']) : '';
+        // The only plugin this page offers to install is BetterLinks from WordPress.org.
+        if ($slug !== 'betterlinks') {
+            wp_send_json_error(__('This plugin can\'t be installed from here.', 'simple-301-redirects'));
+        }
         $result = \Simple301Redirects\Helper::install_plugin($slug);
         if (is_wp_error($result)) {
             wp_send_json_error($result->get_error_message());
@@ -45,8 +49,11 @@ class Ajax {
     public function activate_plugin()
     {
         check_ajax_referer('simple301redirects', 'security');
-        if( ! current_user_can( 'manage_options' ) ) wp_die();
+        if( ! current_user_can( 'activate_plugins' ) ) wp_die();
         $basename = isset($_POST['basename']) ? sanitize_text_field($_POST['basename']) : '';
+        if ($basename !== 'betterlinks/betterlinks.php') {
+            wp_send_json_error(__('This plugin can\'t be activated from here.', 'simple-301-redirects'));
+        }
         $result = activate_plugin($basename, '', false );
         if (is_wp_error($result)) {
             wp_send_json_error($result->get_error_message());

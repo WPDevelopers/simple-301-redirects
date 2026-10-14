@@ -18,7 +18,7 @@ class Tools
             check_ajax_referer('simple301redirects', 'security');
             $content = get_option(SIMPLE301REDIRECTS_SETTINGS_NAME);
             $content = $this->prepare_csv_file_data(get_option(SIMPLE301REDIRECTS_SETTINGS_NAME));
-            $filename = 'simple-301-redirects.' . date('Y-m-d') . '.csv';
+            $filename = 'simple-301-redirects.' . gmdate('Y-m-d') . '.csv';
             header('Content-Type: application/csv');
             header('Content-Disposition: attachment; filename="'.$filename.'";');
             $f = fopen('php://output', 'w');
@@ -50,7 +50,8 @@ class Tools
             check_ajax_referer('simple301redirects', 'security');
             $file = $_FILES['upload_file'];
             if (!empty($file['tmp_name']) && 'csv' === pathinfo($file['name'])[ 'extension' ]) {
-                $fileContent = fopen($file['tmp_name'], "r");
+                // Streams the uploaded CSV row by row; WP_Filesystem has no stream reader.
+                $fileContent = fopen($file['tmp_name'], "r"); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
                 if (!empty($fileContent)) {
                     $results = $this->process_data($fileContent);
                     set_transient('simple_301_redirects_import_info', json_encode($results), 60 * 60 * 5);
@@ -88,6 +89,7 @@ class Tools
     public function get_import_info()
     {
         check_ajax_referer('simple301redirects', 'security');
+        if( ! current_user_can( 'manage_options' ) ) wp_die();
         $results = get_transient('simple_301_redirects_import_info');
         if ($results) {
             delete_transient('simple_301_redirects_import_info');
