@@ -4,7 +4,7 @@ Tags: 301 redirect, redirects, url redirect, seo redirects, wildcard redirect
 Requires at least: 5.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -156,6 +156,9 @@ The settings page offers to install our free BetterLinks plugin. Only when an ad
 
 
 == Changelog ==
+
+= 2.1.1 - 15/10/2026 =
+* Few minor bug fixes & improvements
 
 = 2.1.0 - 08/02/2026 =
 * Fixed: PHP issue caused by incorrect _load_textdomain_just_in_time() usage.
