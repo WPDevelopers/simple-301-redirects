@@ -266,11 +266,11 @@ msgid "Add New"
 msgstr ""
 
 #: src/components/Link/index.js:100
-msgid "ANALYTICS"
+msgid "Track clicks"
 msgstr ""
 
 #: src/components/Link/index.js:103
-msgid "Click analytics are available in our free BetterLinks plugin."
+msgid "See how many visitors use this redirect with BetterLinks (free)."
 msgstr ""
 
 #: src/components/Tools/index.js:26
