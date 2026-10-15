@@ -100,7 +100,7 @@ export default function Link({ request = '', destination = '', isNewLink = false
 									<span>{__('Track clicks', 'simple-301-redirects')}</span>
 									<div className="s3r-tooltiptext-wrapper">
 										<div className="s3r-tooltiptext">
-											{__('See how many visitors use this redirect with BetterLinks (free).', 'simple-301-redirects')} <InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
+											{__('To See Analytics Data', 'simple-301-redirects')} <InstallPlugin label={__('Install BetterLinks', 'simple-301-redirects')} />
 										</div>
 									</div>
 								</div>

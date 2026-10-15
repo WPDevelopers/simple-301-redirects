@@ -270,7 +270,7 @@ msgid "Track clicks"
 msgstr ""
 
 #: src/components/Link/index.js:103
-msgid "See how many visitors use this redirect with BetterLinks (free)."
+msgid "To See Analytics Data"
 msgstr ""
 
 #: src/components/Tools/index.js:26
