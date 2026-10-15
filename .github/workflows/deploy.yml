@@ -8,14 +8,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
-      - name: Running NPM Install
-        run: npm install
-      - name: Running NPM Build
-        run: npm run build
+          node-version: '20'
+      - name: Install dependencies (from yarn.lock)
+        run: yarn install --frozen-lockfile
+      - name: Build JS and CSS
+        run: yarn build
       - name: WordPress Plugin Deploy
         id: deploy
         uses: 10up/action-wordpress-plugin-deploy@stable

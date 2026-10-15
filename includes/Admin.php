@@ -30,7 +30,7 @@ class Admin {
     public function skip_no_conflict()
 	{
 		$whitelist = ['127.0.0.1', '::1'];
-		if (in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+		if (isset($_SERVER['REMOTE_ADDR']) && in_array($_SERVER['REMOTE_ADDR'], $whitelist, true)) {
 			return true;
 		}
 		return false;
@@ -44,11 +44,13 @@ class Admin {
         ] );
         add_action('init', function() use ($tracker) {
             $tracker->set_notice_options(array(
-                'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? You can get a <strong>10% discount</strong> coupon on our Premium products if you allow us to track the non-sensitive usage data.', 'simple-301-redirects' ),
-                'extra_notice' => __( 'We collect non-sensitive diagnostic data and plugin usage information. 
-                Your site URL, WordPress & PHP version, plugins & themes and email address to send you the 
-                discount coupon. This data lets us make sure this plugin always stays compatible with the most 
-                popular plugins and themes. No spam, I promise.', 'simple-301-redirects' ),
+                'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper and get a <strong>10% discount</strong> coupon on our Premium products.', 'simple-301-redirects' ),
+                'extra_notice' => sprintf(
+                    /* translators: 1: external service host name, 2: privacy policy URL. */
+                    __( 'If you allow it, Simple 301 Redirects sends these details to WPDeveloper\'s WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version, the Simple 301 Redirects version, and the email address of the administrator who allows tracking (used to send the discount coupon). They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with the email address of the administrator who deactivates it and any reason they enter in the deactivation form. Like any web request, this also reveals your server\'s IP address. Nothing is sent if you click "No Thanks." <a href="%2$s" target="_blank" rel="noopener noreferrer">Privacy Policy</a>', 'simple-301-redirects' ),
+                    '<code>send.wpinsight.com</code>',
+                    esc_url( 'https://wpdeveloper.com/privacy-policy/' )
+                ),
             ));
         });
         $tracker->init();

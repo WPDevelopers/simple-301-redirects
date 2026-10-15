@@ -32,38 +32,28 @@ class Helper
     public static function get_remote_plugin_data($slug = '')
     {
         if (empty($slug)) {
-            return new \WP_Error('empty_arg', __('Argument should not be empty.'));
+            return new \WP_Error('empty_arg', __('Argument should not be empty.', 'simple-301-redirects'));
         }
 
-        $response = wp_remote_post(
-            'http://api.wordpress.org/plugins/info/1.0/',
-            [
-                'body' => [
-                    'action' => 'plugin_information',
-                    'request' => serialize((object) [
-                        'slug' => $slug,
-                        'fields' => [
-                            'version' => false,
-                        ],
-                    ]),
-                ],
-            ]
-        );
+        include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
 
-        if (is_wp_error($response)) {
-            return $response;
-        }
-
-        return unserialize(wp_remote_retrieve_body($response));
+        // Core's WordPress.org Plugins API client (HTTPS, JSON).
+        return plugins_api('plugin_information', [
+            'slug' => $slug,
+            'fields' => [
+                'sections' => false,
+            ],
+        ]);
     }
 
     public static function install_plugin($slug = '', $active = true)
     {
         if (empty($slug)) {
-            return new \WP_Error('empty_arg', __('Argument should not be empty.'));
+            return new \WP_Error('empty_arg', __('Argument should not be empty.', 'simple-301-redirects'));
         }
 
         include_once ABSPATH . 'wp-admin/includes/file.php';
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
         include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
         include_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
 

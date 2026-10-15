@@ -4,7 +4,9 @@
 	"description": "Simple 301 Redirects",
 	"main": "index.js",
 	"scripts": {
-		"build": "wp-scripts build",
+		"build": "npm run build:js && npm run build:css",
+		"build:js": "wp-scripts build",
+		"build:css": "sass --no-source-map --style=compressed assets/scss/simple-301-redirects.scss assets/css/simple-301-redirects.css",
 		"check-engines": "wp-scripts check-engines",
 		"check-licenses": "wp-scripts check-licenses",
 		"format": "wp-scripts format",
@@ -27,6 +29,7 @@
 		"@babel/preset-env": "^7.24.7",
 		"@babel/preset-react": "^7.24.7",
 		"@wordpress/i18n": "^4.16.0",
-		"@wordpress/scripts": "^27.0.0"
+		"@wordpress/scripts": "^27.0.0",
+		"sass": "^1.35.2"
 	}
 }

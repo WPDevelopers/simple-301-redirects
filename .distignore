@@ -1,14 +1,10 @@
-.babelrc
 .github
 .gitignore
 .gitattributes
 .distignore
 package-lock.json
-package.json
-webpack.config.js
 .git
 node_modules
-composer.json
 composer.lock
 prepros.config
 *.xml
@@ -16,8 +12,6 @@ prepros.config
 *.md
 .prettierignore
 .prettierrc.json
-src
-assets/scss
 .editorconfig
 .eslintrc.json
 .wordpress-org
