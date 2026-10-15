@@ -1,12 +1,12 @@
-=== Simple 301 Redirects By BetterLinks - Easy WordPress Redirect Manager for Redirects, 404 Error Log & More ===
+=== Simple 301 Redirects by BetterLinks - Easy Redirect Manager ===
 Contributors: wpdevteam, asif2bd, re_enter_rupok, scottnelle
-Tags: 301 redirect, 404 error log, redirect url, link shortener, url redirects, 301, shortlinks, links, permalink, redirects, seo redirects, url redirect, url, pretty links, short links, link tracking, affiliate links, urls
+Tags: 301 redirect, redirects, url redirect, seo redirects, wildcard redirect
 Requires at least: 5.3
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.0
-License: GPL-3.0-or-later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Stable tag: 2.1.1
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Simple 301 Redirects provides an easy method of redirecting requests to another page on your site or elsewhere on the web.
 
@@ -40,7 +40,7 @@ https://www.youtube.com/watch?v=F0Zyo2yDoZY
 - Request: /old-folder/\*
 - Destination: /new-folder/\*
 
-◾**Advanced Analytics:** Easily track and analyze click-through rates of your link redirects with BetterLinks (advanced link management solution by WPDeveloper)
+◾**Click Analytics with BetterLinks:** Simple 301 Redirects does not track clicks. If you need click-through analytics for your redirects, you can install our separate free plugin [BetterLinks](https://wordpress.org/plugins/betterlinks/) from WordPress.org and migrate your redirects to it
 
 ◾ **Friendly Support:** Get super friendly community support as we have an extraordinary support team ready to help you. Ask your questions in the support forum &amp; someone from our team will help you
 
@@ -118,6 +118,37 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 1. Add redirects on the Settings > 301 Redirects page.
 
 
+== Source Code ==
+
+The admin screen's JavaScript (`assets/js/simple-301-redirects.core.min.js`) and stylesheet (`assets/css/simple-301-redirects.css`) are compiled files. Their human-readable source ships with the plugin:
+
+* JavaScript (React): `src/`, built with `@wordpress/scripts` using `webpack.config.js` and `babel.config.json`
+* Stylesheet (SCSS): `assets/scss/`
+
+The same source is also in the public development repository: [github.com/WPDevelopers/simple-301-redirects](https://github.com/WPDevelopers/simple-301-redirects).
+
+To rebuild both files from the plugin folder, run:
+
+`yarn install --frozen-lockfile`
+`yarn build`
+
+== External services ==
+
+Simple 301 Redirects performs redirects entirely on your own site. It connects to an external service only in the two cases below.
+
+= WPInsight usage analytics (opt-in, off by default) =
+
+WPInsight is WPDeveloper's usage analytics service. We use it to learn which WordPress versions, PHP versions, plugins and themes people run alongside Simple 301 Redirects, so we can keep the plugin compatible with them.
+
+* **When data is sent:** only after an administrator clicks "Sure, I'd like to help" in the opt-in notice. It is sent once at that moment, then about once a day by WP-Cron (only the details that changed since the last report), and once more when the plugin is deactivated. If you click "No Thanks." or ignore the notice, nothing is ever sent.
+* **What is sent:** your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, the lists of active and inactive plugins, the active theme and its version, the Simple 301 Redirects version, and the email address of the administrator who clicks the opt-in button (used to send the discount coupon offered in the notice). On deactivation it sends the same details again, plus the email address of the administrator who deactivates the plugin and the reason and any note they enter in the deactivation form. Like any web request, the connection also reveals your server's IP address to the service.
+* **Where it is sent:** `https://send.wpinsight.com/process-plugin-data`
+* **Terms and privacy:** [Terms and Conditions](https://wpdeveloper.com/terms-and-conditions/), [Privacy Policy](https://wpdeveloper.com/privacy-policy/)
+
+= WordPress.org Plugins API (only when you click "Install BetterLinks") =
+
+The settings page offers to install our free BetterLinks plugin. Only when an administrator clicks "Install BetterLinks" does the plugin ask the WordPress.org Plugins API (`https://api.wordpress.org/plugins/info/`) for BetterLinks' download link and download it from WordPress.org, the same way the Plugins > Add New screen does. The request sends the plugin slug `betterlinks` along with the information WordPress core sends with every WordPress.org API request. [WordPress.org Privacy Policy](https://wordpress.org/about/privacy/)
+
 == Screenshots ==
 
 1. Simple 301 Redirects - Dashboard
@@ -125,6 +156,9 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 
 == Changelog ==
+
+= 2.1.1 - 15/10/2026 =
+* Few minor bug fixes & improvements
 
 = 2.1.0 - 08/02/2026 =
 * Fixed: PHP issue caused by incorrect _load_textdomain_just_in_time() usage.

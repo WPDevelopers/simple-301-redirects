@@ -1,14 +1,10 @@
-.babelrc           export-ignore
 .github            export-ignore
 .gitignore         export-ignore
 .gitattributes     export-ignore
 .distignore        export-ignore
 package-lock.json  export-ignore
-package.json       export-ignore
-webpack.config.js  export-ignore
 .git               export-ignore
 node_modules       export-ignore
-composer.json      export-ignore
 composer.lock      export-ignore
 prepros.config     export-ignore
 *.xml              export-ignore
@@ -16,8 +12,6 @@ prepros.config     export-ignore
 *.md               export-ignore
 .prettierignore    export-ignore
 .prettierrc.json   export-ignore
-src                export-ignore
-assets/scss        export-ignore
 .editorconfig      export-ignore
 .eslintrc.json     export-ignore
 .wordpress-org     export-ignore

@@ -7,7 +7,11 @@
  * Author URI:      https://wpdeveloper.net/
  * Text Domain:     simple-301-redirects
  * Domain Path:     /languages
- * Version:         2.1.0
+ * Version:         2.1.1
+ * Requires at least: 5.3
+ * Requires PHP:    7.4
+ * License:         GPL-2.0-or-later
+ * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 /*  Copyright 2009-2021  WPDeveloper
@@ -70,7 +74,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function define_constants()
 		{
-			define('SIMPLE301REDIRECTS_VERSION', '2.1.0');
+			define('SIMPLE301REDIRECTS_VERSION', '2.1.1');
 			define('SIMPLE301REDIRECTS_SETTINGS_NAME', '301_redirects');
 			define('SIMPLE301REDIRECTS_PLUGIN_FILE', __FILE__);
 			define('SIMPLE301REDIRECTS_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -96,7 +100,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function load_textdomain()
 		{
-			load_plugin_textdomain('simple-301-redirects', false, dirname(dirname(plugin_basename(__FILE__))) . '/languages/');
+			load_plugin_textdomain('simple-301-redirects', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		}
 		public function load_installer()
 		{

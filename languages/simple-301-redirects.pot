@@ -1,230 +1,310 @@
-# Copyright (C) 2021 WPDeveloper
-# This file is distributed under the same license as the Simple 301 Redirects plugin.
+# Copyright (C) 2026 WPDeveloper
+# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Simple 301 Redirects 2.0.5\n"
+"Project-Id-Version: Simple 301 Redirects 2.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/simple-301-redirects\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-18T06:29:57+00:00\n"
+"POT-Creation-Date: 2026-10-14T11:12:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: simple-301-redirects\n"
 
 #. Plugin Name of the plugin
-#: src/components/TopBar/index.js:17
+#: wp-simple-301-redirects.php
+#: src/components/TopBar/index.js:12
 msgid "Simple 301 Redirects"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wp-simple-301-redirects.php
 msgid "https://wordpress.org/plugins/simple-301-redirects/"
 msgstr ""
 
 #. Description of the plugin
+#: wp-simple-301-redirects.php
 msgid "Create a list of URLs that you would like to 301 redirect to another page or site. Now with wildcard support."
 msgstr ""
 
 #. Author of the plugin
+#: wp-simple-301-redirects.php
 msgid "WPDeveloper"
 msgstr ""
 
 #. Author URI of the plugin
+#: wp-simple-301-redirects.php
 msgid "https://wpdeveloper.net/"
 msgstr ""
 
-#: includes/Admin.php:46
-msgid "Want to help make <strong>Simple 301 Redirects</strong> even more awesome? You can get a <strong>10% discount</strong> coupon on our Premium products if you allow us to track the non-sensitive usage data."
-msgstr ""
-
 #: includes/Admin.php:47
-msgid ""
-"We collect non-sensitive diagnostic data and plugin usage information. \n"
-"            Your site URL, WordPress & PHP version, plugins & themes and email address to send you the \n"
-"            discount coupon. This data lets us make sure this plugin always stays compatible with the most \n"
-"            popular plugins and themes. No spam, I promise."
+msgid "Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper and get a <strong>10% discount</strong> coupon on our Premium products."
 msgstr ""
 
-#: includes/Admin/Ajax.php:41
+#. translators: 1: external service host name, 2: privacy policy URL.
+#: includes/Admin.php:50
+#, php-format
+msgid "If you allow it, Simple 301 Redirects sends these details to WPDeveloper's WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version, the Simple 301 Redirects version, and the email address of the administrator who allows tracking (used to send the discount coupon). They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with the email address of the administrator who deactivates it and any reason they enter in the deactivation form. Like any web request, this also reveals your server's IP address. Nothing is sent if you click \"No Thanks.\" <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a>"
+msgstr ""
+
+#: includes/Admin/Ajax.php:39
+msgid "This plugin can't be installed from here."
+msgstr ""
+
+#: includes/Admin/Ajax.php:45
 msgid "Plugin is installed successfully!"
 msgstr ""
 
 #: includes/Admin/Ajax.php:55
+msgid "This plugin can't be activated from here."
+msgstr ""
+
+#: includes/Admin/Ajax.php:62
 msgid "Plugin couldn't be activated."
 msgstr ""
 
-#: includes/Admin/Ajax.php:57
+#: includes/Admin/Ajax.php:64
 msgid "BetterLinks is activated!"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:33
+#: includes/Admin/WPDev/PluginUsageTracker.php:370
+msgid "We can't detect any plugin information. This is most probably because you have not included the code in the plugin main file."
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:634
+msgid "What we collect."
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:635
+msgid "Sure, I'd like to help"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:636
+msgid "No Thanks."
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:737
+msgid "Sorry to see you go"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:738
+msgid "Before you deactivate the plugin, would you quickly give us your reason for doing so?"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:741
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:743
+msgid "I found a better plugin"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:744
+msgid "Please share which plugin"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:746
+msgid "I couldn't get the plugin to work"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:747
+msgid "It's a temporary deactivation"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:749
+msgid "Other"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:750
+msgid "Please share the reason"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:811
+msgid "Submitting form"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:867
+msgid "Submit and Deactivate"
+msgstr ""
+
+#: includes/Admin/WPDev/PluginUsageTracker.php:867
+msgid "Just Deactivate"
+msgstr ""
+
+#: includes/Helper.php:35
+#: includes/Helper.php:52
+msgid "Argument should not be empty."
+msgstr ""
+
+#: src/components/BetterLinks/index.js:31
 msgid "BetterLinks – Shorten, Track and Manage any URL"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:35
+#: src/components/BetterLinks/index.js:33
 msgid "Install BetterLinks to get the best out of Simple 301 Redirects and get access to more advanced features. Check out the features below"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:39
+#: src/components/BetterLinks/index.js:45
 msgid "Easy-to-use & Simple Link Shortener"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:40
+#: src/components/BetterLinks/index.js:46
 msgid "Create attractive looking links instantly"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:41
+#: src/components/BetterLinks/index.js:47
 msgid "Safe Redirection URLs"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:42
+#: src/components/BetterLinks/index.js:48
 msgid "Analyze and Track your marketing campaigns from one place"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:43
+#: src/components/BetterLinks/index.js:49
 msgid "Optimized queries to reduce load time & make faster"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:44
+#: src/components/BetterLinks/index.js:50
 msgid "Individual Analytics for each links"
 msgstr ""
 
-#: src/components/BetterLinks/index.js:46
+#: src/components/BetterLinks/index.js:52
 msgid "You can migrate from Simple 301 Redirects to BetterLinks within one click."
 msgstr ""
 
-#: src/components/BetterLinks/index.js:49
-#: src/components/Link/index.js:108
+#: src/components/BetterLinks/index.js:55
+#: src/components/Link/index.js:103
 msgid "Install BetterLinks"
 msgstr ""
 
-#: src/components/Documentation/index.js:26
+#: src/components/Documentation/index.js:21
 msgid "Simple Redirects"
 msgstr ""
 
-#: src/components/Documentation/index.js:28
+#: src/components/Documentation/index.js:23
 msgid "Simple redirects work similar to the format that Apache uses: the request should be relative to your WordPress root. The destination can be either a full URL to any page on the web, or relative to your WordPress root."
 msgstr ""
 
-#: src/components/Documentation/index.js:33
-#: src/components/Documentation/index.js:46
-#: src/components/Documentation/index.js:60
-#: src/components/Documentation/index.js:74
+#: src/components/Documentation/index.js:28
+#: src/components/Documentation/index.js:41
+#: src/components/Documentation/index.js:55
+#: src/components/Documentation/index.js:69
 msgid "Example"
 msgstr ""
 
-#: src/components/Documentation/index.js:36
-#: src/components/Documentation/index.js:49
-#: src/components/Documentation/index.js:63
+#: src/components/Documentation/index.js:31
+#: src/components/Documentation/index.js:44
+#: src/components/Documentation/index.js:58
 msgid "Request: "
 msgstr ""
 
-#: src/components/Documentation/index.js:37
+#: src/components/Documentation/index.js:32
 msgid "/old-page/"
 msgstr ""
 
-#: src/components/Documentation/index.js:40
-#: src/components/Documentation/index.js:53
-#: src/components/Documentation/index.js:67
+#: src/components/Documentation/index.js:35
+#: src/components/Documentation/index.js:48
+#: src/components/Documentation/index.js:62
 msgid "Destination: "
 msgstr ""
 
-#: src/components/Documentation/index.js:40
-#: src/components/Documentation/index.js:67
+#: src/components/Documentation/index.js:35
+#: src/components/Documentation/index.js:62
 msgid "/new-page/"
 msgstr ""
 
-#: src/components/Documentation/index.js:44
+#: src/components/Documentation/index.js:39
 msgid "Wildcards"
 msgstr ""
 
-#: src/components/Documentation/index.js:45
+#: src/components/Documentation/index.js:40
 msgid "Wildcards Redirect will redirect all files within a directory to the same filename in the redirected directory. To use wildcards, put an asterisk (*) after the folder name that you want to redirect."
 msgstr ""
 
-#: src/components/Documentation/index.js:50
-#: src/components/Documentation/index.js:64
-#: src/components/Documentation/index.js:78
+#: src/components/Documentation/index.js:45
+#: src/components/Documentation/index.js:59
+#: src/components/Documentation/index.js:73
 msgid "/old-folder/*"
 msgstr ""
 
-#: src/components/Documentation/index.js:53
+#: src/components/Documentation/index.js:48
 msgid "/new-folder/* "
 msgstr ""
 
-#: src/components/Documentation/index.js:58
+#: src/components/Documentation/index.js:53
 msgid "You can also use wildcards to redirect all the dynamic files of a certain directory to a same destination URL as well."
 msgstr ""
 
-#: src/components/Documentation/index.js:72
+#: src/components/Documentation/index.js:67
 msgid "You can also use the asterisk in the destination to replace whatever it matched in the request if you like. Something like this:"
 msgstr ""
 
-#: src/components/Documentation/index.js:77
+#: src/components/Documentation/index.js:72
 msgid "Request:"
 msgstr ""
 
-#: src/components/Documentation/index.js:81
-#: src/components/Documentation/index.js:90
+#: src/components/Documentation/index.js:76
+#: src/components/Documentation/index.js:85
 msgid "Destination:"
 msgstr ""
 
-#: src/components/Documentation/index.js:81
-#: src/components/Documentation/index.js:87
-#: src/components/Documentation/index.js:90
+#: src/components/Documentation/index.js:76
+#: src/components/Documentation/index.js:82
+#: src/components/Documentation/index.js:85
 msgid "/some/other/folder/*"
 msgstr ""
 
-#: src/components/Documentation/index.js:87
+#: src/components/Documentation/index.js:82
 msgid "/old-folder/*/content/"
 msgstr ""
 
-#: src/components/Link/index.js:96
+#: src/components/Link/index.js:91
 msgid "Add New"
 msgstr ""
 
-#: src/components/Link/index.js:105
-msgid "3/1 CLICKS"
+#: src/components/Link/index.js:100
+msgid "Track clicks"
 msgstr ""
 
-#: src/components/Link/index.js:108
-msgid "To see Analytics data"
+#: src/components/Link/index.js:103
+msgid "To See Analytics Data"
 msgstr ""
 
-#: src/components/Tools/index.js:32
+#: src/components/Tools/index.js:26
 msgid "Import Redirect Rules"
 msgstr ""
 
-#: src/components/Tools/index.js:33
+#: src/components/Tools/index.js:27
 msgid "Import your 301 Redirect Links from your Device"
 msgstr ""
 
-#: src/components/Tools/index.js:46
+#: src/components/Tools/index.js:40
 msgid "Import File"
 msgstr ""
 
-#: src/components/Tools/index.js:59
+#: src/components/Tools/index.js:53
 msgid "Export Redirect Rules"
 msgstr ""
 
-#: src/components/Tools/index.js:60
+#: src/components/Tools/index.js:54
 msgid "Export your 301 Redirect Links in .csv format"
 msgstr ""
 
-#: src/components/Tools/index.js:67
+#: src/components/Tools/index.js:61
 msgid "Export File"
 msgstr ""
 
-#: src/components/WildCards/index.js:57
+#: src/components/WildCards/index.js:53
 msgid "Use Wildcards?"
 msgstr ""
 
-#: src/containers/group/ManageLinks.js:111
+#: src/containers/group/ManageLinks.js:106
 msgid "Request"
 msgstr ""
 
-#: src/containers/group/ManageLinks.js:115
+#: src/containers/group/ManageLinks.js:110
 msgid "Destination"
 msgstr ""

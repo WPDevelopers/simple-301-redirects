@@ -158,8 +158,8 @@ class PluginUsageTracker {
      * @return void
      */
     private function redirect_to(){
-        $request_uri  = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
-        $query_string = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY );
+        $request_uri  = wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
+        $query_string = wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_QUERY );
         parse_str( $query_string, $current_url );
 
         $unset_array = array( 'dismiss', 'plugin', '_wpnonce', 'later', 'plugin_action', 'marketing_optin' );
@@ -367,7 +367,7 @@ class PluginUsageTracker {
          */
         $plugin = $this->plugin_data();
         if( empty( $plugin ) ) {
-            $body['message'] .= __( 'We can\'t detect any plugin information. This is most probably because you have not included the code in the plugin main file.', 'disable-comments' );
+            $body['message'] = __( 'We can\'t detect any plugin information. This is most probably because you have not included the code in the plugin main file.', 'simple-301-redirects' );
             $body['status'] = 'NOT FOUND';
         } else {
             if( isset( $plugin['Name'] ) ) {
@@ -447,14 +447,6 @@ class PluginUsageTracker {
          * Send Initial Data to API
          */
         if( $site_id == false && $this->item_id !== false ) {
-            if( isset( $_SERVER['REMOTE_ADDR'] ) && ! empty( $_SERVER['REMOTE_ADDR'] && $_SERVER['REMOTE_ADDR'] != '127.0.0.1' ) ) {
-                $country_request = wp_remote_get( 'http://ip-api.com/json/'. $_SERVER['REMOTE_ADDR'] .'?fields=country');
-                if( ! is_wp_error( $country_request ) && $country_request['response']['code'] == 200 ) {
-                    $ip_data = json_decode( $country_request["body"] );
-                    $body['country'] = isset( $ip_data->country ) ? $ip_data->country : 'NOT SET';
-                }
-            }
-
             $body['plugin_slug'] = $this->plugin_name;
             $body['url']         = $site_url;
             $body['item_id']     = $this->item_id;
@@ -625,10 +617,10 @@ class PluginUsageTracker {
                 $output .= '<a href="'. esc_url( $url_yes ) .'" class="button-primary">'. $this->notice_options['yes'] .'</a>&nbsp;';
                 $output .= '<a href="'. esc_url( $url_no ) .'" class="button-secondary">'. $this->notice_options['no'] .'</a>';
             $output .= '</p>';
-            $output .= "<script type='text/javascript'>jQuery('.wpinsights-". $this->plugin_name ."-collect').on('click', function(e) {e.preventDefault();jQuery('.wpinsights-data').slideToggle('fast');});</script>";
         $output .= '</div>';
 
-        echo $output;
+        echo wp_kses_post( $output );
+        echo "<script type='text/javascript'>jQuery('.wpinsights-". esc_attr( $this->plugin_name ) ."-collect').on('click', function(e) {e.preventDefault();jQuery('.wpinsights-data').slideToggle('fast');});</script>";
     }
     /**
      * Set all notice options to customized notice.
@@ -639,9 +631,9 @@ class PluginUsageTracker {
      */
     public function set_notice_options( $options = [] ){
         $default_options = [
-            'consent_button_text' => __( 'What we collect.', 'disable-comments' ),
-            'yes'                 => __( 'Sure, I\'d like to help', 'disable-comments' ),
-            'no'                  => __( 'No Thanks.', 'disable-comments' ),
+            'consent_button_text' => __( 'What we collect.', 'simple-301-redirects' ),
+            'yes'                 => __( 'Sure, I\'d like to help', 'simple-301-redirects' ),
+            'no'                  => __( 'No Thanks.', 'simple-301-redirects' ),
         ];
         $options = wp_parse_args( $options, $default_options );
         $this->notice_options = $options;
@@ -701,12 +693,15 @@ class PluginUsageTracker {
      */
     public function deactivate_reasons_form_submit() {
         check_ajax_referer( 'wpins_deactivation_nonce', 'security' );
+        if( ! current_user_can( 'activate_plugins' ) ) {
+            wp_die();
+        }
         if( isset( $_POST['values'] ) ) {
-            $values = $_POST['values'];
+            $values = sanitize_text_field( wp_unslash( $_POST['values'] ) );
             update_option( 'wpins_deactivation_reason_' . $this->plugin_name, $values );
         }
         if( isset( $_POST['details'] ) ) {
-            $details = sanitize_text_field( $_POST['details'] );
+            $details = sanitize_textarea_field( wp_unslash( $_POST['details'] ) );
             update_option( 'wpins_deactivation_details_' . $this->plugin_name, $details );
         }
         echo 'success';
@@ -739,24 +734,43 @@ class PluginUsageTracker {
      */
     public function deactivation_reasons() {
         $form = array();
-        $form['heading'] = __( 'Sorry to see you go', 'disable-comments' );
-        $form['body'] = __( 'Before you deactivate the plugin, would you quickly give us your reason for doing so?', 'disable-comments' );
+        $form['heading'] = __( 'Sorry to see you go', 'simple-301-redirects' );
+        $form['body'] = __( 'Before you deactivate the plugin, would you quickly give us your reason for doing so?', 'simple-301-redirects' );
 
         $form['options'] = array(
-            __( 'I no longer need the plugin', 'disable-comments' ),
+            __( 'I no longer need the plugin', 'simple-301-redirects' ),
             [
-                'label' => __( 'I found a better plugin', 'disable-comments' ),
-                'extra_field' => __( 'Please share which plugin', 'disable-comments' )
+                'label' => __( 'I found a better plugin', 'simple-301-redirects' ),
+                'extra_field' => __( 'Please share which plugin', 'simple-301-redirects' )
             ],
-            __( "I couldn't get the plugin to work", 'disable-comments' ),
-            __( 'It\'s a temporary deactivation', 'disable-comments' ),
+            __( "I couldn't get the plugin to work", 'simple-301-redirects' ),
+            __( 'It\'s a temporary deactivation', 'simple-301-redirects' ),
             [
-                'label' => __( 'Other', 'disable-comments' ),
-                'extra_field' => __( 'Please share the reason', 'disable-comments' ),
+                'label' => __( 'Other', 'simple-301-redirects' ),
+                'extra_field' => __( 'Please share the reason', 'simple-301-redirects' ),
                 'type' => 'textarea'
             ]
         );
         return apply_filters( 'wpins_form_text_' . $this->plugin_name, $form );
+    }
+    /**
+     * Tags and attributes the deactivation form markup is built from.
+     *
+     * @return array
+     */
+    private function goodbye_form_allowed_html() {
+        $attrs = array( 'class' => true, 'id' => true, 'style' => true );
+        return array(
+            'div'      => $attrs,
+            'p'        => $attrs,
+            'strong'   => array(),
+            'span'     => $attrs,
+            'ul'       => $attrs,
+            'li'       => $attrs,
+            'label'    => array( 'for' => true ),
+            'input'    => array_merge( $attrs, array( 'type' => true, 'name' => true, 'value' => true, 'placeholder' => true ) ),
+            'textarea' => array_merge( $attrs, array( 'type' => true, 'name' => true, 'placeholder' => true ) ),
+        );
     }
     /**
      * Deactivate Reasons Form.
@@ -794,12 +808,11 @@ class PluginUsageTracker {
             $html .= '</ul></div><!-- .wpinsights-'. $class_plugin_name .'-goodbye-options -->';
         }
         $html .= '</div><!-- .wpinsights-goodbye-form-body -->';
-        $html .= '<p class="deactivating-spinner"><span class="spinner"></span> ' . __( 'Submitting form', 'disable-comments' ) . '</p>';
+        $html .= '<p class="deactivating-spinner"><span class="spinner"></span> ' . __( 'Submitting form', 'simple-301-redirects' ) . '</p>';
 
         $wrapper_class = '.wpinsights-goodbye-form-wrapper-'. $class_plugin_name;
 
         $styles = '';
-        $styles .= '<style type="text/css">';
             $styles .= '.wpinsights-form-active-' . $class_plugin_name . ' .wpinsights-goodbye-form-bg {';
                 $styles .= 'background: rgba( 0, 0, 0, .8 );position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 9;';
             $styles .= '}';
@@ -840,27 +853,26 @@ class PluginUsageTracker {
             $styles .= '}';
             $styles .= $wrapper_class . ' .test {';
             $styles .= '}';
-        $styles .= '</style>';
-        $styles .= '';
 
-        echo $styles;
+        // Static CSS; its only variable part is the esc_attr()'d plugin slug. esc_html() would break the ">" selectors.
+        echo '<style type="text/css">' . wp_strip_all_tags( $styles ) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         ?>
         <script type="text/javascript">
             jQuery(document).ready(function($){
-                $("#wpinsights-goodbye-link-<?php echo $class_plugin_name; ?>").on("click",function(){
+                $("#wpinsights-goodbye-link-<?php echo esc_attr( $class_plugin_name ); ?>").on("click",function(){
                     // We'll send the user to this deactivation link when they've completed or dismissed the form
-                    var url = document.getElementById("wpinsights-goodbye-link-<?php echo $class_plugin_name; ?>");
-                    $('body').toggleClass('wpinsights-form-active-<?php echo $class_plugin_name; ?>');
-                    $(".wpinsights-goodbye-form-wrapper-<?php echo $class_plugin_name; ?> #wpinsights-goodbye-form").fadeIn();
-                    $(".wpinsights-goodbye-form-wrapper-<?php echo $class_plugin_name; ?> #wpinsights-goodbye-form").html( '<?php echo $html; ?>' + '<div class="wpinsights-goodbye-form-footer"><div class="wpinsights-goodbye-form-buttons"><a id="wpinsights-submit-form-<?php echo $class_plugin_name; ?>" class="wpinsights-submit-btn" href="#"><?php _e( 'Submit and Deactivate', 'disable-comments' ); ?></a>&nbsp;<a class="wpsp-put-deactivate-btn" href="'+url+'"><?php _e( 'Just Deactivate', 'disable-comments' ); ?></a></div></div>');
-                    $('#wpinsights-submit-form-<?php echo $class_plugin_name; ?>').on('click', function(e){
+                    var url = document.getElementById("wpinsights-goodbye-link-<?php echo esc_attr( $class_plugin_name ); ?>");
+                    $('body').toggleClass('wpinsights-form-active-<?php echo esc_attr( $class_plugin_name ); ?>');
+                    $(".wpinsights-goodbye-form-wrapper-<?php echo esc_attr( $class_plugin_name ); ?> #wpinsights-goodbye-form").fadeIn();
+                    $(".wpinsights-goodbye-form-wrapper-<?php echo esc_attr( $class_plugin_name ); ?> #wpinsights-goodbye-form").html( '<?php echo wp_kses( $html, $this->goodbye_form_allowed_html() ); ?>' + '<div class="wpinsights-goodbye-form-footer"><div class="wpinsights-goodbye-form-buttons"><a id="wpinsights-submit-form-<?php echo esc_attr( $class_plugin_name ); ?>" class="wpinsights-submit-btn" href="#"><?php esc_html_e( 'Submit and Deactivate', 'simple-301-redirects' ); ?></a>&nbsp;<a class="wpsp-put-deactivate-btn" href="'+url+'"><?php esc_html_e( 'Just Deactivate', 'simple-301-redirects' ); ?></a></div></div>');
+                    $('#wpinsights-submit-form-<?php echo esc_attr( $class_plugin_name ); ?>').on('click', function(e){
                         // As soon as we click, the body of the form should disappear
-                        $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .wpinsights-goodbye-form-body").fadeOut();
-                        $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .wpinsights-goodbye-form-footer").fadeOut();
+                        $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .wpinsights-goodbye-form-body").fadeOut();
+                        $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .wpinsights-goodbye-form-footer").fadeOut();
                         // Fade in spinner
-                        $("#wpinsights-goodbye-form-<?php echo $class_plugin_name; ?> .deactivating-spinner").fadeIn();
+                        $("#wpinsights-goodbye-form-<?php echo esc_attr( $class_plugin_name ); ?> .deactivating-spinner").fadeIn();
                         e.preventDefault();
-                        var checkedInput = $("input[name='wpinsights-<?php echo $class_plugin_name; ?>-goodbye-options']:checked"),
+                        var checkedInput = $("input[name='wpinsights-<?php echo esc_attr( $class_plugin_name ); ?>-goodbye-options']:checked"),
                             checkedInputVal, details;
                         if( checkedInput.length > 0 ) {
                             checkedInputVal = checkedInput.val();
@@ -875,10 +887,10 @@ class PluginUsageTracker {
                         }
 
                         var data = {
-                            'action': 'deactivation_form_<?php echo $class_plugin_name; ?>',
+                            'action': 'deactivation_form_<?php echo esc_attr( $class_plugin_name ); ?>',
                             'values': checkedInputVal,
                             'details': details,
-                            'security': "<?php echo wp_create_nonce ( 'wpins_deactivation_nonce' ); ?>",
+                            'security': "<?php echo esc_js( wp_create_nonce( 'wpins_deactivation_nonce' ) ); ?>",
                             'dataType': "json"
                         }
 
@@ -899,7 +911,7 @@ class PluginUsageTracker {
                     // If we click outside the form, the form will close
                     $('.wpinsights-goodbye-form-bg').on('click',function(){
                         $("#wpinsights-goodbye-form").fadeOut();
-                        $('body').removeClass('wpinsights-form-active-<?php echo $class_plugin_name; ?>');
+                        $('body').removeClass('wpinsights-form-active-<?php echo esc_attr( $class_plugin_name ); ?>');
                     });
                 });
             });
