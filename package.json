@@ -1,6 +1,6 @@
 {
 	"name": "simple301redirects",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"description": "Simple 301 Redirects",
 	"main": "index.js",
 	"scripts": {
