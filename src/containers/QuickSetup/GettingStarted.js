@@ -48,16 +48,19 @@ const GettingStarted = () => {
 						<ul>
 							<li>
 								{__(
-									'Site: address and name, language and charset, WordPress, PHP and server software versions, whether it is a multisite, text direction, and where Simple 301 Redirects is installed on your server (its file path).',
+									'Site: details, WordPress, PHP and server versions, installed plugins, active theme, plugin version, and installation path.',
 									'simple-301-redirects'
 								)}
 							</li>
-							<li>{__('Plugins and theme: active and inactive plugins, your active theme and its version, and the Simple 301 Redirects version.', 'simple-301-redirects')}</li>
-							<li>{__('On deactivation: the same details again, plus any reason entered in the deactivation form.', 'simple-301-redirects')}</li>
-							<li>{__("Like any web request, sending this reveals your server's IP address.", 'simple-301-redirects')}</li>
+							<li>
+								{__(
+									'On deactivation, we also collect any reason provided.',
+									'simple-301-redirects'
+								)}
+							</li>
 						</ul>
 						<p>
-							{__('Sent to WPDeveloper\'s WPInsight service (send.wpinsight.com) when you allow it, then about once a day (only what changed) and when the plugin is deactivated. Nothing is sent if you skip.', 'simple-301-redirects')}{' '}
+							{__("Data is sent to WPDeveloper's WPInsight service. Your server's IP address is included in the request. Redirect rules and visitor data are never sent.", 'simple-301-redirects')}{' '}
 							<a href="https://wpdeveloper.com/privacy-policy/" target="_blank" rel="noopener noreferrer">
 								{__('Privacy policy', 'simple-301-redirects')}
 							</a>

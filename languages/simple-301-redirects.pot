@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-19T08:28:46+00:00\n"
+"POT-Creation-Date: 2026-10-19T11:00:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: simple-301-redirects\n"
@@ -414,34 +414,26 @@ msgid "What we collect"
 msgstr ""
 
 #: src/containers/QuickSetup/GettingStarted.js:50
-msgid "Site: address and name, language and charset, WordPress, PHP and server software versions, whether it is a multisite, text direction, and where Simple 301 Redirects is installed on your server (its file path)."
-msgstr ""
-
-#: src/containers/QuickSetup/GettingStarted.js:55
-msgid "Plugins and theme: active and inactive plugins, your active theme and its version, and the Simple 301 Redirects version."
+msgid "Site: details, WordPress, PHP and server versions, installed plugins, active theme, plugin version, and installation path."
 msgstr ""
 
 #: src/containers/QuickSetup/GettingStarted.js:56
-msgid "On deactivation: the same details again, plus any reason entered in the deactivation form."
+msgid "On deactivation, we also collect any reason provided."
 msgstr ""
 
-#: src/containers/QuickSetup/GettingStarted.js:57
-msgid "Like any web request, sending this reveals your server's IP address."
+#: src/containers/QuickSetup/GettingStarted.js:63
+msgid "Data is sent to WPDeveloper's WPInsight service. Your server's IP address is included in the request. Redirect rules and visitor data are never sent."
 msgstr ""
 
-#: src/containers/QuickSetup/GettingStarted.js:60
-msgid "Sent to WPDeveloper's WPInsight service (send.wpinsight.com) when you allow it, then about once a day (only what changed) and when the plugin is deactivated. Nothing is sent if you skip."
-msgstr ""
-
-#: src/containers/QuickSetup/GettingStarted.js:62
+#: src/containers/QuickSetup/GettingStarted.js:65
 msgid "Privacy policy"
 msgstr ""
 
-#: src/containers/QuickSetup/GettingStarted.js:69
+#: src/containers/QuickSetup/GettingStarted.js:72
 msgid "Allow & Continue"
 msgstr ""
 
-#: src/containers/QuickSetup/GettingStarted.js:72
+#: src/containers/QuickSetup/GettingStarted.js:75
 msgid "Skip"
 msgstr ""
 
