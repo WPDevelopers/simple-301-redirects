@@ -5,6 +5,7 @@ class Admin {
     public function __construct()
     {
         $this->add_menu();
+        $this->quick_setup();
         $this->load_assets();
         $this->init_ajax();
         $this->init_tools();
@@ -14,6 +15,10 @@ class Admin {
     public function add_menu()
     {
         new Admin\Menu();
+    }
+    public function quick_setup()
+    {
+        new Admin\QuickSetup();
     }
     public function load_assets()
     {
@@ -39,15 +44,17 @@ class Admin {
     {
         $tracker = Admin\WPDev\PluginUsageTracker::get_instance( SIMPLE301REDIRECTS_PLUGIN_FILE, [
             'opt_in'       => true,
-            'goodbye_form' => true,
-            'item_id'      => 'c1e613119bf3e9188767'
+            'goodbye_form'    => true,
+            // No admin email: it was only collected to send an opt-in coupon, which is gone.
+            'email_marketing' => false,
+            'item_id'         => 'c1e613119bf3e9188767'
         ] );
         add_action('init', function() use ($tracker) {
             $tracker->set_notice_options(array(
-                'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper and get a <strong>10% discount</strong> coupon on our Premium products.', 'simple-301-redirects' ),
+                'notice' => __( 'Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper.', 'simple-301-redirects' ),
                 'extra_notice' => sprintf(
                     /* translators: 1: external service host name, 2: privacy policy URL. */
-                    __( 'If you allow it, Simple 301 Redirects sends these details to WPDeveloper\'s WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version, the Simple 301 Redirects version, and the email address of the administrator who allows tracking (used to send the discount coupon). They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with the email address of the administrator who deactivates it and any reason they enter in the deactivation form. Like any web request, this also reveals your server\'s IP address. Nothing is sent if you click "No Thanks." <a href="%2$s" target="_blank" rel="noopener noreferrer">Privacy Policy</a>', 'simple-301-redirects' ),
+                    __( 'If you allow it, Simple 301 Redirects sends these details to WPDeveloper\'s WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version and the Simple 301 Redirects version. They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with any reason entered in the deactivation form. Like any web request, this also reveals your server\'s IP address. Nothing is sent if you click "No Thanks." <a href="%2$s" target="_blank" rel="noopener noreferrer">Privacy Policy</a>', 'simple-301-redirects' ),
                     '<code>send.wpinsight.com</code>',
                     esc_url( 'https://wpdeveloper.com/privacy-policy/' )
                 ),

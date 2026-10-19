@@ -7,7 +7,7 @@
  * Author URI:      https://wpdeveloper.net/
  * Text Domain:     simple-301-redirects
  * Domain Path:     /languages
- * Version:         2.1.1
+ * Version:         2.1.2
  * Requires at least: 5.3
  * Requires PHP:    7.4
  * License:         GPL-2.0-or-later
@@ -47,6 +47,7 @@ if (!class_exists("Simple301redirects")) {
 		private function __construct()
 		{
 			$this->define_constants();
+			register_activation_hook(__FILE__, [$this, 'activate']);
 			add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
 			add_action('init', [$this, 'load_textdomain']);
 
@@ -67,6 +68,14 @@ if (!class_exists("Simple301redirects")) {
 			return $instance;
 		}
 
+		/**
+		 * Flag the one-time redirect to the Quick Setup wizard (see Admin\QuickSetup).
+		 */
+		public function activate()
+		{
+			add_option('simple301redirects_quick_setup', true);
+		}
+
 		public function on_plugins_loaded()
 		{
 			do_action('simple301redirects_loaded');
@@ -74,7 +83,7 @@ if (!class_exists("Simple301redirects")) {
 
 		public function define_constants()
 		{
-			define('SIMPLE301REDIRECTS_VERSION', '2.1.1');
+			define('SIMPLE301REDIRECTS_VERSION', '2.1.2');
 			define('SIMPLE301REDIRECTS_SETTINGS_NAME', '301_redirects');
 			define('SIMPLE301REDIRECTS_PLUGIN_FILE', __FILE__);
 			define('SIMPLE301REDIRECTS_PLUGIN_BASENAME', plugin_basename(__FILE__));

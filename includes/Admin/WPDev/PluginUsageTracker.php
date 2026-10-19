@@ -917,4 +917,23 @@ class PluginUsageTracker {
             });
         </script>
     <?php }
+    /**
+     * Record the admin's answer from the Quick Setup wizard, the same way the notice buttons do.
+     *
+     * @param string $action 'yes' to allow tracking, anything else to decline.
+     * @param string $plugin Plugin slug.
+     * @return void
+     */
+    public function opt_in( $action, $plugin ) {
+        if ( $action == 'yes' ) {
+            $this->schedule_tracking();
+            $this->set_is_tracking_allowed( true, $plugin );
+            if ( $this->do_tracking( true ) ) {
+                $this->update_block_notice( $plugin );
+            }
+        } else {
+            $this->set_is_tracking_allowed( false, $plugin );
+            $this->update_block_notice( $plugin );
+        }
+    }
 }
