@@ -11,7 +11,7 @@ class Helper
 
     public static function plugin_page_hook_suffix($hook)
     {
-        if ($hook == 'settings_page_301options') {
+        if ($hook == 'settings_page_301options' || $hook == 'settings_page_' . Admin\QuickSetup::PAGE_SLUG) {
             return true;
         }
         return false;

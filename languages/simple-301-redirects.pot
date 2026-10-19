@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-14T11:12:55+00:00\n"
+"POT-Creation-Date: 2026-10-19T08:28:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: simple-301-redirects\n"
@@ -40,34 +40,59 @@ msgstr ""
 msgid "https://wpdeveloper.net/"
 msgstr ""
 
-#: includes/Admin.php:47
-msgid "Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper and get a <strong>10% discount</strong> coupon on our Premium products."
+#: includes/Admin.php:54
+msgid "Want to help make <strong>Simple 301 Redirects</strong> even more awesome? Allow us to send usage data to WPDeveloper."
 msgstr ""
 
 #. translators: 1: external service host name, 2: privacy policy URL.
-#: includes/Admin.php:50
+#: includes/Admin.php:57
 #, php-format
-msgid "If you allow it, Simple 301 Redirects sends these details to WPDeveloper's WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version, the Simple 301 Redirects version, and the email address of the administrator who allows tracking (used to send the discount coupon). They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with the email address of the administrator who deactivates it and any reason they enter in the deactivation form. Like any web request, this also reveals your server's IP address. Nothing is sent if you click \"No Thanks.\" <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a>"
+msgid "If you allow it, Simple 301 Redirects sends these details to WPDeveloper's WPInsight service at %1$s: your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, your active and inactive plugins, the active theme and its version and the Simple 301 Redirects version. They are sent once now, then about once a day (only the details that changed), and once more when the plugin is deactivated, together with any reason entered in the deactivation form. Like any web request, this also reveals your server's IP address. Nothing is sent if you click \"No Thanks.\" <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy Policy</a>"
 msgstr ""
 
-#: includes/Admin/Ajax.php:39
+#: includes/Admin/Ajax.php:41
 msgid "This plugin can't be installed from here."
 msgstr ""
 
-#: includes/Admin/Ajax.php:45
+#: includes/Admin/Ajax.php:47
 msgid "Plugin is installed successfully!"
 msgstr ""
 
-#: includes/Admin/Ajax.php:55
+#: includes/Admin/Ajax.php:57
 msgid "This plugin can't be activated from here."
 msgstr ""
 
-#: includes/Admin/Ajax.php:62
+#: includes/Admin/Ajax.php:64
 msgid "Plugin couldn't be activated."
 msgstr ""
 
-#: includes/Admin/Ajax.php:64
+#: includes/Admin/Ajax.php:66
 msgid "BetterLinks is activated!"
+msgstr ""
+
+#: includes/Admin/Ajax.php:138
+#: includes/Admin/Ajax.php:165
+msgid "You don't have permission to do this."
+msgstr ""
+
+#: includes/Admin/QuickSetup.php:77
+msgid "Simple 301 Redirects Quick Setup"
+msgstr ""
+
+#: includes/Admin/QuickSetup.php:78
+msgid "301 Redirects Setup"
+msgstr ""
+
+#: includes/Admin/Tools.php:99
+msgid "No redirects found in the file. Its header row must have a request column and a destination column."
+msgstr ""
+
+#: includes/Admin/Tools.php:105
+msgid "All Data has been successfully Imported."
+msgstr ""
+
+#: includes/Admin/Tools.php:107
+msgid "Import Failed."
 msgstr ""
 
 #: includes/Admin/WPDev/PluginUsageTracker.php:370
@@ -217,6 +242,7 @@ msgid "/new-page/"
 msgstr ""
 
 #: src/components/Documentation/index.js:39
+#: src/containers/QuickSetup/Configuration.js:22
 msgid "Wildcards"
 msgstr ""
 
@@ -298,13 +324,157 @@ msgid "Export File"
 msgstr ""
 
 #: src/components/WildCards/index.js:53
+#: src/containers/QuickSetup/Configuration.js:29
 msgid "Use Wildcards?"
 msgstr ""
 
 #: src/containers/group/ManageLinks.js:106
+#: src/containers/QuickSetup/CreateRedirect.js:26
 msgid "Request"
 msgstr ""
 
 #: src/containers/group/ManageLinks.js:110
+#: src/containers/QuickSetup/CreateRedirect.js:40
 msgid "Destination"
+msgstr ""
+
+#: src/containers/QuickSetup/Configuration.js:17
+#: src/containers/QuickSetup/SetupCanvas.js:36
+msgid "Configuration"
+msgstr ""
+
+#: src/containers/QuickSetup/Configuration.js:18
+msgid "Choose how your redirects match incoming requests. You can change this any time on the 301 Redirects page."
+msgstr ""
+
+#: src/containers/QuickSetup/Configuration.js:23
+msgid "Redirect everything inside a folder with one rule."
+msgstr ""
+
+#: src/containers/QuickSetup/Configuration.js:32
+msgid "Put an asterisk (*) after the folder name. Example: /old-folder/* → /new-folder/* sends /old-folder/page/ to /new-folder/page/."
+msgstr ""
+
+#: src/containers/QuickSetup/CreateRedirect.js:21
+#: src/containers/QuickSetup/SetupCanvas.js:36
+msgid "Create Redirect"
+msgstr ""
+
+#: src/containers/QuickSetup/CreateRedirect.js:22
+msgid "Add your first 301 redirect. You can add more, edit or import them later on the 301 Redirects page."
+msgstr ""
+
+#: src/containers/QuickSetup/CreateRedirect.js:36
+msgid "The old address, relative to your site root."
+msgstr ""
+
+#: src/containers/QuickSetup/CreateRedirect.js:50
+msgid "Where visitors should go: a full URL, or a path on this site such as /new-page/."
+msgstr ""
+
+#: src/containers/QuickSetup/Finish.js:23
+msgid "Great job! You’re all set"
+msgstr ""
+
+#: src/containers/QuickSetup/Finish.js:25
+msgid "Your setup is complete. Manage, import and export your redirects any time from Settings → 301 Redirects."
+msgstr ""
+
+#: src/containers/QuickSetup/Finish.js:35
+msgid "Copy redirect URL"
+msgstr ""
+
+#: src/containers/QuickSetup/Finish.js:53
+msgid "Test redirect"
+msgstr ""
+
+#: src/containers/QuickSetup/Finish.js:62
+msgid "Redirects to"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:23
+#: src/containers/QuickSetup/SetupCanvas.js:36
+msgid "Getting Started"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:25
+msgid "Set up Simple 301 Redirects in a few quick steps and send visitors from old URLs to the right pages."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:32
+msgid "Simple 301 Redirects video tutorial"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:41
+msgid "Help us improve Simple 301 Redirects by sharing basic site and usage data with WPDeveloper. Your redirects and visitor data are never sent."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:43
+msgid "What we collect"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:50
+msgid "Site: address and name, language and charset, WordPress, PHP and server software versions, whether it is a multisite, text direction, and where Simple 301 Redirects is installed on your server (its file path)."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:55
+msgid "Plugins and theme: active and inactive plugins, your active theme and its version, and the Simple 301 Redirects version."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:56
+msgid "On deactivation: the same details again, plus any reason entered in the deactivation form."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:57
+msgid "Like any web request, sending this reveals your server's IP address."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:60
+msgid "Sent to WPDeveloper's WPInsight service (send.wpinsight.com) when you allow it, then about once a day (only what changed) and when the plugin is deactivated. Nothing is sent if you skip."
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:62
+msgid "Privacy policy"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:69
+msgid "Allow & Continue"
+msgstr ""
+
+#: src/containers/QuickSetup/GettingStarted.js:72
+msgid "Skip"
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:36
+#: src/containers/QuickSetup/SetupCanvas.js:181
+msgid "Finish"
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:89
+msgid "Please enter both a request and a destination."
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:102
+msgid "A redirect for this request already exists. Use a different request."
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:109
+#: src/containers/QuickSetup/SetupCanvas.js:113
+msgid "The redirect could not be saved. Please try again."
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:144
+msgid "Setup progress"
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:168
+msgid "Skip this step"
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:176
+msgid "Back"
+msgstr ""
+
+#: src/containers/QuickSetup/SetupCanvas.js:184
+msgid "Next"
 msgstr ""

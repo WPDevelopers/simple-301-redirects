@@ -55,7 +55,15 @@ class Assets {
 				'site_url' => site_url('/'),
 				'route_path' => wp_parse_url(admin_url(), PHP_URL_PATH),
 				'is_betterlinks_activated' => \Simple301Redirects\Helper::is_activated_betterlinks(),
-				'hide_btl_notice' => get_option('simple301redirects_hide_btl_notice')
+				'hide_btl_notice' => get_option('simple301redirects_hide_btl_notice'),
+				'settings_page_url' => admin_url('options-general.php?page=301options'),
+				'wildcard' => get_option('301_redirects_wildcard'),
+				'simple301redirects_quick_setup_step' => get_option(QuickSetup::STEP_OPTION, false),
+				// Whether the admin has opted in to usage data sharing.
+				'usage_tracking_allowed' => (function () {
+					$allow_tracking = get_option('wpins_allow_tracking');
+					return is_array($allow_tracking) && isset($allow_tracking[SIMPLE301REDIRECTS_PLUGIN_SLUG]);
+				})(),
 			]);
 		}
 	}
