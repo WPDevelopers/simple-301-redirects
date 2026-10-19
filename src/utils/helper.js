@@ -7,7 +7,21 @@ export const {
 	route_path,
 	is_betterlinks_activated,
 	hide_btl_notice,
+	settings_page_url,
+	wildcard,
+	simple301redirects_quick_setup_step,
+	usage_tracking_allowed,
 } = window.Simple301Redirects;
+
+/**
+ * POST an admin-ajax action with the plugin nonce (same request shape as BetterLinks' makeRequest).
+ */
+export const makeRequest = (data = {}) => {
+	const form_data = new FormData();
+	form_data.append('security', s3r_nonce);
+	Object.entries(data).forEach(([key, value]) => form_data.append(key, value));
+	return axios.post(ajaxurl, form_data);
+};
 
 export const copyToClipboard = (copyText) => {
 	var tempInput = document.createElement('input');

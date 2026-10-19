@@ -5,6 +5,7 @@ class Admin {
     public function __construct()
     {
         $this->add_menu();
+        $this->quick_setup();
         $this->load_assets();
         $this->init_ajax();
         $this->init_tools();
@@ -14,6 +15,10 @@ class Admin {
     public function add_menu()
     {
         new Admin\Menu();
+    }
+    public function quick_setup()
+    {
+        new Admin\QuickSetup();
     }
     public function load_assets()
     {

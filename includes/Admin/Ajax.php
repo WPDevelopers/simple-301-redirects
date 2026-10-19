@@ -13,6 +13,8 @@ class Ajax {
         add_action('wp_ajax_simple301redirects/admin/create_new_link', [$this, 'create_new_link']);
         add_action('wp_ajax_simple301redirects/admin/update_link', [$this, 'update_link']);
         add_action('wp_ajax_simple301redirects/admin/delete_link', [$this, 'delete_link']);
+        add_action('wp_ajax_simple301redirects__client_consent', [$this, 'client_consent']);
+        add_action('wp_ajax_simple301redirects__complete_setup', [$this, 'complete_setup']);
     }
     public function get_wildcard()
     {
@@ -127,5 +129,44 @@ class Ajax {
 		}
         wp_send_json_success($links);
         wp_die();
+    }
+
+    public function client_consent()
+    {
+        check_ajax_referer('simple301redirects', 'security');
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( "You don't have permission to do this.", 'simple-301-redirects' ) );
+        }
+        $opt_in_value = isset( $_POST['opt_in_value'] ) ? sanitize_text_field( wp_unslash( $_POST['opt_in_value'] ) ) : 'no';
+        $opt_in = WPDev\PluginUsageTracker::get_instance( SIMPLE301REDIRECTS_PLUGIN_FILE, [
+            'opt_in'       => true,
+            'goodbye_form'    => true,
+            'email_marketing' => false,
+            'item_id'         => 'c1e613119bf3e9188767',
+        ] );
+
+        $opt_in_value = 'yes' === $opt_in_value ? 'yes' : 'no';
+        $opt_in->opt_in( $opt_in_value, SIMPLE301REDIRECTS_PLUGIN_SLUG );
+
+        // A settings switch may reuse this endpoint; only the setup wizard advances its step.
+        $context = isset( $_POST['context'] ) ? sanitize_key( wp_unslash( $_POST['context'] ) ) : '';
+        if ( 'settings' !== $context ) {
+            update_option( QuickSetup::STEP_OPTION, 1 );
+        }
+        wp_send_json_success( [
+            'result' => $opt_in_value,
+        ] );
+    }
+
+    public function complete_setup()
+    {
+        check_ajax_referer('simple301redirects', 'security');
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( esc_html__( "You don't have permission to do this.", 'simple-301-redirects' ) );
+        }
+        $is_update = update_option( QuickSetup::STEP_OPTION, 'complete' );
+        wp_send_json_success( [
+            'result' => ( $is_update || QuickSetup::is_complete() ) ? 'complete' : 'error',
+        ] );
     }
 }

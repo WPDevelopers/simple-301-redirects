@@ -47,6 +47,7 @@ if (!class_exists("Simple301redirects")) {
 		private function __construct()
 		{
 			$this->define_constants();
+			register_activation_hook(__FILE__, [$this, 'activate']);
 			add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
 			add_action('init', [$this, 'load_textdomain']);
 
@@ -65,6 +66,14 @@ if (!class_exists("Simple301redirects")) {
 			}
 
 			return $instance;
+		}
+
+		/**
+		 * Flag the one-time redirect to the Quick Setup wizard (see Admin\QuickSetup).
+		 */
+		public function activate()
+		{
+			add_option('simple301redirects_quick_setup', true);
 		}
 
 		public function on_plugins_loaded()

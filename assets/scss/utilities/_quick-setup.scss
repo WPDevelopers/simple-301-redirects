@@ -1,0 +1,573 @@
+// ==========================================================================
+// Quick Setup wizard (`src/containers/QuickSetup/*`) — `s3r-qs-*`.
+// Ported from BetterLinks' `bl-qs` design so both plugins' wizards match.
+// ==========================================================================
+$qs-border: #e6e8ee;
+$qs-text: #1a2233;
+$qs-muted: #6b7280;
+$qs-blue: #2f6bff;
+$qs-blue-dark: #1f57e6;
+$qs-surface: #f7f8fa;
+$qs-white: #fff;
+$qs-green: #16a34a;
+$qs-danger: #ef4444;
+
+.s3r-qs-root {
+	padding: 30px 20px 40px 0;
+}
+
+.s3r-qs {
+	max-width: 920px;
+	margin: 0 auto;
+	color: $qs-text;
+	font-size: 14px;
+	line-height: 1.5;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	// ---- Stepper ---------------------------------------------------------
+	&__steps {
+		display: flex;
+		align-items: center;
+		margin-bottom: 24px;
+		padding: 18px 20px;
+		border: 1px solid $qs-border;
+		border-radius: 14px;
+		background: $qs-white;
+	}
+	&__step {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex: none;
+	}
+	&__step-dot {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		height: 30px;
+		border: 2px solid $qs-border;
+		border-radius: 50%;
+		background: $qs-white;
+		color: #9aa2b1;
+		font-size: 13px;
+		font-weight: 700;
+		transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+	}
+	&__step-label {
+		color: $qs-muted;
+		font-size: 13px;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+	&__step-line {
+		flex: 1 1 auto;
+		height: 2px;
+		min-width: 16px;
+		margin: 0 12px;
+		background: $qs-border;
+		transition: background-color 0.18s ease;
+	}
+	&__step.is-active {
+		.s3r-qs__step-dot {
+			border-color: $qs-blue;
+			color: $qs-blue;
+		}
+		.s3r-qs__step-label {
+			color: $qs-text;
+		}
+	}
+	&__step.is-done {
+		.s3r-qs__step-dot {
+			border-color: $qs-blue;
+			background: $qs-blue;
+			color: #fff;
+		}
+	}
+	&__step-line.is-done {
+		background: $qs-blue;
+	}
+
+	// ---- Panel -----------------------------------------------------------
+	&__panel {
+		padding: 32px;
+		border: 1px solid $qs-border;
+		border-radius: 16px;
+		background: $qs-white;
+	}
+	&__head {
+		margin-bottom: 24px;
+	}
+	&__head-title {
+		margin: 0 0 6px;
+		padding: 0;
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 1.3;
+		color: $qs-text;
+	}
+	&__head-desc {
+		margin: 0;
+		max-width: 640px;
+		color: $qs-muted;
+		font-size: 13.5px;
+	}
+	&__head--center {
+		text-align: center;
+
+		.s3r-qs__head-desc {
+			margin: 0 auto;
+		}
+	}
+
+	// ---- Footer nav ------------------------------------------------------
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 20px;
+	}
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-left: auto;
+	}
+	&__skip {
+		border: 0;
+		background: none;
+		padding: 0;
+		color: $qs-muted;
+		font-size: 13.5px;
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+
+		&:hover {
+			color: $qs-text;
+		}
+	}
+	&__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		height: 44px;
+		padding: 0 22px;
+		border: 1px solid transparent;
+		border-radius: 10px;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+		svg {
+			flex: none;
+		}
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+		&--primary {
+			background: $qs-blue;
+			color: #fff;
+
+			&:hover:not(:disabled) {
+				background: $qs-blue-dark;
+				color: #fff;
+			}
+		}
+		&--ghost {
+			border-color: $qs-border;
+			background: $qs-white;
+			color: $qs-text;
+
+			&:hover:not(:disabled) {
+				border-color: $qs-blue;
+				color: $qs-blue;
+			}
+		}
+	}
+
+	// ---- Getting started -------------------------------------------------
+	&__video {
+		position: relative;
+		width: 100%;
+		max-width: 560px;
+		margin: 0 auto 24px;
+		aspect-ratio: 16 / 9;
+		border-radius: 14px;
+		overflow: hidden;
+		background: #0f1626;
+
+		iframe {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			border: 0;
+		}
+	}
+	// Usage-data opt-in card: Allow & Continue / Skip.
+	&__consent {
+		padding: 20px 24px 24px;
+		border: 1px solid $qs-border;
+		border-radius: 14px;
+		background: $qs-white;
+		color: $qs-muted;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+	&__consent-text {
+		margin: 0;
+		color: $qs-muted;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+	&__consent-actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 24px;
+		margin-top: 22px;
+
+		.s3r-qs__btn {
+			min-width: 200px;
+		}
+	}
+	&__consent-skip {
+		border: 0;
+		background: none;
+		padding: 8px 4px;
+		color: $qs-text;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+
+		&:hover,
+		&:focus-visible {
+			color: $qs-blue;
+		}
+	}
+	&__consent-link {
+		border: 0;
+		background: none;
+		padding: 0;
+		color: $qs-text;
+		font-size: inherit;
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	&__consent-more {
+		margin-top: 12px;
+		padding-top: 12px;
+		border-top: 1px dashed $qs-border;
+		font-size: 13px;
+
+		ul {
+			margin: 0 0 8px 18px;
+			padding: 0;
+			list-style: disc;
+		}
+		li {
+			margin: 0 0 4px;
+		}
+		p {
+			margin: 0;
+		}
+		a {
+			color: $qs-blue;
+		}
+	}
+
+	// ---- Configuration ---------------------------------------------------
+	&__row {
+		display: flex;
+		gap: 24px;
+		padding: 20px 0;
+		border-top: 1px solid $qs-border;
+
+		&:last-child {
+			padding-bottom: 0;
+		}
+	}
+	&__row-label {
+		flex: 0 0 220px;
+
+		h3 {
+			margin: 0 0 4px;
+			padding: 0;
+			font-size: 14px;
+			font-weight: 700;
+			color: $qs-text;
+		}
+		p {
+			margin: 0;
+			color: $qs-muted;
+			font-size: 13px;
+		}
+	}
+	&__row-control {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+	&__toggle {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		cursor: pointer;
+
+		input {
+			position: absolute;
+			opacity: 0;
+			width: 1px;
+			height: 1px;
+			margin: 0;
+		}
+	}
+	&__toggle-track {
+		position: relative;
+		flex: none;
+		width: 42px;
+		height: 24px;
+		border-radius: 999px;
+		background: #cbd2dd;
+		transition: background-color 0.18s ease;
+
+		&::after {
+			content: '';
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			background: #fff;
+			box-shadow: 0 1px 2px rgba(16, 24, 40, 0.25);
+			transition: transform 0.18s ease;
+		}
+	}
+	&__toggle input:checked + &__toggle-track {
+		background: $qs-blue;
+
+		&::after {
+			transform: translateX(18px);
+		}
+	}
+	&__toggle input:focus-visible + &__toggle-track {
+		box-shadow: 0 0 0 3px rgba($qs-blue, 0.25);
+	}
+	&__toggle-label {
+		font-size: 14px;
+		font-weight: 500;
+		color: $qs-text;
+	}
+	&__note {
+		margin: 10px 0 0;
+		padding: 10px 12px;
+		border: 1px solid $qs-border;
+		border-radius: 8px;
+		background: $qs-surface;
+		color: $qs-muted;
+		font-size: 12.5px;
+		line-height: 1.55;
+	}
+
+	// ---- Create Redirect step --------------------------------------------
+	&__form-group {
+		margin: 0 0 18px;
+	}
+	&__form-label {
+		display: block;
+		margin-bottom: 8px;
+		font-size: 14px;
+		font-weight: 600;
+		color: $qs-text;
+	}
+	&__required::after {
+		content: ' *';
+		color: $qs-danger;
+	}
+	&__form-control {
+		width: 100%;
+		min-height: 46px;
+		padding: 12px 14px;
+		border: 1px solid $qs-border;
+		border-radius: 10px;
+		background: $qs-white;
+		color: $qs-text;
+		font-size: 14px;
+		outline: none;
+		box-shadow: none;
+		transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+		&:focus {
+			border-color: $qs-blue;
+			box-shadow: 0 0 0 3px rgba($qs-blue, 0.12);
+		}
+		&::placeholder {
+			color: #9aa3b2;
+		}
+	}
+	&__help {
+		margin: 6px 0 0;
+		color: $qs-muted;
+		font-size: 12.5px;
+	}
+	&__error {
+		margin-top: 4px;
+		color: $qs-danger;
+		font-size: 13px;
+	}
+
+	// ---- Finish ----------------------------------------------------------
+	&__finish {
+		text-align: center;
+		padding: 8px 0 4px;
+	}
+	&__finish-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 72px;
+		height: 72px;
+		margin-bottom: 18px;
+		border-radius: 50%;
+		background: rgba($qs-green, 0.12);
+		color: $qs-green;
+	}
+	&__finish-title {
+		margin: 0 0 8px;
+		padding: 0;
+		font-size: 24px;
+		font-weight: 800;
+		color: $qs-text;
+	}
+	&__finish-desc {
+		max-width: 540px;
+		margin: 0 auto 22px;
+		color: $qs-muted;
+		font-size: 14.5px;
+	}
+	&__finish-redirect {
+		margin: 12px 0 0;
+		color: $qs-muted;
+		font-size: 13px;
+		word-break: break-all;
+
+		strong {
+			color: $qs-text;
+		}
+	}
+	&__shorturl {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		max-width: 100%;
+		padding: 10px 10px 10px 16px;
+		border: 1px solid $qs-border;
+		border-radius: 12px;
+		background: $qs-surface;
+
+		code {
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			background: none;
+			padding: 0;
+			color: $qs-text;
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+	&__shorturl-btn {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		border: 1px solid $qs-border;
+		border-radius: 8px;
+		background: $qs-white;
+		color: $qs-muted;
+		cursor: pointer;
+
+		&:hover {
+			border-color: $qs-blue;
+			color: $qs-blue;
+		}
+		&.is-copied {
+			border-color: $qs-green;
+			color: $qs-green;
+		}
+	}
+}
+
+// ==========================================================================
+// Responsive
+// ==========================================================================
+@media screen and (max-width: 782px) {
+	.s3r-qs-root {
+		padding: 16px 10px 40px 0;
+	}
+	.s3r-qs {
+		&__panel {
+			padding: 20px;
+		}
+		// Collapse the stepper to just the dots + the active label.
+		&__steps {
+			padding: 14px;
+		}
+		&__step-label {
+			display: none;
+		}
+		&__step.is-active .s3r-qs__step-label {
+			display: inline;
+		}
+		&__step-line {
+			margin: 0 8px;
+			min-width: 10px;
+		}
+		&__footer {
+			flex-direction: column-reverse;
+			align-items: stretch;
+		}
+		&__actions {
+			margin-left: 0;
+
+			.s3r-qs__btn {
+				flex: 1 1 0;
+			}
+		}
+		&__skip {
+			text-align: center;
+		}
+		&__consent {
+			padding: 16px;
+		}
+		&__consent-actions {
+			flex-direction: column;
+			gap: 8px;
+
+			.s3r-qs__btn {
+				width: 100%;
+				min-width: 0;
+			}
+		}
+		&__row {
+			flex-direction: column;
+			gap: 12px;
+		}
+		&__row-label {
+			flex-basis: auto;
+		}
+	}
+}

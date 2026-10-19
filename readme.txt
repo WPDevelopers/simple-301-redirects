@@ -115,7 +115,8 @@ Visit [WPDeveloper](https://wpdeveloper.net/) to learn more about how to do bett
 
 1. Upload Simple 301 Redirects to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Add redirects on the Settings > 301 Redirects page.
+1. The Quick Setup wizard opens: choose whether to share usage data, turn wildcards on or off, and add your first redirect. You can skip any step.
+1. Add more redirects on the Settings > 301 Redirects page.
 
 
 == Source Code ==
@@ -134,16 +135,20 @@ To rebuild both files from the plugin folder, run:
 
 == External services ==
 
-Simple 301 Redirects performs redirects entirely on your own site. It connects to an external service only in the two cases below.
+Simple 301 Redirects performs redirects entirely on your own site. It connects to an external service only in the cases below.
 
 = WPInsight usage analytics (opt-in, off by default) =
 
 WPInsight is WPDeveloper's usage analytics service. We use it to learn which WordPress versions, PHP versions, plugins and themes people run alongside Simple 301 Redirects, so we can keep the plugin compatible with them.
 
-* **When data is sent:** only after an administrator clicks "Sure, I'd like to help" in the opt-in notice. It is sent once at that moment, then about once a day by WP-Cron (only the details that changed since the last report), and once more when the plugin is deactivated. If you click "No Thanks." or ignore the notice, nothing is ever sent.
+* **When data is sent:** only after an administrator agrees, either by clicking "Allow & Continue" on the first step of the Quick Setup wizard or "Sure, I'd like to help" in the opt-in notice. It is sent once at that moment, then about once a day by WP-Cron (only the details that changed since the last report), and once more when the plugin is deactivated. If you click "Skip" or "No Thanks.", or ignore both, nothing is ever sent.
 * **What is sent:** your site URL and site name, WordPress version, site language and charset, PHP version, server software, whether the site is a multisite, text direction, the server path of the plugin, the lists of active and inactive plugins, the active theme and its version, and the Simple 301 Redirects version. On deactivation it sends the same details again, plus the reason and any note entered in the deactivation form. No email address or other personal account details are sent. Like any web request, the connection also reveals your server's IP address to the service.
 * **Where it is sent:** `https://send.wpinsight.com/process-plugin-data`
 * **Terms and privacy:** [Terms and Conditions](https://wpdeveloper.com/terms-and-conditions/), [Privacy Policy](https://wpdeveloper.com/privacy-policy/)
+
+= YouTube (Quick Setup video) =
+
+The first step of the Quick Setup wizard embeds a Simple 301 Redirects tutorial video from YouTube, using YouTube's privacy-enhanced domain (`https://www.youtube-nocookie.com`). While that step is on screen, your browser loads the video player from YouTube, which receives your IP address and browser details like any embedded video. Nothing is sent from your server. [YouTube Terms of Service](https://www.youtube.com/t/terms), [Google Privacy Policy](https://policies.google.com/privacy)
 
 = WordPress.org Plugins API (only when you click "Install BetterLinks") =
 
